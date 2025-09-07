@@ -6,7 +6,8 @@
     <title>Basic CSS Styles</title>
     
     <style>
-        h1, h2, h3 {
+        h1, h2 {
+            font-family: Arial, sans-serif;
             color: steelblue;
             text-align: center;
         }
@@ -16,17 +17,18 @@
 </head>
 <body>
 
-    <h1>Internal Style Example</h1>
-    <p>This heading is styled using an internal CSS block within the `head` section of the HTML file.</p>
+    <header>
+        <h1>Internal Style Example</h1>
+        <p>This heading is styled using an internal CSS block within the `head` section of the HTML file.</p>
+    </header>
 
-    <p style="color: purple; background-color: lightgray;">
-        This paragraph is styled using an **inline** style. Notice how the style is applied directly to the HTML tag.
+    <p style="color: purple; background-color: lightgray; padding: 5px;">
+        This paragraph is styled using an <b>inline</b> style. Notice how the style is applied directly to the HTML tag.
     </p>
 
-    <h2>External Style Example</h2>
     <div class="styled-box">
-        This box is styled using an **external** stylesheet called `style.css`.
+        <p>This box is styled using an <b>external</b> stylesheet called `style.css`.</p>
     </div>
-    
+
 </body>
 </html>

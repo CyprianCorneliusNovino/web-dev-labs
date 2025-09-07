@@ -9,3 +9,98 @@
     margin: 20px auto;
     text-align: center;
 }
+
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Light background for the page */
+    display: flex; /* Use flexbox to center the container */
+    justify-content: center;
+    align-items: flex-start; /* Align to the top, not center vertically */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    padding-top: 30px; /* Add some space from the top */
+    padding-bottom: 30px; /* Add some space from the bottom */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+/* Main Container - mimics the wireframe's overall box */
+.container {
+    width: 80%; /* Adjust as needed */
+    max-width: 800px; /* Maximum width for the content */
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    box-sizing: border-box; /* Include padding in the width */
+}
+
+/* Header Styling */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee; /* Separator line */
+}
+
+header h1 {
+    font-family: 'Georgia', serif; /* A more elegant font */
+    font-size: 3em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.tagline {
+    font-size: 1.2em;
+    color: #666;
+    font-style: italic;
+}
+
+/* Section Headings */
+h2 {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.8em;
+    color: #444;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0; /* Subtle underline */
+    padding-bottom: 5px;
+}
+
+/* Paragraph Styling */
+p {
+    font-size: 1.1em;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* List Styling for Menu Preview */
+ul {
+    list-style-type: disc; /* Default bullet points */
+    margin-left: 25px; /* Indent the list */
+    font-size: 1.1em;
+    color: #555;
+}
+
+ul li {
+    margin-bottom: 8px;
+}
+
+/* Footer Styling */
+footer {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #eee; /* Separator line */
+    background-color: #f9f9f9; /* Light background for footer */
+    padding: 15px; /* Padding inside footer */
+    border-radius: 5px; 
+}
+
+footer p {
+    font-size: 0.9em;
+    color: #777;
+    margin: 0; 
+}
