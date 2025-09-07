@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic CSS Styles</title>
+    
+    <style>
+        h1, h2, h3 {
+            color: steelblue;
+            text-align: center;
+        }
+    </style>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Internal Style Example</h1>
+    <p>This heading is styled using an internal CSS block within the `head` section of the HTML file.</p>
+
+    <p style="color: purple; background-color: lightgray;">
+        This paragraph is styled using an **inline** style. Notice how the style is applied directly to the HTML tag.
+    </p>
+
+    <h2>External Style Example</h2>
+    <div class="styled-box">
+        This box is styled using an **external** stylesheet called `style.css`.
+    </div>
+    
+</body>
+</html>
