@@ -1,0 +1,75 @@
+/* General page styles */
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Container for content */
+div.container {
+    max-width: 800px;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom font and color for headings */
+h1, h2 {
+    font-family: 'Georgia', serif;
+    color: #4a2c00; /* Dark brown color for a cafe theme */
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-top: 40px;
+}
+
+/* Paragraph styling */
+p {
+    margin-bottom: 20px;
+}
+
+/* Styling for the menu list (ul) */
+ul {
+    list-style-type: none;
+    padding: 20px;
+    margin: 20px 0;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #ccc;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+/* Separator line style */
+hr {
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin: 30px 0;
+}
+
+/* Footer styling */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    color: #777;
+}
