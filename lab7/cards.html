@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Profile Cards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 40px 0;
+        }
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+        }
+        .card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 24px 18px;
+            width: 260px;
+            text-align: center;
+            transition: box-shadow 0.2s;
+        }
+        .card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+        }
+        .card img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 16px;
+            border: 2px solid #4CAF50;
+        }
+        .card h3 {
+            margin: 10px 0 8px 0;
+            color: #333;
+            font-size: 1.3em;
+        }
+        .card p {
+            color: #666;
+            font-size: 1em;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="card">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile 1">
+            <h3>Alex Rivera</h3>
+            <p>Web developer who loves building interactive and accessible websites.</p>
+        </div>
+        <div class="card">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile 2">
+            <h3>Jamie Chen</h3>
+            <p>UI/UX designer passionate about creating beautiful user experiences.</p>
+        </div>
+        <div class="card">
+            <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Profile 3">
+            <h3>Sam Patel</h3>
+            <p>Full-stack engineer with a knack for solving complex problems.</p>
+        </div>

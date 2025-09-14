@@ -3,32 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic CSS Styles</title>
-    
+    <title>Box Style Grid Layout</title>
     <style>
-        h1, h2 {
+        body {
+            background: #f4f4f4;
             font-family: Arial, sans-serif;
-            color: steelblue;
+            margin: 0;
+            padding: 40px 0;
+        }
+        .box-container {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            padding: 20px;
+        }
+        .box {
+            width: 240px;
+            padding: 28px 18px;
+            margin: 0;
+            background: #fff;
+            border-radius: 18px;
             text-align: center;
+            font-size: 1.1em;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .box1 {
+            border: 4px solid #1976d2;
+            background: #e3f2fd;
+        }
+        .box2 {
+            border: 3px dashed #388e3c;
+            background: #e8f5e9;
+            border-radius: 50px 18px 50px 18px;
+        }
+        .box3 {
+            border: 6px dotted #d32f2f;
+            background: #ffebee;
+            border-radius: 18px 50px 18px 50px;
         }
     </style>
-    
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <header>
-        <h1>Internal Style Example</h1>
-        <p>This heading is styled using an internal CSS block within the `head` section of the HTML file.</p>
-    </header>
-
-    <p style="color: purple; background-color: lightgray; padding: 5px;">
-        This paragraph is styled using an <b>inline</b> style. Notice how the style is applied directly to the HTML tag.
-    </p>
-
-    <div class="styled-box">
-        <p>This box is styled using an <b>external</b> stylesheet called `style.css`.</p>
+    <div class="box-container">
+        <div class="box box1">
+            <p>This is a solid bordered box with a soft blue background and rounded corners.</p>
+        </div>
+        <div class="box box2">
+            <p>This box uses a dashed border, green accent, and unique rounded corners.</p>
+        </div>
+        <div class="box box3">
+            <p>This box features a dotted border, red accent, and alternating corner radii.</p>
+        </div>
     </div>
-
 </body>
 </html>
