@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energetic Beats Playlist - Musicify</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+    .main-content { margin-left: 260px; padding: 36px 40px 40px 40px; min-height: 100vh; }
+    .playlist-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
+    .playlist-header img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; background: #333; }
+    .playlist-header .info h1 { margin: 0 0 10px 0; font-size: 2em; }
+    .playlist-header .info p { margin: 0; color: #bbb; }
+    .song-list { margin-top: 24px; }
+    .song-list table { width: 100%; border-collapse: collapse; }
+    .song-list th, .song-list td { padding: 12px 10px; text-align: left; }
+    .song-list th { color: #1db954; border-bottom: 1px solid #333; }
+    .song-list tr { cursor: pointer; }
+    .song-list tr:hover { background: #232323; }
+    .song-list td { border-bottom: 1px solid #232323; }
+    .song-title a { color: #1db954; font-weight: 500; text-decoration: underline; }
+    .song-title a:hover { color: #fff; }
+    .song-artist { color: #bbb; }
+    .song-album { color: #aaa; }
+    .song-duration { color: #888; }
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .nav-buttons a {
+      background: #1db954;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 24px;
+      font-size: 1em;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .nav-buttons a:hover {
+      background: #1ed760;
+      color: #181818;
+    }
+    @media (max-width: 900px) {
+      .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
+      .playlist-header img { width: 90px; height: 90px; }
+    }
+    @media (max-width: 600px) {
+      .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
+      .playlist-header { flex-direction: column; align-items: flex-start; }
+      .playlist-header img { width: 100px; height: 100px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">Musicify</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="playlists.html">Playlists</a>
+      <a href="moods.html">Moods</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="credits.html">Credits</a>
+    </nav>
+    <div class="recent">
+      <h3>Recently Played</h3>
+      <ul>
+        <li><a href="chillvibes.html" style="color:#fff;">Chill Vibes</a></li>
+        <li><a href="energetic.html" style="color:#fff;">Energetic Beats</a></li>
+        <li><a href="focus.html" style="color:#fff;">Focus & Study</a></li>
+      </ul>
+    </div>
+    <button class="create-btn">Create Playlist</button>
+  </div>
+  <div class="main-content">
+    <div class="nav-buttons">
+      <a href="index.html">Home</a>
+      <a href="playlists.html">Playlists</a>
+      <a href="moods.html">Moods</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="credits.html">Credits</a>
+    </div>
+    <div class="playlist-header">
+      <a href="images/energetic.jpg" target="_blank">
+        <img src="images/energetic.jpg" alt="Energetic Beats Playlist Cover">
+      </a>
+      <div class="info">
+        <h1>Energetic Beats</h1>
+        <p>Get pumped with high-energy music. Perfect for workouts, parties, or whenever you need a boost!</p>
+        <p>20 tracks &bull; 1hr 17min</p>
+      </div>
+    </div>
+    <div class="song-list">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Song</th>
+            <th>Artist</th>
+            <th>Album</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onclick="window.open('https://open.spotify.com/track/7GhIk7Il098yCjg4BQjzvb','_blank')">
+            <td>1</td>
+            <td class="song-title"><a href="https://open.spotify.com/track/7GhIk7Il098yCjg4BQjzvb" target="_blank">Uptown Funk</a></td>
+            <td class="song-artist">Mark Ronson ft. Bruno Mars</td>
+            <td class="song-album">Uptown Special</td>
+            <td class="song-duration">4:30</td>
+          </tr>
+          <tr onclick="window.open('https://open.spotify.com/track/6habFhsOp2NvshLv26DqMb','_blank')">
+            <td>2</td>
+            <td class="song-title"><a href="https://open.spotify.com/track/6habFhsOp2NvshLv26DqMb" target="_blank">Titanium</a></td>
+            <td class="song-artist">David Guetta ft. Sia</td>
+            <td class="song-album">Nothing but the Beat</td>
+            <td class="song-duration">4:05</td>
+          </tr>
+          <tr onclick="window.open('https://open.spotify.com/track/1rqqCSm0Qe4I9rUvWncaom','_blank')">
+            <td>3</td>
+            <td class="song-title"><a href="https://open.spotify.com/track/1rqqCSm0Qe4I9rUvWncaom" target="_blank">Don't Start Now</a></td>
+            <td class="song-artist">Dua Lipa</td>
+            <td class="song-album">Future Nostalgia</td>
+            <td class="song-duration">3:03</td>
+          </tr>
+          <tr onclick="window.open('https://open.spotify.com/track/2dpaYNEQHiRxtZbfNsse99','_blank')">
+            <td>4</td>
+            <td class="song-title"><a href="https://open.spotify.com/track/2dpaYNEQHiRxtZbfNsse99" target="_blank">Blinding Lights</a></td>
+            <td class="song-artist">The Weeknd</td>
+            <td class="song-album">After Hours</td>
+            <td class="song-duration">3:20</td>
+          </tr>
+          <tr onclick="window.open('https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b','_blank')">
+            <td>5</td>
+            <td class="song-title"><a href="https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b" target="_blank">Can't Hold Us</a></td>
+            <td class="song-artist">Macklemore & Ryan Lewis</td>
+            <td class="song-album">The Heist</td>
+            <td class="song-duration">4:18</td>
+          </tr>
+          <tr onclick="window.open('https://open.spotify.com/track/6K4t31amVTZDgR3sKmwUJJ','_blank')">
+            <td>6</td>
+            <td class="song-title"><a href="https://open.spotify.com/track/6K4t31amVTZDgR3sKmwUJJ" target="_blank">Can't Stop the Feeling!</a></td>
+            <td class="song-artist">Justin Timberlake</td>
+            <td class="song-album">Trolls (Original Motion Picture Soundtrack)</td>
+            <td class="song-duration">3:56</td>
+          </tr>
+          <tr onclick="window.open('https://open.spotify.com/track/3AJwUDP919kvQ9QcozQPxg','_blank')">
+            <td>7</td>
+            <td class="song-title"><a href="https://open.spotify.com/track/3AJwUDP919kvQ9QcozQPxg" target="_blank">Shape of You</a></td>
+            <td class="song-artist">Ed Sheeran</td>
+            <td class="song-album">÷ (Divide)</td>
+            <td class="song-duration">3:53</td>
+          </tr>
+          <tr onclick="window.open('https://open.spotify.com/track/2Fxmhks0bxGSBdJ92vM42m','_blank')">
+            <td>8</td>
+            <td class="song-title"><a href="https://open.spotify.com/track/2Fxmhks0bxGSBdJ92vM42m" target="_blank">Believer</a></td>
+            <td class="song-artist">Imagine Dragons</td>
+            <td class="song-album">Evolve</td>
+            <td class="song-duration">3:24</td>
+          </tr>
+          <tr onclick="window.open('https://open.spotify.com/track/2dLLR6qlu5UJ5gk0dKz0h3','_blank')">
+            <td>9</td>
+            <td class="song-title"><a href="https://open.spotify.com/track/2dLLR6qlu5UJ5gk0dKz0h3" target="_blank">Stronger</a></td>
+            <td class="song-artist">Kanye West</td>
+            <td class="song-album">Graduation</td>
+            <td class="song-duration">5:12</td>
+          </tr>
+          <tr onclick="window.open('https://open.spotify.com/track/1rfofaqEpACxVEHIZBJe6W','_blank')">
+            <td>10</td>
+            <td class="song-title"><a href="https://open.spotify.com/track/1rfofaqEpACxVEHIZBJe6W" target="_blank">Levitating</a></td>
+            <td class="song-artist">Dua Lipa</td>
+            <td class="song-album">Future Nostalgia</td>
+            <td class="song-duration">3:23</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="footer-player" id="footer-player">
+    <img src="images/energetic.jpg" alt="Now Playing" id="player-img">
+    <div class="track-info">
+      <div class="track-title" id="player-title">Uptown Funk</div>
+      <div class="track-artist" id="player-artist">Mark Ronson ft. Bruno Mars</div>
+    </div>
+    <div class="controls">
+      <button title="Previous"><i class="fa fa-step-backward"></i></button>
+      <button title="Play/Pause"><i class="fa fa-play"></i></button>
+      <button title="Next"><i class="fa fa-step-forward"></i></button>
+    </div>
+  </div>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</body>
+</html>
