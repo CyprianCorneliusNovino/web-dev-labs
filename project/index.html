@@ -1,333 +1,359 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Music Discovery - Playlists by Mood</title>
-  <meta name="description" content="Discover new music playlists by mood. Find the perfect soundtrack for every moment!">
-  <link rel="stylesheet" href="css/styles.css">
-  <style>
-    body {
-      background: #181818;
-      color: #fff;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    .sidebar {
-      width: 260px;
-      background: #121212;
-      height: 100vh;
-      position: fixed;
-      left: 0;
-      top: 0;
-      display: flex;
-      flex-direction: column;
-      padding: 24px 0 0 0;
-      box-shadow: 2px 0 12px rgba(0,0,0,0.2);
-    }
-    .sidebar .logo {
-      font-size: 2em;
-      font-weight: bold;
-      color: #1db954;
-      text-align: center;
-      margin-bottom: 32px;
-      letter-spacing: 2px;
-    }
-    .sidebar nav {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-    .sidebar nav a {
-      color: #fff;
-      text-decoration: none;
-      padding: 10px 32px;
-      font-size: 1.1em;
-      border-radius: 6px;
-      transition: background 0.2s, color 0.2s;
-    }
-    .sidebar nav a.active,
-    .sidebar nav a:hover {
-      background: #282828;
-      color: #1db954;
-    }
-    .sidebar .recent {
-      margin: 24px 0 0 0;
-      padding: 0 32px;
-    }
-    .sidebar .recent h3 {
-      font-size: 1em;
-      color: #bbb;
-      margin-bottom: 10px;
-      margin-top: 0;
-      font-weight: 400;
-    }
-    .sidebar .recent ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .sidebar .recent li {
-      margin-bottom: 10px;
-      color: #eee;
-      font-size: 0.98em;
-      opacity: 0.85;
-    }
-    .sidebar .create-btn {
-      margin: 24px 32px 0 32px;
-      background: #1db954;
-      color: #fff;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 0;
-      font-size: 1em;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .sidebar .create-btn:hover {
-      background: #1ed760;
-    }
-    .main-content {
-      margin-left: 260px;
-      padding: 36px 40px 40px 40px;
-      min-height: 100vh;
-      background: #181818;
-    }
-    .search-bar {
-      width: 100%;
-      max-width: 420px;
-      margin-bottom: 32px;
-      display: flex;
-      align-items: center;
-      background: #222;
-      border-radius: 24px;
-      padding: 8px 18px;
-    }
-    .search-bar input {
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 1.1em;
-      width: 100%;
-      outline: none;
-      margin-left: 10px;
-    }
-    .section-title {
-      font-size: 1.4em;
-      margin: 32px 0 18px 0;
-      color: #fff;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-    .playlist-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 28px;
-    }
-    .playlist-card {
-      background: #222;
-      border-radius: 14px;
-      padding: 18px 16px 16px 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: background 0.2s, transform 0.2s;
-      cursor: pointer;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      text-decoration: none;
-    }
-    .playlist-card:hover {
-      background: #282828;
-      transform: translateY(-6px) scale(1.03);
-    }
-    .playlist-card img {
-      width: 110px;
-      height: 110px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 14px;
-      background: #333;
-    }
-    .playlist-card .playlist-title {
-      font-size: 1.08em;
-      font-weight: 500;
-      color: #fff;
-      margin-bottom: 4px;
-      text-align: center;
-    }
-    .playlist-card .playlist-desc {
-      font-size: 0.97em;
-      color: #bbb;
-      text-align: center;
-      margin-bottom: 2px;
-    }
-    .playlist-card .playlist-meta {
-      font-size: 0.85em;
-      color: #888;
-      margin-top: 2px;
-    }
-    .footer-player {
-      position: fixed;
-      left: 260px;
-      right: 0;
-      bottom: 0;
-      background: #222;
-      border-top: 1px solid #333;
-      display: flex;
-      align-items: center;
-      padding: 12px 32px;
-      z-index: 10;
-      min-height: 70px;
-    }
-    .footer-player img {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      object-fit: cover;
-      margin-right: 18px;
-    }
-    .footer-player .track-info {
-      flex: 1;
-    }
-    .footer-player .track-title {
-      font-size: 1.08em;
-      color: #fff;
-      font-weight: 500;
-    }
-    .footer-player .track-artist {
-      font-size: 0.95em;
-      color: #bbb;
-    }
-    .footer-player .controls {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      margin-left: 24px;
-    }
-    .footer-player .controls button {
-      background: none;
-      border: none;
-      color: #1db954;
-      font-size: 1.3em;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-    .footer-player .controls button:hover {
-      color: #fff;
-    }
-    @media (max-width: 900px) {
-      .sidebar { width: 70px; }
-      .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
-      .footer-player { left: 70px; padding: 10px 8px; }
-      .sidebar .logo { font-size: 1.2em; }
-      .sidebar nav a { font-size: 0.9em; padding: 8px 10px; }
-      .sidebar .recent, .sidebar .create-btn { display: none; }
-    }
-    @media (max-width: 600px) {
-      .sidebar { display: none; }
-      .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
-      .footer-player { left: 0; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Discovery - Playlists by Mood</title>
+    <meta name="description" content="Discover new music playlists by mood. Find the perfect soundtrack for every moment!">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background: #181818;
+            color: #fff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 260px;
+            background: #121212;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 0 0 0;
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);
+            transition: width 0.3s;
+        }
+        .sidebar .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: #1db954;
+            text-align: center;
+            margin-bottom: 32px;
+            letter-spacing: 2px;
+        }
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        .sidebar nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 32px;
+            font-size: 1.1em;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .sidebar nav a.active,
+        .sidebar nav a:hover {
+            background: #282828;
+            color: #1ed760;
+        }
+        .sidebar .recent {
+            margin: 24px 0 0 0;
+            padding: 0 32px;
+        }
+        .sidebar .recent h3 {
+            font-size: 1em;
+            color: #bbb;
+            margin-bottom: 10px;
+            margin-top: 0;
+            font-weight: 400;
+        }
+        .sidebar .recent ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar .recent li {
+            margin-bottom: 10px;
+            color: #eee;
+            font-size: 0.98em;
+            opacity: 0.85;
+        }
+        .sidebar .create-btn {
+            margin: 24px 32px 0 32px;
+            background: #1db954;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 0;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .sidebar .create-btn:hover {
+            background: #1ed760;
+        }
+        .main-content {
+            margin-left: 260px;
+            padding: 36px 40px 40px 40px;
+            min-height: 100vh;
+            background: #181818;
+        }
+        .search-bar {
+            width: 100%;
+            max-width: 420px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            background: #222;
+            border-radius: 24px;
+            padding: 8px 18px;
+        }
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.1em;
+            width: 100%;
+            outline: none;
+            margin-left: 10px;
+        }
+        .section-title {
+            font-size: 1.4em;
+            margin: 32px 0 18px 0;
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .playlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 28px;
+        }
+        .playlist-card {
+            background: #222;
+            border-radius: 14px;
+            padding: 18px 16px 16px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background 0.2s, transform 0.2s;
+            cursor: pointer;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            text-decoration: none;
+        }
+        .playlist-card:hover {
+            background: #282828;
+            transform: translateY(-6px) scale(1.03);
+        }
+        .playlist-card img {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 14px;
+            background: #333;
+        }
+        .playlist-card .playlist-title {
+            font-size: 1.08em;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+        .playlist-card .playlist-desc {
+            font-size: 0.97em;
+            color: #bbb;
+            text-align: center;
+            margin-bottom: 2px;
+        }
+        .playlist-card .playlist-meta {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 2px;
+        }
+        .footer-player {
+            position: fixed;
+            left: 260px;
+            right: 0;
+            bottom: 0;
+            background: #222;
+            border-top: 1px solid #333;
+            display: flex;
+            align-items: center;
+            padding: 12px 32px;
+            z-index: 10;
+            min-height: 70px;
+        }
+        .footer-player img {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 18px;
+        }
+        .footer-player .track-info {
+            flex: 1;
+        }
+        .footer-player .track-title {
+            font-size: 1.08em;
+            color: #fff;
+            font-weight: 500;
+        }
+        .footer-player .track-artist {
+            font-size: 0.95em;
+            color: #bbb;
+        }
+        .footer-player .controls {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-left: 24px;
+        }
+        .footer-player .controls button {
+            background: none;
+            border: none;
+            color: #1db954;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .footer-player .controls button:hover {
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 70px;
+            }
+            .main-content {
+                margin-left: 70px;
+                padding: 24px 8px 80px 8px;
+            }
+            .footer-player {
+                left: 70px;
+                padding: 10px 8px;
+            }
+            .sidebar .logo {
+                font-size: 1.2em;
+            }
+            .sidebar nav a {
+                font-size: 0.9em;
+                padding: 8px 10px;
+            }
+            .sidebar .recent,
+            .sidebar .create-btn {
+                display: none;
+            }
+        }
+        @media (max-width: 600px) {
+            .sidebar {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 16px 2vw 80px 2vw;
+            }
+            .footer-player {
+                left: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="logo">Musicify</div>
-    <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="playlists.html">Playlists</a>
-      <a href="moods.html">Moods</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <div class="recent">
-      <h3>Recently Played</h3>
-      <ul>
-        <li>Chill Vibes</li>
-        <li>Energetic Beats</li>
-        <li>Focus & Study</li>
-      </ul>
-    </div>
-    <button class="create-btn">Create Playlist</button>
-  </div>
-  <div class="main-content">
-    <form class="search-bar">
-      <i class="fa fa-search" style="color:#bbb;"></i>
-      <input type="text" placeholder="Search playlists, moods, artists..." />
-    </form>
-    <div>
-      <div class="section-title">Mood Playlists</div>
-      <div class="playlist-grid">
-        <a href="chillvibes.html" class="playlist-card">
-          <img src="images/chill.jpg" alt="Chill Vibes">
-          <div class="playlist-title">Chill Vibes</div>
-          <div class="playlist-desc">Relax and unwind with mellow tunes.</div>
-          <div class="playlist-meta">20 tracks • 1hr 15min</div>
-        </a>
-        <a href="energetic.html" class="playlist-card">
-          <img src="images/energetic.jpg" alt="Energetic Beats">
-          <div class="playlist-title">Energetic Beats</div>
-          <div class="playlist-desc">Get pumped with high-energy music.</div>
-          <div class="playlist-meta">20 tracks • 1hr 17min</div>
-        </a>
-        <a href="focus.html" class="playlist-card">
-          <img src="images/focus.jpg" alt="Focus & Study">
-          <div class="playlist-title">Focus & Study</div>
-          <div class="playlist-desc">Stay productive with focused sounds.</div>
-          <div class="playlist-meta">20 tracks • 1hr 30min</div>
-        </a>
-        <a href="rainy.html" class="playlist-card">
-          <img src="images/rainy.jpg" alt="Rainy Day Melodies">
-          <div class="playlist-title">Rainy Day Melodies</div>
-          <div class="playlist-desc">Perfect for cozy, rainy days.</div>
-          <div class="playlist-meta">20 tracks • 1hr 23min</div>
-        </a>
-      </div>
-      <div class="section-title">New Releases</div>
-      <div class="playlist-grid">
-        <a href="sadmix.html" class="playlist-card">
-          <img src="images/new1.jpg" alt="Sad Mix">
-          <div class="playlist-title">Sad Mix</div>
-          <div class="playlist-desc">Emotional tracks for rainy days.</div>
-          <div class="playlist-meta">15 tracks • 55min</div>
-        </a>
-        <a href="daylist.html" class="playlist-card">
-          <img src="images/new2.jpg" alt="Daylist">
-          <div class="playlist-title">Daylist</div>
-          <div class="playlist-desc">A playlist for every part of your day.</div>
-          <div class="playlist-meta">18 tracks • 1hr 5min</div>
-        </a>
-        <div class="playlist-card">
-          <img src="images/new3.jpg" alt="Pop Hits">
-          <div class="playlist-title">Pop Hits</div>
-          <div class="playlist-desc">Today's top pop songs.</div>
-          <div class="playlist-meta">20 tracks • 1hr 10min</div>
+    <div class="sidebar">
+        <div class="logo">Musicify</div>
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="moods.html">Moods</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="recent">
+            <h3>Recently Played</h3>
+            <ul>
+                <li>Chill Vibes</li>
+                <li>Energetic Beats</li>
+                <li>Focus & Study</li>
+            </ul>
         </div>
-        <div class="playlist-card">
-          <img src="images/new4.jpg" alt="Rock Essentials">
-          <div class="playlist-title">Rock Essentials</div>
-          <div class="playlist-desc">Classic and modern rock.</div>
-          <div class="playlist-meta">22 tracks • 1hr 40min</div>
+        <button class="create-btn">Create Playlist</button>
+    </div>
+    <div class="main-content">
+        <form class="search-bar">
+            <i class="fa fa-search" style="color:#bbb;"></i>
+            <input type="text" placeholder="Search playlists, moods, artists..." />
+        </form>
+        <div>
+            <div class="section-title">Mood Playlists</div>
+            <div class="playlist-grid">
+                <a href="chillvibes.html" class="playlist-card">
+                    <img src="images/chill.jpg" alt="Chill Vibes">
+                    <div class="playlist-title">Chill Vibes</div>
+                    <div class="playlist-desc">Relax and unwind with mellow tunes.</div>
+                    <div class="playlist-meta">20 tracks • 1hr 15min</div>
+                </a>
+                <a href="energetic.html" class="playlist-card">
+                    <img src="images/energetic.jpg" alt="Energetic Beats">
+                    <div class="playlist-title">Energetic Beats</div>
+                    <div class="playlist-desc">Get pumped with high-energy music.</div>
+                    <div class="playlist-meta">20 tracks • 1hr 17min</div>
+                </a>
+                <a href="focus.html" class="playlist-card">
+                    <img src="images/focus.jpg" alt="Focus & Study">
+                    <div class="playlist-title">Focus & Study</div>
+                    <div class="playlist-desc">Stay productive with focused sounds.</div>
+                    <div class="playlist-meta">20 tracks • 1hr 30min</div>
+                </a>
+                <a href="rainy.html" class="playlist-card">
+                    <img src="images/rainy.jpg" alt="Rainy Day Melodies">
+                    <div class="playlist-title">Rainy Day Melodies</div>
+                    <div class="playlist-desc">Perfect for cozy, rainy days.</div>
+                    <div class="playlist-meta">20 tracks • 1hr 23min</div>
+                </a>
+            </div>
+            <div class="section-title">New Releases</div>
+            <div class="playlist-grid">
+                <a href="sadmix.html" class="playlist-card">
+                    <img src="images/new1.jpg" alt="Sad Mix">
+                    <div class="playlist-title">Sad Mix</div>
+                    <div class="playlist-desc">Emotional tracks for rainy days.</div>
+                    <div class="playlist-meta">15 tracks • 55min</div>
+                </a>
+                <a href="daylist.html" class="playlist-card">
+                    <img src="images/new2.jpg" alt="Daylist">
+                    <div class="playlist-title">Daylist</div>
+                    <div class="playlist-desc">A playlist for every part of your day.</div>
+                    <div class="playlist-meta">18 tracks • 1hr 5min</div>
+                </a>
+                <a href="pophits.html" class="playlist-card">
+                    <img src="images/new3.jpg" alt="Pop Hits">
+                    <div class="playlist-title">Pop Hits</div>
+                    <div class="playlist-desc">Today's top pop songs.</div>
+                    <div class="playlist-meta">20 tracks • 1hr 10min</div>
+                </a>
+                <a href="rock.html" class="playlist-card">
+                    <img src="images/new4.jpg" alt="Rock Essentials">
+                    <div class="playlist-title">Rock Essentials</div>
+                    <div class="playlist-desc">Classic and modern rock.</div>
+                    <div class="playlist-meta">22 tracks • 1hr 40min</div>
+                </a>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="footer-player">
-    <img src="images/chill.jpg" alt="Now Playing">
-    <div class="track-info">
-      <div class="track-title">Exaa Rod010</div>
-      <div class="track-artist">Twierpilotte</div>
+    <div class="footer-player">
+        <img src="images/chill.jpg" alt="Now Playing">
+        <div class="track-info">
+            <div class="track-title">Exaa Rod010</div>
+            <div class="track-artist">Twierpilotte</div>
+        </div>
+        <div class="controls">
+            <button title="Previous"><i class="fa fa-step-backward"></i></button>
+            <button title="Play/Pause"><i class="fa fa-play"></i></button>
+            <button title="Next"><i class="fa fa-step-forward"></i></button>
+        </div>
     </div>
-    <div class="controls">
-      <button title="Previous"><i class="fa fa-step-backward"></i></button>
-      <button title="Play/Pause"><i class="fa fa-play"></i></button>
-      <button title="Next"><i class="fa fa-step-forward"></i></button>
-    </div>
-  </div>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </body>
 </html>
-
