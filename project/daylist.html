@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daylist Playlist - Musicify</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+    .main-content { margin-left: 260px; padding: 36px 40px 40px 40px; min-height: 100vh; }
+    .playlist-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
+    .playlist-header img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; background: #333; }
+    .song-list { margin-top: 24px; }
+    .song-list table { width: 100%; border-collapse: collapse; }
+    .song-list th, .song-list td { padding: 12px 10px; text-align: left; }
+    .song-list th { color: #1db954; border-bottom: 1px solid #333; }
+    .song-list tr { cursor: pointer; }
+    .song-list tr:hover { background: #232323; }
+    .song-list td { border-bottom: 1px solid #232323; }
+    .song-title { color: #1db954; font-weight: 500; text-decoration: underline; }
+    .song-artist { color: #bbb; }
+    .song-album { color: #aaa; }
+    .song-duration { color: #888; }
+    .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 18px; margin-top: 32px; }
+    .audio-player img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+    .audio-info { flex: 1; }
+    .audio-title { font-size: 1.1em; color: #fff; }
+    .audio-artist { color: #bbb; font-size: 0.98em; }
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .nav-buttons a {
+      background: #1db954;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 24px;
+      font-size: 1em;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .nav-buttons a:hover {
+      background: #1ed760;
+      color: #181818;
+    }
+    @media (max-width: 900px) {
+      .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
+      .playlist-header img { width: 90px; height: 90px; }
+    }
+    @media (max-width: 600px) {
+      .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
+      .playlist-header { flex-direction: column; align-items: flex-start; }
+      .playlist-header img { width: 100px; height: 100px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <!-- Optional: Add sidebar content here -->
+  </div>
+  <div class="main-content">
+    <div class="nav-buttons">
+      <a href="index.html">Home</a>
+      <a href="javascript:history.back()">Back</a>
+    </div>
+    <div class="playlist-header">
+      <img src="images/daylist.jpg" alt="Daylist Playlist Cover">
+      <div class="info">
+        <h1>Daylist</h1>
+        <p>Soundtrack your whole day! From morning motivation to evening chill, this playlist has a song for every moment.</p>
+        <p>10 tracks &bull; 38min</p>
+      </div>
+    </div>
+    <div class="song-list">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Song</th>
+            <th>Artist</th>
+            <th>Album</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onclick="playSong('Good Morning', 'Max Frost', 'images/daylist.jpg', 'audio/good_morning.mp3')">
+            <td>1</td>
+            <td class="song-title">Good Morning</td>
+            <td class="song-artist">Max Frost</td>
+            <td class="song-album">Gold Rush</td>
+            <td class="song-duration">3:38</td>
+          </tr>
+          <tr onclick="playSong('Walking on Sunshine', 'Katrina & The Waves', 'images/daylist.jpg', 'audio/walking_on_sunshine.mp3')">
+            <td>2</td>
+            <td class="song-title">Walking on Sunshine</td>
+            <td class="song-artist">Katrina & The Waves</td>
+            <td class="song-album">Katrina & The Waves</td>
+            <td class="song-duration">3:43</td>
+          </tr>
+          <tr onclick="playSong('Pocketful of Sunshine', 'Natasha Bedingfield', 'images/daylist.jpg', 'audio/pocketful_of_sunshine.mp3')">
+            <td>3</td>
+            <td class="song-title">Pocketful of Sunshine</td>
+            <td class="song-artist">Natasha Bedingfield</td>
+            <td class="song-album">Pocketful of Sunshine</td>
+            <td class="song-duration">3:23</td>
+          </tr>
+          <tr onclick="playSong('On Top of the World', 'Imagine Dragons', 'images/daylist.jpg', 'audio/on_top_of_the_world.mp3')">
+            <td>4</td>
+            <td class="song-title">On Top of the World</td>
+            <td class="song-artist">Imagine Dragons</td>
+            <td class="song-album">Night Visions</td>
+            <td class="song-duration">3:12</td>
+          </tr>
+          <tr onclick="playSong('Happy', 'Pharrell Williams', 'images/daylist.jpg', 'audio/happy.mp3')">
+            <td>5</td>
+            <td class="song-title">Happy</td>
+            <td class="song-artist">Pharrell Williams</td>
+            <td class="song-album">G I R L</td>
+            <td class="song-duration">3:53</td>
+          </tr>
+          <tr onclick="playSong('Sunflower', 'Post Malone & Swae Lee', 'images/daylist.jpg', 'audio/sunflower.mp3')">
+            <td>6</td>
+            <td class="song-title">Sunflower</td>
+            <td class="song-artist">Post Malone & Swae Lee</td>
+            <td class="song-album">Spider-Man: Into the Spider-Verse</td>
+            <td class="song-duration">2:38</td>
+          </tr>
+          <tr onclick="playSong('Budapest', 'George Ezra', 'images/daylist.jpg', 'audio/budapest.mp3')">
+            <td>7</td>
+            <td class="song-title">Budapest</td>
+            <td class="song-artist">George Ezra</td>
+            <td class="song-album">Wanted on Voyage</td>
+            <td class="song-duration">3:20</td>
+          </tr>
+          <tr onclick="playSong('Put Your Records On', 'Corinne Bailey Rae', 'images/daylist.jpg', 'audio/put_your_records_on.mp3')">
+            <td>8</td>
+            <td class="song-title">Put Your Records On</td>
+            <td class="song-artist">Corinne Bailey Rae</td>
+            <td class="song-album">Corinne Bailey Rae</td>
+            <td class="song-duration">3:35</td>
+          </tr>
+          <tr onclick="playSong('Sunday Best', 'Surfaces', 'images/daylist.jpg', 'audio/sunday_best.mp3')">
+            <td>9</td>
+            <td class="song-title">Sunday Best</td>
+            <td class="song-artist">Surfaces</td>
+            <td class="song-album">Where the Light Is</td>
+            <td class="song-duration">2:39</td>
+          </tr>
+          <tr onclick="playSong('Good Life', 'OneRepublic', 'images/daylist.jpg', 'audio/good_life.mp3')">
+            <td>10</td>
+            <td class="song-title">Good Life</td>
+            <td class="song-artist">OneRepublic</td>
+            <td class="song-album">Waking Up</td>
+            <td class="song-duration">4:13</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="audio-player" id="audio-player">
+      <img src="images/daylist.jpg" id="audio-img" alt="Now Playing">
+      <div class="audio-info">
+        <div class="audio-title" id="audio-title">Good Morning</div>
+        <div class="audio-artist" id="audio-artist">Max Frost</div>
+      </div>
+      <audio id="audio" controls style="width:200px;">
+        <source src="audio/good_morning.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  </div>
+  <script>
+    function playSong(title, artist, img, src) {
+      document.getElementById('audio-title').textContent = title;
+      document.getElementById('audio-artist').textContent = artist;
+      document.getElementById('audio-img').src = img;
+      var audio = document.getElementById('audio');
+      audio.src = src;
+      audio.play();
+    }
+  </script>
+</body>
+</html>

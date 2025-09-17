@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chill Vibes Playlist - Musicify</title>
+  <title>Rock Essentials 2025 Playlist - Musicify</title>
   <link rel="stylesheet" href="css/styles.css">
   <style>
     body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
@@ -20,52 +20,75 @@
     .song-list tr:hover { background: #232323; }
     .song-list td { border-bottom: 1px solid #232323; }
     .song-title { color: #1db954; font-weight: 500; text-decoration: underline; }
+    .song-title a { color: inherit; text-decoration: inherit; display: block; width: 100%; height: 100%; }
     .song-artist { color: #bbb; }
     .song-album { color: #aaa; }
     .song-duration { color: #888; }
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .nav-buttons a {
+      background: #1db954;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 24px;
+      font-size: 1em;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .nav-buttons a:hover {
+      background: #1ed760;
+      color: #181818;
+    }
+    .spotify-player {
+      margin-top: 36px;
+      display: none;
+      justify-content: center;
+      width: 100%;
+    }
+    .spotify-player.active {
+      display: flex;
+    }
+    #spotify-iframe {
+      width: 100vw;
+      min-width: 320px;
+      height: 100px;
+      border-radius: 18px;
+      margin: auto;
+      display: block;
+      background: #181818;
+      border: none;
+    }
     @media (max-width: 900px) {
       .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
       .playlist-header img { width: 90px; height: 90px; }
+      #spotify-iframe { width: 98vw !important; }
     }
     @media (max-width: 600px) {
       .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
       .playlist-header { flex-direction: column; align-items: flex-start; }
       .playlist-header img { width: 100px; height: 100px; }
+      #spotify-iframe { width: 98vw !important; }
     }
-    a { color: #1db954; text-decoration: none; }
-    a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="logo">Musicify</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="playlists.html">Playlists</a>
-      <a href="moods.html">Moods</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="credits.html">Credits</a>
-    </nav>
-    <div class="recent">
-      <h3>Recently Played</h3>
-      <ul>
-        <li><a href="chillvibes.html" style="color:#fff;">Chill Vibes</a></li>
-        <li><a href="energetic.html" style="color:#fff;">Energetic Beats</a></li>
-        <li><a href="focus.html" style="color:#fff;">Focus & Study</a></li>
-      </ul>
-    </div>
-    <button class="create-btn">Create Playlist</button>
-  </div>
   <div class="main-content">
+    <div class="nav-buttons">
+      <a href="index.html">Home</a>
+      <a href="javascript:history.back()">Back</a>
+    </div>
     <div class="playlist-header">
-      <a href="images/chill.jpg" target="_blank">
-        <img src="images/chill.jpg" alt="Chill Vibes Playlist Cover">
-      </a>
+      <img src="images/rock.jpg" alt="Rock Essentials 2025 Playlist Cover">
       <div class="info">
-        <h1>Chill Vibes</h1>
-        <p>Relax and unwind with mellow tunes. Perfect for studying, late nights, or just chilling out.</p>
-        <p>20 tracks &bull; 1hr 15min</p>
+        <h1>Rock Essentials 2025</h1>
+        <p>The best modern rock tracks of 2025. From alternative anthems to stadium-shaking hits, this playlist keeps the energy high!</p>
+        <p>10 tracks &bull; 40min</p>
       </div>
     </div>
     <div class="song-list">
@@ -80,98 +103,90 @@
           </tr>
         </thead>
         <tbody>
-          <tr onclick="playSong('Sunset Lover', 'Petit Biscuit', 'images/chill.jpg', 'https://open.spotify.com/track/3U4isOIWM3VvDubwSI3y7a')">
+          <tr onclick="showSpotify('5nC5F5n3hE2l6w6zJc8Q7z')">
             <td>1</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/3U4isOIWM3VvDubwSI3y7a" target="_blank">Sunset Lover</a></td>
-            <td class="song-artist">Petit Biscuit</td>
-            <td class="song-album">Presence</td>
+            <td class="song-title"><a href="#">Echoes</a></td>
+            <td class="song-artist">Imagine Dragons</td>
+            <td class="song-album">Origins II</td>
+            <td class="song-duration">3:44</td>
+          </tr>
+          <tr onclick="showSpotify('7KXjTSCq5nL1LoYtL7XAwS')">
+            <td>2</td>
+            <td class="song-title"><a href="#">Midnight Drive</a></td>
+            <td class="song-artist">Foo Fighters</td>
+            <td class="song-album">Concrete & Gold 2025</td>
+            <td class="song-duration">4:01</td>
+          </tr>
+          <tr onclick="showSpotify('3AJwUDP919kvQ9QcozQPxg')">
+            <td>3</td>
+            <td class="song-title"><a href="#">Wildfire</a></td>
+            <td class="song-artist">Paramore</td>
+            <td class="song-album">This Is Why (Deluxe)</td>
+            <td class="song-duration">3:27</td>
+          </tr>
+          <tr onclick="showSpotify('1rqqCSm0Qe4I9rUvWncaom')">
+            <td>4</td>
+            <td class="song-title"><a href="#">Rise Again</a></td>
+            <td class="song-artist">The Killers</td>
+            <td class="song-album">Imploding the Mirage II</td>
             <td class="song-duration">3:58</td>
           </tr>
-          <tr onclick="playSong('Weightless', 'Marconi Union', 'images/chill.jpg', 'https://open.spotify.com/track/6Qyc6fS4DsZjB2mRW9DsQs')">
-            <td>2</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/6Qyc6fS4DsZjB2mRW9DsQs" target="_blank">Weightless</a></td>
-            <td class="song-artist">Marconi Union</td>
-            <td class="song-album">Weightless</td>
-            <td class="song-duration">8:00</td>
-          </tr>
-          <tr onclick="playSong('Night Trouble', 'Petit Biscuit', 'images/chill.jpg', 'https://open.spotify.com/track/2nGFzvICaeEWjIrBrL2RAx')">
-            <td>3</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/2nGFzvICaeEWjIrBrL2RAx" target="_blank">Night Trouble</a></td>
-            <td class="song-artist">Petit Biscuit</td>
-            <td class="song-album">Petit Biscuit</td>
-            <td class="song-duration">4:48</td>
-          </tr>
-          <tr onclick="playSong('Coffee', 'beabadoobee', 'images/chill.jpg', 'https://open.spotify.com/track/2X485T9Z5Ly0xyaghN73ed')">
-            <td>4</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/2X485T9Z5Ly0xyaghN73ed" target="_blank">Coffee</a></td>
-            <td class="song-artist">beabadoobee</td>
-            <td class="song-album">Patched Up</td>
-            <td class="song-duration">2:17</td>
-          </tr>
-          <tr onclick="playSong('Lose It', 'Oh Wonder', 'images/chill.jpg', 'https://open.spotify.com/track/1pKYYY0dkg23sQQXi0Q5zN')">
+          <tr onclick="showSpotify('2Fxmhks0bxGSBdJ92vM42m')">
             <td>5</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/1pKYYY0dkg23sQQXi0Q5zN" target="_blank">Lose It</a></td>
-            <td class="song-artist">Oh Wonder</td>
-            <td class="song-album">Oh Wonder</td>
+            <td class="song-title"><a href="#">Breakout</a></td>
+            <td class="song-artist">Royal Blood</td>
+            <td class="song-album">Back to the Water Below</td>
+            <td class="song-duration">3:12</td>
+          </tr>
+          <tr onclick="showSpotify('6QgjcU0zLnzq5OrUoSZ3OK')">
+            <td>6</td>
+            <td class="song-title"><a href="#">Electric Heart</a></td>
+            <td class="song-artist">Måneskin</td>
+            <td class="song-album">Rush! (Are U Coming?)</td>
+            <td class="song-duration">3:35</td>
+          </tr>
+          <tr onclick="showSpotify('0VjIjW4GlUZAMYd2vXMi3b')">
+            <td>7</td>
+            <td class="song-title"><a href="#">Gravity</a></td>
+            <td class="song-artist">Nothing But Thieves</td>
+            <td class="song-album">Dead Club City</td>
+            <td class="song-duration">4:09</td>
+          </tr>
+          <tr onclick="showSpotify('3H7ihDc1dqLriiWXwsc2po')">
+            <td>8</td>
+            <td class="song-title"><a href="#">Rebel Soul</a></td>
+            <td class="song-artist">Greta Van Fleet</td>
+            <td class="song-album">Starcatcher</td>
             <td class="song-duration">3:49</td>
           </tr>
-          <tr onclick="playSong('Home', 'Edward Sharpe & The Magnetic Zeros', 'images/chill.jpg', 'https://open.spotify.com/track/4y3OI86AEP6PQoDE6olYhO')">
-            <td>6</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/4y3OI86AEP6PQoDE6olYhO" target="_blank">Home</a></td>
-            <td class="song-artist">Edward Sharpe & The Magnetic Zeros</td>
-            <td class="song-album">Up From Below</td>
-            <td class="song-duration">5:06</td>
-          </tr>
-          <tr onclick="playSong('Bloom', 'The Paper Kites', 'images/chill.jpg', 'https://open.spotify.com/track/2nGFzvICaeEWjIrBrL2RAx')">
-            <td>7</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/2nGFzvICaeEWjIrBrL2RAx" target="_blank">Bloom</a></td>
-            <td class="song-artist">The Paper Kites</td>
-            <td class="song-album">Woodland</td>
-            <td class="song-duration">3:31</td>
-          </tr>
-          <tr onclick="playSong('Holocene', 'Bon Iver', 'images/chill.jpg', 'https://open.spotify.com/track/0W4Kpfp1w2xkY3PrV714B7')">
-            <td>8</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/0W4Kpfp1w2xkY3PrV714B7" target="_blank">Holocene</a></td>
-            <td class="song-artist">Bon Iver</td>
-            <td class="song-album">Bon Iver</td>
-            <td class="song-duration">5:36</td>
-          </tr>
-          <tr onclick="playSong('Rivers and Roads', 'The Head and the Heart', 'images/chill.jpg', 'https://open.spotify.com/track/2X485T9Z5Ly0xyaghN73ed')">
+          <tr onclick="showSpotify('2nLtzopw4rPReszdYBJU6h')">
             <td>9</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/2X485T9Z5Ly0xyaghN73ed" target="_blank">Rivers and Roads</a></td>
-            <td class="song-artist">The Head and the Heart</td>
-            <td class="song-album">The Head and the Heart</td>
-            <td class="song-duration">4:43</td>
+            <td class="song-title"><a href="#">Burning Bridges</a></td>
+            <td class="song-artist">Bring Me The Horizon</td>
+            <td class="song-album">POST HUMAN: NeX GEn</td>
+            <td class="song-duration">3:55</td>
           </tr>
-          <tr onclick="playSong('Ophelia', 'The Lumineers', 'images/chill.jpg', 'https://open.spotify.com/track/0pqnGHJpmpxLKifKRmU6WP')">
+          <tr onclick="showSpotify('6habFhsOp2NvshLv26DqMb')">
             <td>10</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/0pqnGHJpmpxLKifKRmU6WP" target="_blank">Ophelia</a></td>
-            <td class="song-artist">The Lumineers</td>
-            <td class="song-album">Cleopatra</td>
-            <td class="song-duration">2:40</td>
+            <td class="song-title"><a href="#">Thunder Road</a></td>
+            <td class="song-artist">The Strokes</td>
+            <td class="song-album">The New Abnormal II</td>
+            <td class="song-duration">4:20</td>
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
-  <div class="footer-player" id="footer-player">
-    <img src="images/chill.jpg" alt="Now Playing" id="player-img">
-    <div class="track-info">
-      <div class="track-title" id="player-title">Sunset Lover</div>
-      <div class="track-artist" id="player-artist">Petit Biscuit</div>
-    </div>
-    <div class="controls">
-      <button title="Previous"><i class="fa fa-step-backward"></i></button>
-      <button title="Play/Pause"><i class="fa fa-play"></i></button>
-      <button title="Next"><i class="fa fa-step-forward"></i></button>
+    <div class="spotify-player" id="spotify-player">
+      <iframe id="spotify-iframe" src="" width="100vw" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media" style="min-width:320px; max-width:100vw; margin:auto; display:block; border-radius:18px; background:#181818;"></iframe>
     </div>
   </div>
   <script>
-    function playSong(title, artist, img, url) {
-      document.getElementById('player-title').textContent = title;
-      document.getElementById('player-artist').textContent = artist;
-      document.getElementById('player-img').src = img;
-      window.open(url, '_blank');
+    function showSpotify(trackId) {
+      var player = document.getElementById('spotify-player');
+      var iframe = document.getElementById('spotify-iframe');
+      iframe.src = "https://open.spotify.com/embed/track/" + trackId + "?utm_source=generator&theme=0";
+      player.classList.add('active');
+      player.scrollIntoView({behavior: "smooth"});
     }
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sad Mix Playlist - Musicify</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+    .main-content { margin-left: 260px; padding: 36px 40px 40px 40px; min-height: 100vh; }
+    .playlist-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
+    .playlist-header img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; background: #333; }
+    .song-list { margin-top: 24px; }
+    .song-list table { width: 100%; border-collapse: collapse; }
+    .song-list th, .song-list td { padding: 12px 10px; text-align: left; }
+    .song-list th { color: #1db954; border-bottom: 1px solid #333; }
+    .song-list tr { cursor: pointer; }
+    .song-list tr:hover { background: #232323; }
+    .song-list td { border-bottom: 1px solid #232323; }
+    .song-title { color: #1db954; font-weight: 500; text-decoration: underline; }
+    .song-artist { color: #bbb; }
+    .song-album { color: #aaa; }
+    .song-duration { color: #888; }
+    .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 18px; margin-top: 32px; }
+    .audio-player img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+    .audio-info { flex: 1; }
+    .audio-title { font-size: 1.1em; color: #fff; }
+    .audio-artist { color: #bbb; font-size: 0.98em; }
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .nav-buttons a {
+      background: #1db954;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 24px;
+      font-size: 1em;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .nav-buttons a:hover {
+      background: #1ed760;
+      color: #181818;
+    }
+    @media (max-width: 900px) {
+      .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
+      .playlist-header img { width: 90px; height: 90px; }
+    }
+    @media (max-width: 600px) {
+      .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
+      .playlist-header { flex-direction: column; align-items: flex-start; }
+      .playlist-header img { width: 100px; height: 100px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <!-- Optional: Add sidebar content here -->
+  </div>
+  <div class="main-content">
+    <div class="nav-buttons">
+      <a href="index.html">Home</a>
+      <a href="javascript:history.back()">Back</a>
+    </div>
+    <div class="playlist-header">
+      <img src="images/sadmix.jpg" alt="Sad Mix Playlist Cover">
+      <div class="info">
+        <h1>Sad Mix</h1>
+        <p>Let your feelings flow with these emotional tracks. Perfect for rainy days, late nights, or whenever you need to let it out.</p>
+        <p>10 tracks &bull; 45min</p>
+      </div>
+    </div>
+    <div class="song-list">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Song</th>
+            <th>Artist</th>
+            <th>Album</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onclick="playSong('Someone Like You', 'Adele', 'images/sadmix.jpg', 'audio/someone_like_you.mp3')">
+            <td>1</td>
+            <td class="song-title">Someone Like You</td>
+            <td class="song-artist">Adele</td>
+            <td class="song-album">21</td>
+            <td class="song-duration">4:45</td>
+          </tr>
+          <tr onclick="playSong('Let Her Go', 'Passenger', 'images/sadmix.jpg', 'audio/let_her_go.mp3')">
+            <td>2</td>
+            <td class="song-title">Let Her Go</td>
+            <td class="song-artist">Passenger</td>
+            <td class="song-album">All the Little Lights</td>
+            <td class="song-duration">4:12</td>
+          </tr>
+          <tr onclick="playSong('Fix You', 'Coldplay', 'images/sadmix.jpg', 'audio/fix_you.mp3')">
+            <td>3</td>
+            <td class="song-title">Fix You</td>
+            <td class="song-artist">Coldplay</td>
+            <td class="song-album">X&Y</td>
+            <td class="song-duration">4:55</td>
+          </tr>
+          <tr onclick="playSong('All I Want', 'Kodaline', 'images/sadmix.jpg', 'audio/all_i_want.mp3')">
+            <td>4</td>
+            <td class="song-title">All I Want</td>
+            <td class="song-artist">Kodaline</td>
+            <td class="song-album">In a Perfect World</td>
+            <td class="song-duration">5:05</td>
+          </tr>
+          <tr onclick="playSong('Say You Love Me', 'Jessie Ware', 'images/sadmix.jpg', 'audio/say_you_love_me.mp3')">
+            <td>5</td>
+            <td class="song-title">Say You Love Me</td>
+            <td class="song-artist">Jessie Ware</td>
+            <td class="song-album">Tough Love</td>
+            <td class="song-duration">4:17</td>
+          </tr>
+          <tr onclick="playSong('Let It Go', 'James Bay', 'images/sadmix.jpg', 'audio/let_it_go.mp3')">
+            <td>6</td>
+            <td class="song-title">Let It Go</td>
+            <td class="song-artist">James Bay</td>
+            <td class="song-album">Chaos and the Calm</td>
+            <td class="song-duration">4:21</td>
+          </tr>
+          <tr onclick="playSong('Skinny Love', 'Birdy', 'images/sadmix.jpg', 'audio/skinny_love.mp3')">
+            <td>7</td>
+            <td class="song-title">Skinny Love</td>
+            <td class="song-artist">Birdy</td>
+            <td class="song-album">Birdy</td>
+            <td class="song-duration">3:21</td>
+          </tr>
+          <tr onclick="playSong('Jealous', 'Labrinth', 'images/sadmix.jpg', 'audio/jealous.mp3')">
+            <td>8</td>
+            <td class="song-title">Jealous</td>
+            <td class="song-artist">Labrinth</td>
+            <td class="song-album">Jealous</td>
+            <td class="song-duration">4:48</td>
+          </tr>
+          <tr onclick="playSong('Lost Boy', 'Ruth B.', 'images/sadmix.jpg', 'audio/lost_boy.mp3')">
+            <td>9</td>
+            <td class="song-title">Lost Boy</td>
+            <td class="song-artist">Ruth B.</td>
+            <td class="song-album">The Intro</td>
+            <td class="song-duration">4:36</td>
+          </tr>
+          <tr onclick="playSong('Say Something', 'A Great Big World & Christina Aguilera', 'images/sadmix.jpg', 'audio/say_something.mp3')">
+            <td>10</td>
+            <td class="song-title">Say Something</td>
+            <td class="song-artist">A Great Big World & Christina Aguilera</td>
+            <td class="song-album">Is There Anybody Out There?</td>
+            <td class="song-duration">3:49</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="audio-player" id="audio-player">
+      <img src="images/sadmix.jpg" id="audio-img" alt="Now Playing">
+      <div class="audio-info">
+        <div class="audio-title" id="audio-title">Someone Like You</div>
+        <div class="audio-artist" id="audio-artist">Adele</div>
+      </div>
+      <audio id="audio" controls style="width:200px;">
+        <source src="audio/someone_like_you.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  </div>
+  <script>
+    function playSong(title, artist, img, src) {
+      document.getElementById('audio-title').textContent = title;
+      document.getElementById('audio-artist').textContent = artist;
+      document.getElementById('audio-img').src = img;
+      var audio = document.getElementById('audio');
+      audio.src = src;
+      audio.play();
+    }
+  </script>
+</body>
+</html>
