@@ -1,186 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pop Hits 2025 Playlist - Musicify</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <style>
-    body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
-    .main-content { margin-left: 260px; padding: 36px 40px 40px 40px; min-height: 100vh; }
-    .playlist-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
-    .playlist-header img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; background: #333; }
-    .song-list { margin-top: 24px; }
-    .song-list table { width: 100%; border-collapse: collapse; }
-    .song-list th, .song-list td { padding: 12px 10px; text-align: left; }
-    .song-list th { color: #1db954; border-bottom: 1px solid #333; }
-    .song-list tr { cursor: pointer; }
-    .song-list tr:hover { background: #232323; }
-    .song-list td { border-bottom: 1px solid #232323; }
-    .song-title { color: #1db954; font-weight: 500; text-decoration: underline; }
-    .song-artist { color: #bbb; }
-    .song-album { color: #aaa; }
-    .song-duration { color: #888; }
-    .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 18px; margin-top: 32px; }
-    .audio-player img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
-    .audio-info { flex: 1; }
-    .audio-title { font-size: 1.1em; color: #fff; }
-    .audio-artist { color: #bbb; font-size: 0.98em; }
-    .nav-buttons {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .nav-buttons a {
-      background: #1db954;
-      color: #fff;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 24px;
-      font-size: 1em;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.2s;
-      display: inline-block;
-    }
-    .nav-buttons a:hover {
-      background: #1ed760;
-      color: #181818;
-    }
-    @media (max-width: 900px) {
-      .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
-      .playlist-header img { width: 90px; height: 90px; }
-    }
-    @media (max-width: 600px) {
-      .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
-      .playlist-header { flex-direction: column; align-items: flex-start; }
-      .playlist-header img { width: 100px; height: 100px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop Hits 2025 - Musicify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+        .main-content { margin-left: 260px; padding: 36px 40px 40px 40px; min-height: 100vh; }
+        .playlist-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
+        .playlist-header img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; background: #333; }
+        .song-list { margin-top: 24px; }
+        .song-list table { width: 100%; border-collapse: collapse; }
+        .song-list th, .song-list td { padding: 12px 10px; text-align: left; }
+        .song-list th { color: #aaa; border-bottom: 1px solid #333; }
+        .song-list tr { cursor: pointer; }
+        .song-list tr:hover { background: #232323; }
+        .song-list td { border-bottom: 1px solid #232323; }
+        .song-title { color: #fff; font-weight: 500; text-decoration: none; }
+        .song-artist { color: #bbb; }
+        .song-album { color: #aaa; }
+        .song-duration { color: #888; }
+        .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 18px; margin-top: 32px; }
+        .audio-player img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+        .audio-info { flex: 1; }
+        .audio-title { font-size: 1.1em; color: #fff; }
+        .audio-artist { color: #bbb; font-size: 0.98em; }
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .nav-buttons a {
+            background: #222;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s;
+            display: inline-block;
+        }
+        .nav-buttons a:hover {
+            background: #333;
+            border-color: #666;
+        }
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .audio-controls button {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: color 0.2s;
+        }
+        .audio-controls button:hover {
+            color: #1db954;
+        }
+        .audio-player audio {
+            width: 200px;
+        }
+        @media (max-width: 900px) {
+            .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
+            .playlist-header img { width: 90px; height: 90px; }
+        }
+        @media (max-width: 600px) {
+            .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
+            .playlist-header { flex-direction: column; align-items: flex-start; }
+            .playlist-header img { width: 100px; height: 100px; }
+        }
+    </style>
 </head>
 <body>
-  <div class="sidebar">
-    <!-- Optional: Add sidebar content here -->
-  </div>
-  <div class="main-content">
-    <div class="nav-buttons">
-      <a href="index.html">Home</a>
-      <a href="javascript:history.back()">Back</a>
+    <div class="sidebar">
     </div>
-    <div class="playlist-header">
-      <img src="images/poplist.jpg" alt="Pop Hits 2025 Playlist Cover">
-      <div class="info">
-        <h1>Pop Hits 2025</h1>
-        <p>The hottest modern pop tracks of 2025. Stay up to date with the latest chart-toppers and viral hits!</p>
-        <p>10 tracks &bull; 36min</p>
-      </div>
+    <div class="main-content">
+        <div class="nav-buttons">
+            <a href="index.html" style="background: #1db954; border-color: #1db954;">Home</a>
+            <a href="javascript:history.back()" style="background: #222; border-color: #444;">Back</a>
+        </div>
+        <div class="playlist-header">
+            <img src="images/pophits.webp" alt="Pop Hits 2025 Playlist Cover">
+            <div class="info">
+                <h1>Pop Hits 2025</h1>
+                <p>The hottest modern pop tracks of 2025. Stay up-to-date with the latest chart-toppers and viral hits!</p>
+                <p>10 tracks &bull; 36min</p>
+            </div>
+        </div>
+        <div class="song-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Song</th>
+                        <th>Artist</th>
+                        <th>Album</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr onclick="playSong(0)">
+                        <td>1</td>
+                        <td class="song-title">Eclipse</td>
+                        <td class="song-artist">Dua Lipa</td>
+                        <td class="song-album">Future Nostalgia 2</td>
+                        <td class="song-duration">3:32</td>
+                    </tr>
+                    <tr onclick="playSong(1)">
+                        <td>2</td>
+                        <td class="song-title">Neon Dreams</td>
+                        <td class="song-artist">The Weeknd</td>
+                        <td class="song-album">After Hours Deluxe</td>
+                        <td class="song-duration">3:45</td>
+                    </tr>
+                    <tr onclick="playSong(2)">
+                        <td>3</td>
+                        <td class="song-title">Paradise</td>
+                        <td class="song-artist">Olivia Rodrigo</td>
+                        <td class="song-album">GUTS (Deluxe)</td>
+                        <td class="song-duration">3:18</td>
+                    </tr>
+                    <tr onclick="playSong(3)">
+                        <td>4</td>
+                        <td class="song-title">Starlight</td>
+                        <td class="song-artist">Harry Styles</td>
+                        <td class="song-album">Fine Line 2</td>
+                        <td class="song-duration">3:41</td>
+                    </tr>
+                    <tr onclick="playSong(4)">
+                        <td>5</td>
+                        <td class="song-title">Glow Up</td>
+                        <td class="song-artist">Billie Eilish</td>
+                        <td class="song-album">Happier Than Ever (2025)</td>
+                        <td class="song-duration">3:29</td>
+                    </tr>
+                    <tr onclick="playSong(5)">
+                        <td>6</td>
+                        <td class="song-title">City Lights</td>
+                        <td class="song-artist">Shawn Mendes</td>
+                        <td class="song-album">Illuminate Again</td>
+                        <td class="song-duration">3:27</td>
+                    </tr>
+                    <tr onclick="playSong(6)">
+                        <td>7</td>
+                        <td class="song-title">Electric Heart</td>
+                        <td class="song-artist">Sabrina Carpenter</td>
+                        <td class="song-album">Short n' Sweet</td>
+                        <td class="song-duration">3:10</td>
+                    </tr>
+                    <tr onclick="playSong(7)">
+                        <td>8</td>
+                        <td class="song-title">Golden Hour</td>
+                        <td class="song-artist">Taylor Swift</td>
+                        <td class="song-album">Midnights 2AM</td>
+                        <td class="song-duration">3:40</td>
+                    </tr>
+                    <tr onclick="playSong(8)">
+                        <td>9</td>
+                        <td class="song-title">Runaway</td>
+                        <td class="song-artist">Charlie Puth</td>
+                        <td class="song-album">CHARLIE 2025</td>
+                        <td class="song-duration">3:20</td>
+                    </tr>
+                    <tr onclick="playSong(9)">
+                        <td>10</td>
+                        <td class="song-title">Viral</td>
+                        <td class="song-artist">Ariana Grande</td>
+                        <td class="song-album">eternal sunshine</td>
+                        <td class="song-duration">3:18</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="audio-player" id="audio-player">
+            <img src="images/pophits.webp" id="audio-img" alt="Now Playing">
+            <div class="audio-info">
+                <div class="audio-title" id="audio-title"></div>
+                <div class="audio-artist" id="audio-artist"></div>
+            </div>
+            <audio id="audio" controls style="width:200px;" preload="auto"></audio>
+        </div>
     </div>
-    <div class="song-list">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Song</th>
-            <th>Artist</th>
-            <th>Album</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr onclick="playSong('Eclipse', 'Dua Lipa', 'images/poplist.jpg', 'audio/eclipse.mp3')">
-            <td>1</td>
-            <td class="song-title">Eclipse</td>
-            <td class="song-artist">Dua Lipa</td>
-            <td class="song-album">Future Nostalgia 2</td>
-            <td class="song-duration">3:32</td>
-          </tr>
-          <tr onclick="playSong('Neon Dreams', 'The Weeknd', 'images/poplist.jpg', 'audio/neon_dreams.mp3')">
-            <td>2</td>
-            <td class="song-title">Neon Dreams</td>
-            <td class="song-artist">The Weeknd</td>
-            <td class="song-album">After Hours Deluxe</td>
-            <td class="song-duration">3:45</td>
-          </tr>
-          <tr onclick="playSong('Paradise', 'Olivia Rodrigo', 'images/poplist.jpg', 'audio/paradise.mp3')">
-            <td>3</td>
-            <td class="song-title">Paradise</td>
-            <td class="song-artist">Olivia Rodrigo</td>
-            <td class="song-album">GUTS (Deluxe)</td>
-            <td class="song-duration">3:18</td>
-          </tr>
-          <tr onclick="playSong('Starlight', 'Harry Styles', 'images/poplist.jpg', 'audio/starlight.mp3')">
-            <td>4</td>
-            <td class="song-title">Starlight</td>
-            <td class="song-artist">Harry Styles</td>
-            <td class="song-album">Fine Line 2</td>
-            <td class="song-duration">3:41</td>
-          </tr>
-          <tr onclick="playSong('Glow Up', 'Billie Eilish', 'images/poplist.jpg', 'audio/glow_up.mp3')">
-            <td>5</td>
-            <td class="song-title">Glow Up</td>
-            <td class="song-artist">Billie Eilish</td>
-            <td class="song-album">Happier Than Ever (2025)</td>
-            <td class="song-duration">3:29</td>
-          </tr>
-          <tr onclick="playSong('City Lights', 'Shawn Mendes', 'images/poplist.jpg', 'audio/city_lights.mp3')">
-            <td>6</td>
-            <td class="song-title">City Lights</td>
-            <td class="song-artist">Shawn Mendes</td>
-            <td class="song-album">Illuminate Again</td>
-            <td class="song-duration">3:27</td>
-          </tr>
-          <tr onclick="playSong('Electric Heart', 'Sabrina Carpenter', 'images/poplist.jpg', 'audio/electric_heart.mp3')">
-            <td>7</td>
-            <td class="song-title">Electric Heart</td>
-            <td class="song-artist">Sabrina Carpenter</td>
-            <td class="song-album">Short n’ Sweet</td>
-            <td class="song-duration">3:10</td>
-          </tr>
-          <tr onclick="playSong('Golden Hour', 'Taylor Swift', 'images/poplist.jpg', 'audio/golden_hour.mp3')">
-            <td>8</td>
-            <td class="song-title">Golden Hour</td>
-            <td class="song-artist">Taylor Swift</td>
-            <td class="song-album">Midnights 2AM</td>
-            <td class="song-duration">3:40</td>
-          </tr>
-          <tr onclick="playSong('Runaway', 'Charlie Puth', 'images/poplist.jpg', 'audio/runaway.mp3')">
-            <td>9</td>
-            <td class="song-title">Runaway</td>
-            <td class="song-artist">Charlie Puth</td>
-            <td class="song-album">CHARLIE 2025</td>
-            <td class="song-duration">3:20</td>
-          </tr>
-          <tr onclick="playSong('Viral', 'Ariana Grande', 'images/poplist.jpg', 'audio/viral.mp3')">
-            <td>10</td>
-            <td class="song-title">Viral</td>
-            <td class="song-artist">Ariana Grande</td>
-            <td class="song-album">eternal sunshine</td>
-            <td class="song-duration">3:18</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="audio-player" id="audio-player">
-      <img src="images/poplist.jpg" id="audio-img" alt="Now Playing">
-      <div class="audio-info">
-        <div class="audio-title" id="audio-title">Eclipse</div>
-        <div class="audio-artist" id="audio-artist">Dua Lipa</div>
-      </div>
-      <audio id="audio" controls style="width:200px;">
-        <source src="audio/eclipse.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-      </audio>
-    </div>
-  </div>
-  <script>
-    function playSong(title, artist, img, src) {
-      document.getElementById('audio-title').textContent = title;
-      document.getElementById('audio-artist').textContent = artist;
-      document.getElementById('audio-img').src = img;
-      var audio = document.getElementById('audio');
-      audio.src = src;
-      audio.play();
-    }
-  </script>
+    <script>
+        const playlist = [
+            { title: 'Eclipse', artist: 'Dua Lipa', album: 'Future Nostalgia 2', duration: '3:32', src: 'audio/Dua Lipa - Eclipse.mp3', img: 'images/pophits.webp' },
+            { title: 'Neon Dreams', artist: 'The Weeknd', album: 'After Hours Deluxe', duration: '3:45', src: 'audio/The Weeknd - Neon Dreams.mp3', img: 'images/pophits.webp' },
+            { title: 'Paradise', artist: 'Olivia Rodrigo', album: 'GUTS (Deluxe)', duration: '3:18', src: 'audio/Olivia Rodrigo - Paradise.mp3', img: 'images/pophits.webp' },
+            { title: 'Starlight', artist: 'Harry Styles', album: 'Fine Line 2', duration: '3:41', src: 'audio/Harry Styles - Starlight.mp3', img: 'images/pophits.webp' },
+            { title: 'Glow Up', artist: 'Billie Eilish', album: 'Happier Than Ever (2025)', duration: '3:29', src: 'audio/Billie Eilish - Glow Up.mp3', img: 'images/pophits.webp' },
+            { title: 'City Lights', artist: 'Shawn Mendes', album: 'Illuminate Again', duration: '3:27', src: 'audio/Shawn Mendes - City Lights.mp3', img: 'images/pophits.webp' },
+            { title: 'Electric Heart', artist: 'Sabrina Carpenter', album: 'Short n\' Sweet', duration: '3:10', src: 'audio/Sabrina Carpenter - Electric Heart.mp3', img: 'images/pophits.webp' },
+            { title: 'Golden Hour', artist: 'Taylor Swift', album: 'Midnights 2AM', duration: '3:40', src: 'audio/Taylor Swift - Golden Hour.mp3', img: 'images/pophits.webp' },
+            { title: 'Runaway', artist: 'Charlie Puth', album: 'CHARLIE 2025', duration: '3:20', src: 'audio/Charlie Puth - Runaway.mp3', img: 'images/pophits.webp' },
+            { title: 'Viral', artist: 'Ariana Grande', album: 'eternal sunshine', duration: '3:18', src: 'audio/Ariana Grande - Viral.mp3', img: 'images/pophits.webp' },
+        ];
+        
+        const audio = document.getElementById('audio');
+        const audioTitle = document.getElementById('audio-title');
+        const audioArtist = document.getElementById('audio-artist');
+        const audioImg = document.getElementById('audio-img');
+        
+        let currentSongIndex = -1;
+        
+        function updatePlayer(index) {
+            const song = playlist[index];
+            audioTitle.textContent = song.title;
+            audioArtist.textContent = song.artist;
+            audioImg.src = song.img;
+            audio.src = song.src;
+            currentSongIndex = index;
+        }
+
+        function playSong(index) {
+            updatePlayer(index);
+            audio.play();
+        }
+        
+        // Initial setup to display the first song
+        updatePlayer(0);
+        
+    </script>
 </body>
 </html>
