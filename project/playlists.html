@@ -1,179 +1,377 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chill Vibes Playlist - Musicify</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <style>
-    body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
-    .main-content { margin-left: 260px; padding: 36px 40px 40px 40px; min-height: 100vh; }
-    .playlist-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
-    .playlist-header img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; background: #333; }
-    .playlist-header .info h1 { margin: 0 0 10px 0; font-size: 2em; }
-    .playlist-header .info p { margin: 0; color: #bbb; }
-    .song-list { margin-top: 24px; }
-    .song-list table { width: 100%; border-collapse: collapse; }
-    .song-list th, .song-list td { padding: 12px 10px; text-align: left; }
-    .song-list th { color: #1db954; border-bottom: 1px solid #333; }
-    .song-list tr { cursor: pointer; }
-    .song-list tr:hover { background: #232323; }
-    .song-list td { border-bottom: 1px solid #232323; }
-    .song-title { color: #1db954; font-weight: 500; text-decoration: underline; }
-    .song-artist { color: #bbb; }
-    .song-album { color: #aaa; }
-    .song-duration { color: #888; }
-    @media (max-width: 900px) {
-      .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
-      .playlist-header img { width: 90px; height: 90px; }
-    }
-    @media (max-width: 600px) {
-      .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
-      .playlist-header { flex-direction: column; align-items: flex-start; }
-      .playlist-header img { width: 100px; height: 100px; }
-    }
-    a { color: #1db954; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chill Vibes Playlist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background: #121212;
+            color: #fff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 260px;
+            background: #000;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 0 0 0;
+        }
+        .sidebar .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: #1db954;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .sidebar nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 32px;
+            font-size: 1.1em;
+            border-radius: 6px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .sidebar nav a.active,
+        .sidebar nav a:hover {
+            background: #282828;
+            color: #1ed760;
+        }
+        .main-content {
+            margin-left: 260px;
+            padding: 0 40px 100px 40px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .playlist-header {
+            display: flex;
+            align-items: flex-end;
+            gap: 24px;
+            padding: 40px 0;
+            background: linear-gradient(to bottom, #1db954, #121212);
+            margin: 0 -40px;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        .playlist-header img {
+            width: 230px;
+            height: 230px;
+            object-fit: cover;
+            box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+        }
+        .playlist-details h1 {
+            font-size: 4em;
+            margin: 0;
+        }
+        .playlist-details p {
+            color: #ccc;
+            margin: 8px 0;
+        }
+        .playlist-details .creator {
+            font-weight: bold;
+            color: #fff;
+        }
+        .playlist-details .meta {
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 4px;
+        }
+        .playlist-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 24px;
+        }
+        .playlist-actions button {
+            background: #1db954;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .playlist-actions button:hover {
+            transform: scale(1.05);
+        }
+        .playlist-actions .icon-btn {
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 1.8em;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .playlist-actions .icon-btn:hover {
+            color: #fff;
+        }
+        .song-list {
+            margin-top: 24px;
+        }
+        .song-item {
+            display: grid;
+            grid-template-columns: 20px 1fr 150px 80px;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .song-item:hover {
+            background: #282828;
+        }
+        .song-item .song-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .song-item .song-info img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .song-item .song-info .title {
+            font-weight: bold;
+        }
+        .song-item .song-info .artist {
+            color: #aaa;
+        }
+        .song-item .album,
+        .song-item .duration {
+            color: #aaa;
+        }
+        .footer-player {
+            position: fixed;
+            left: 260px;
+            right: 0;
+            bottom: 0;
+            background: #222;
+            border-top: 1px solid #333;
+            display: flex;
+            align-items: center;
+            padding: 12px 32px;
+            z-index: 10;
+            min-height: 70px;
+        }
+        .footer-player img {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 18px;
+        }
+        .footer-player .track-info {
+            flex: 1;
+        }
+        .footer-player .track-title {
+            font-size: 1.08em;
+            color: #fff;
+            font-weight: 500;
+        }
+        .footer-player .track-artist {
+            font-size: 0.95em;
+            color: #bbb;
+        }
+        .footer-player .controls {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-left: 24px;
+        }
+        .footer-player .controls button {
+            background: none;
+            border: none;
+            color: #1db954;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .footer-player .controls button:hover {
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="logo">Musicify</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="playlists.html">Playlists</a>
-      <a href="moods.html">Moods</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="credits.html">Credits</a>
-    </nav>
-    <div class="recent">
-      <h3>Recently Played</h3>
-      <ul>
-        <li><a href="chillvibes.html" style="color:#fff;">Chill Vibes</a></li>
-        <li><a href="energetic.html" style="color:#fff;">Energetic Beats</a></li>
-        <li><a href="focus.html" style="color:#fff;">Focus & Study</a></li>
-      </ul>
+
+    <div class="sidebar">
+        <div class="logo">Musicify</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#">Playlists</a>
+            <a href="#">Moods</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
     </div>
-    <button class="create-btn">Create Playlist</button>
-  </div>
-  <div class="main-content">
-    <div class="playlist-header">
-      <a href="images/chill.jpg" target="_blank">
-        <img src="images/chill.jpg" alt="Chill Vibes Playlist Cover">
-      </a>
-      <div class="info">
-        <h1>Chill Vibes</h1>
-        <p>Relax and unwind with mellow tunes. Perfect for studying, late nights, or just chilling out.</p>
-        <p>20 tracks &bull; 1hr 15min</p>
-      </div>
+
+    <div class="main-content">
+        <div class="playlist-header">
+            <img src="images/chillvibes.webp" alt="Chill Vibes">
+            <div class="playlist-details">
+                <p>PLAYLIST</p>
+                <h1>MY PLAYLIST</h1>
+                <p>Relax and unwind with mellow tunes.</p>
+                <p class="meta"><span class="creator">Musicify</span> • 10 songs, 40 min</p>
+            </div>
+        </div>
+
+        <div class="playlist-actions">
+            <button id="play-pause-btn"><i class="fa fa-play"></i></button>
+            <button class="icon-btn"><i class="fa fa-heart"></i></button>
+            <button class="icon-btn"><i class="fa fa-ellipsis"></i></button>
+        </div>
+
+        <div class="song-list">
+            <div class="song-item" data-index="0" data-artist="Billie Eilish" data-title="BIRDS OF A FEATHER" data-img="images/chillvibes.webp" data-audio="audio/Billie Eilish - BIRDS OF A FEATHER.mp3">
+                <span>1</span>
+                <div class="song-info">
+                    <img src="images/chillvibes.webp" alt="BIRDS OF A FEATHER">
+                    <div>
+                        <div class="title">BIRDS OF A FEATHER</div>
+                        <div class="artist">Billie Eilish</div>
+                    </div>
+                </div>
+                <div class="album">HIT ME HARD AND SOFT</div>
+                <div class="duration">3:30</div>
+            </div>
+            <div class="song-item" data-index="1" data-artist="Daniel Caesar" data-title="Loose" data-img="images/chillvibes.webp" data-audio="audio/Daniel Caesar - Loose (Lyrics).mp3">
+                <span>2</span>
+                <div class="song-info">
+                    <img src="images/chillvibes.webp" alt="Loose">
+                    <div>
+                        <div class="title">Loose</div>
+                        <div class="artist">Daniel Caesar</div>
+                    </div>
+                </div>
+                <div class="album">Freudian</div>
+                <div class="duration">3:00</div>
+            </div>
+            <div class="song-item" data-index="2" data-artist="The Neighbourhood" data-title="Sweater Weather" data-img="images/chillvibes.webp" data-audio="audio/The Neighbourhood - Sweater Weather.mp3">
+                <span>3</span>
+                <div class="song-info">
+                    <img src="images/chillvibes.webp" alt="Sweater Weather">
+                    <div>
+                        <div class="title">Sweater Weather</div>
+                        <div class="artist">The Neighbourhood</div>
+                    </div>
+                </div>
+                <div class="album">I Love You.</div>
+                <div class="duration">4:00</div>
+            </div>
+            </div>
     </div>
-    <div class="song-list">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Song</th>
-            <th>Artist</th>
-            <th>Album</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr onclick="playSong('Sunset Lover', 'Petit Biscuit', 'images/chill.jpg', 'https://open.spotify.com/track/3U4isOIWM3VvDubwSI3y7a')">
-            <td>1</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/3U4isOIWM3VvDubwSI3y7a" target="_blank">Sunset Lover</a></td>
-            <td class="song-artist">Petit Biscuit</td>
-            <td class="song-album">Presence</td>
-            <td class="song-duration">3:58</td>
-          </tr>
-          <tr onclick="playSong('Weightless', 'Marconi Union', 'images/chill.jpg', 'https://open.spotify.com/track/6Qyc6fS4DsZjB2mRW9DsQs')">
-            <td>2</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/6Qyc6fS4DsZjB2mRW9DsQs" target="_blank">Weightless</a></td>
-            <td class="song-artist">Marconi Union</td>
-            <td class="song-album">Weightless</td>
-            <td class="song-duration">8:00</td>
-          </tr>
-          <tr onclick="playSong('Night Trouble', 'Petit Biscuit', 'images/chill.jpg', 'https://open.spotify.com/track/2nGFzvICaeEWjIrBrL2RAx')">
-            <td>3</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/2nGFzvICaeEWjIrBrL2RAx" target="_blank">Night Trouble</a></td>
-            <td class="song-artist">Petit Biscuit</td>
-            <td class="song-album">Petit Biscuit</td>
-            <td class="song-duration">4:48</td>
-          </tr>
-          <tr onclick="playSong('Coffee', 'beabadoobee', 'images/chill.jpg', 'https://open.spotify.com/track/2X485T9Z5Ly0xyaghN73ed')">
-            <td>4</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/2X485T9Z5Ly0xyaghN73ed" target="_blank">Coffee</a></td>
-            <td class="song-artist">beabadoobee</td>
-            <td class="song-album">Patched Up</td>
-            <td class="song-duration">2:17</td>
-          </tr>
-          <tr onclick="playSong('Lose It', 'Oh Wonder', 'images/chill.jpg', 'https://open.spotify.com/track/1pKYYY0dkg23sQQXi0Q5zN')">
-            <td>5</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/1pKYYY0dkg23sQQXi0Q5zN" target="_blank">Lose It</a></td>
-            <td class="song-artist">Oh Wonder</td>
-            <td class="song-album">Oh Wonder</td>
-            <td class="song-duration">3:49</td>
-          </tr>
-          <tr onclick="playSong('Home', 'Edward Sharpe & The Magnetic Zeros', 'images/chill.jpg', 'https://open.spotify.com/track/4y3OI86AEP6PQoDE6olYhO')">
-            <td>6</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/4y3OI86AEP6PQoDE6olYhO" target="_blank">Home</a></td>
-            <td class="song-artist">Edward Sharpe & The Magnetic Zeros</td>
-            <td class="song-album">Up From Below</td>
-            <td class="song-duration">5:06</td>
-          </tr>
-          <tr onclick="playSong('Bloom', 'The Paper Kites', 'images/chill.jpg', 'https://open.spotify.com/track/2nGFzvICaeEWjIrBrL2RAx')">
-            <td>7</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/2nGFzvICaeEWjIrBrL2RAx" target="_blank">Bloom</a></td>
-            <td class="song-artist">The Paper Kites</td>
-            <td class="song-album">Woodland</td>
-            <td class="song-duration">3:31</td>
-          </tr>
-          <tr onclick="playSong('Holocene', 'Bon Iver', 'images/chill.jpg', 'https://open.spotify.com/track/0W4Kpfp1w2xkY3PrV714B7')">
-            <td>8</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/0W4Kpfp1w2xkY3PrV714B7" target="_blank">Holocene</a></td>
-            <td class="song-artist">Bon Iver</td>
-            <td class="song-album">Bon Iver</td>
-            <td class="song-duration">5:36</td>
-          </tr>
-          <tr onclick="playSong('Rivers and Roads', 'The Head and the Heart', 'images/chill.jpg', 'https://open.spotify.com/track/2X485T9Z5Ly0xyaghN73ed')">
-            <td>9</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/2X485T9Z5Ly0xyaghN73ed" target="_blank">Rivers and Roads</a></td>
-            <td class="song-artist">The Head and the Heart</td>
-            <td class="song-album">The Head and the Heart</td>
-            <td class="song-duration">4:43</td>
-          </tr>
-          <tr onclick="playSong('Ophelia', 'The Lumineers', 'images/chill.jpg', 'https://open.spotify.com/track/0pqnGHJpmpxLKifKRmU6WP')">
-            <td>10</td>
-            <td class="song-title"><a href="https://open.spotify.com/track/0pqnGHJpmpxLKifKRmU6WP" target="_blank">Ophelia</a></td>
-            <td class="song-artist">The Lumineers</td>
-            <td class="song-album">Cleopatra</td>
-            <td class="song-duration">2:40</td>
-          </tr>
-        </tbody>
-      </table>
+
+    <div class="footer-player">
+        <img src="images/chillvibes.webp" alt="Now Playing" id="player-img">
+        <div class="track-info">
+            <div class="track-title" id="player-title"></div>
+            <div class="track-artist" id="player-artist"></div>
+        </div>
+        <div class="controls">
+            <button title="Previous" id="prev-btn"><i class="fa fa-step-backward"></i></button>
+            <button title="Play/Pause" id="footer-play-pause-btn"><i class="fa fa-play"></i></button>
+            <button title="Next" id="next-btn"><i class="fa fa-step-forward"></i></button>
+        </div>
     </div>
-  </div>
-  <div class="footer-player" id="footer-player">
-    <img src="images/chill.jpg" alt="Now Playing" id="player-img">
-    <div class="track-info">
-      <div class="track-title" id="player-title">Sunset Lover</div>
-      <div class="track-artist" id="player-artist">Petit Biscuit</div>
-    </div>
-    <div class="controls">
-      <button title="Previous"><i class="fa fa-step-backward"></i></button>
-      <button title="Play/Pause"><i class="fa fa-play"></i></button>
-      <button title="Next"><i class="fa fa-step-forward"></i></button>
-    </div>
-  </div>
-  <script>
-    function playSong(title, artist, img, url) {
-      document.getElementById('player-title').textContent = title;
-      document.getElementById('player-artist').textContent = artist;
-      document.getElementById('player-img').src = img;
-      window.open(url, '_blank');
-    }
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        const songs = [
+            { title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', img: 'images/chillvibes.webp', audio: 'audio/Billie Eilish - BIRDS OF A FEATHER.mp3' },
+            { title: 'Loose', artist: 'Daniel Caesar', img: 'images/chillvibes.webp', audio: 'audio/Daniel Caesar - Loose (Lyrics).mp3' },
+            { title: 'Sweater Weather', artist: 'The Neighbourhood', img: 'images/chillvibes.webp', audio: 'audio/The Neighbourhood - Sweater Weather.mp3' },
+            // Add more song objects here
+        ];
+
+        let currentSongIndex = 0;
+        const audioPlayer = new Audio();
+        let isPlaying = false;
+
+        const playerTitle = document.getElementById('player-title');
+        const playerArtist = document.getElementById('player-artist');
+        const playerImg = document.getElementById('player-img');
+        const playPauseBtn = document.getElementById('play-pause-btn'); // Main play button
+        const footerPlayPauseBtn = document.getElementById('footer-play-pause-btn'); // Footer play button
+
+        function loadSong(index) {
+            currentSongIndex = index;
+            const song = songs[currentSongIndex];
+            playerTitle.textContent = song.title;
+            playerArtist.textContent = song.artist;
+            playerImg.src = song.img;
+            audioPlayer.src = song.audio;
+        }
+
+        function playPause() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                playPauseBtn.innerHTML = '<i class="fa fa-play"></i>';
+                footerPlayPauseBtn.innerHTML = '<i class="fa fa-play"></i>';
+            } else {
+                audioPlayer.play();
+                playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+                footerPlayPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function playNext() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            loadSong(currentSongIndex);
+            audioPlayer.play();
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+            footerPlayPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+        }
+
+        function playPrev() {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            loadSong(currentSongIndex);
+            audioPlayer.play();
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+            footerPlayPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+        }
+
+        // Event listeners for song items
+        document.querySelectorAll('.song-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const index = parseInt(item.dataset.index);
+                loadSong(index);
+                audioPlayer.play();
+                isPlaying = true;
+                playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+                footerPlayPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+            });
+        });
+
+        // Event listeners for player controls
+        playPauseBtn.addEventListener('click', playPause);
+        footerPlayPauseBtn.addEventListener('click', playPause);
+        document.getElementById('next-btn').addEventListener('click', playNext);
+        document.getElementById('prev-btn').addEventListener('click', playPrev);
+        audioPlayer.addEventListener('ended', playNext);
+
+        // Initial load
+        loadSong(currentSongIndex);
+    </script>
 </body>
 </html>

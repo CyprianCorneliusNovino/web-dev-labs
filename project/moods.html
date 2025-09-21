@@ -1,333 +1,495 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Music Discovery - Playlists by Mood</title>
-  <meta name="description" content="Discover new music playlists by mood. Find the perfect soundtrack for every moment!">
-  <link rel="stylesheet" href="css/styles.css">
-  <style>
-    body {
-      background: #181818;
-      color: #fff;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    .sidebar {
-      width: 260px;
-      background: #121212;
-      height: 100vh;
-      position: fixed;
-      left: 0;
-      top: 0;
-      display: flex;
-      flex-direction: column;
-      padding: 24px 0 0 0;
-      box-shadow: 2px 0 12px rgba(0,0,0,0.2);
-    }
-    .sidebar .logo {
-      font-size: 2em;
-      font-weight: bold;
-      color: #1db954;
-      text-align: center;
-      margin-bottom: 32px;
-      letter-spacing: 2px;
-    }
-    .sidebar nav {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-    .sidebar nav a {
-      color: #fff;
-      text-decoration: none;
-      padding: 10px 32px;
-      font-size: 1.1em;
-      border-radius: 6px;
-      transition: background 0.2s, color 0.2s;
-    }
-    .sidebar nav a.active,
-    .sidebar nav a:hover {
-      background: #282828;
-      color: #1db954;
-    }
-    .sidebar .recent {
-      margin: 24px 0 0 0;
-      padding: 0 32px;
-    }
-    .sidebar .recent h3 {
-      font-size: 1em;
-      color: #bbb;
-      margin-bottom: 10px;
-      margin-top: 0;
-      font-weight: 400;
-    }
-    .sidebar .recent ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .sidebar .recent li {
-      margin-bottom: 10px;
-      color: #eee;
-      font-size: 0.98em;
-      opacity: 0.85;
-    }
-    .sidebar .create-btn {
-      margin: 24px 32px 0 32px;
-      background: #1db954;
-      color: #fff;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 0;
-      font-size: 1em;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .sidebar .create-btn:hover {
-      background: #1ed760;
-    }
-    .main-content {
-      margin-left: 260px;
-      padding: 36px 40px 40px 40px;
-      min-height: 100vh;
-      background: #181818;
-    }
-    .search-bar {
-      width: 100%;
-      max-width: 420px;
-      margin-bottom: 32px;
-      display: flex;
-      align-items: center;
-      background: #222;
-      border-radius: 24px;
-      padding: 8px 18px;
-    }
-    .search-bar input {
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 1.1em;
-      width: 100%;
-      outline: none;
-      margin-left: 10px;
-    }
-    .section-title {
-      font-size: 1.4em;
-      margin: 32px 0 18px 0;
-      color: #fff;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-    .playlist-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 28px;
-    }
-    .playlist-card {
-      background: #222;
-      border-radius: 14px;
-      padding: 18px 16px 16px 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: background 0.2s, transform 0.2s;
-      cursor: pointer;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      text-decoration: none;
-    }
-    .playlist-card:hover {
-      background: #282828;
-      transform: translateY(-6px) scale(1.03);
-    }
-    .playlist-card img {
-      width: 110px;
-      height: 110px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 14px;
-      background: #333;
-    }
-    .playlist-card .playlist-title {
-      font-size: 1.08em;
-      font-weight: 500;
-      color: #fff;
-      margin-bottom: 4px;
-      text-align: center;
-    }
-    .playlist-card .playlist-desc {
-      font-size: 0.97em;
-      color: #bbb;
-      text-align: center;
-      margin-bottom: 2px;
-    }
-    .playlist-card .playlist-meta {
-      font-size: 0.85em;
-      color: #888;
-      margin-top: 2px;
-    }
-    .footer-player {
-      position: fixed;
-      left: 260px;
-      right: 0;
-      bottom: 0;
-      background: #222;
-      border-top: 1px solid #333;
-      display: flex;
-      align-items: center;
-      padding: 12px 32px;
-      z-index: 10;
-      min-height: 70px;
-    }
-    .footer-player img {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      object-fit: cover;
-      margin-right: 18px;
-    }
-    .footer-player .track-info {
-      flex: 1;
-    }
-    .footer-player .track-title {
-      font-size: 1.08em;
-      color: #fff;
-      font-weight: 500;
-    }
-    .footer-player .track-artist {
-      font-size: 0.95em;
-      color: #bbb;
-    }
-    .footer-player .controls {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      margin-left: 24px;
-    }
-    .footer-player .controls button {
-      background: none;
-      border: none;
-      color: #1db954;
-      font-size: 1.3em;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-    .footer-player .controls button:hover {
-      color: #fff;
-    }
-    @media (max-width: 900px) {
-      .sidebar { width: 70px; }
-      .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
-      .footer-player { left: 70px; padding: 10px 8px; }
-      .sidebar .logo { font-size: 1.2em; }
-      .sidebar nav a { font-size: 0.9em; padding: 8px 10px; }
-      .sidebar .recent, .sidebar .create-btn { display: none; }
-    }
-    @media (max-width: 600px) {
-      .sidebar { display: none; }
-      .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
-      .footer-player { left: 0; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Discovery - Playlists by Mood</title>
+    <meta name="description" content="Discover new music playlists by mood. Find the perfect soundtrack for every moment!">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background: #181818;
+            color: #fff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 260px;
+            background: #121212;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 0 0 0;
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);
+            transition: width 0.3s;
+        }
+        .sidebar .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: #1db954;
+            text-align: center;
+            margin-bottom: 32px;
+            letter-spacing: 2px;
+        }
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        .sidebar nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 32px;
+            font-size: 1.1em;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .sidebar nav a.active,
+        .sidebar nav a:hover {
+            background: #282828;
+            color: #1ed760;
+        }
+        .sidebar .recent {
+            margin: 24px 0 0 0;
+            padding: 0 32px;
+        }
+        .sidebar .recent h3 {
+            font-size: 1em;
+            color: #bbb;
+            margin-bottom: 10px;
+            margin-top: 0;
+            font-weight: 400;
+        }
+        .sidebar .recent ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar .recent li {
+            margin-bottom: 10px;
+            color: #eee;
+            font-size: 0.98em;
+            opacity: 0.85;
+        }
+        .sidebar .create-btn {
+            margin: 24px 32px 0 32px;
+            background: #1db954;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 0;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .sidebar .create-btn:hover {
+            background: #1ed760;
+        }
+        .main-content {
+            margin-left: 260px;
+            padding: 36px 40px 40px 40px;
+            min-height: 100vh;
+            background: #181818;
+        }
+        .search-bar {
+            width: 100%;
+            max-width: 420px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            background: #222;
+            border-radius: 24px;
+            padding: 8px 18px;
+        }
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.1em;
+            width: 100%;
+            outline: none;
+            margin-left: 10px;
+        }
+        .section-title {
+            font-size: 1.4em;
+            margin: 32px 0 18px 0;
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .playlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 28px;
+        }
+        .playlist-card {
+            background: #222;
+            border-radius: 14px;
+            padding: 18px 16px 16px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background 0.2s, transform 0.2s;
+            cursor: pointer;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            text-decoration: none;
+        }
+        .playlist-card:hover {
+            background: #282828;
+            transform: translateY(-6px) scale(1.03);
+        }
+        .playlist-card img {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 14px;
+            background: #333;
+        }
+        .playlist-card .playlist-title {
+            font-size: 1.08em;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+        .playlist-card .playlist-desc {
+            font-size: 0.97em;
+            color: #bbb;
+            text-align: center;
+            margin-bottom: 2px;
+        }
+        .playlist-card .playlist-meta {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 2px;
+        }
+        .footer-player {
+            position: fixed;
+            left: 260px;
+            right: 0;
+            bottom: 0;
+            background: #222;
+            border-top: 1px solid #333;
+            display: flex;
+            align-items: center;
+            padding: 12px 32px;
+            z-index: 10;
+            min-height: 70px;
+        }
+        .footer-player img {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 18px;
+        }
+        .footer-player .track-info {
+            flex: 1;
+        }
+        .footer-player .track-title {
+            font-size: 1.08em;
+            color: #fff;
+            font-weight: 500;
+        }
+        .footer-player .track-artist {
+            font-size: 0.95em;
+            color: #bbb;
+        }
+        .footer-player .controls {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-left: 24px;
+        }
+        .footer-player .controls button {
+            background: none;
+            border: none;
+            color: #1db954;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .footer-player .controls button:hover {
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 70px;
+            }
+            .main-content {
+                margin-left: 70px;
+                padding: 24px 8px 80px 8px;
+            }
+            .footer-player {
+                left: 70px;
+                padding: 10px 8px;
+            }
+            .sidebar .logo {
+                font-size: 1.2em;
+            }
+            .sidebar nav a {
+                font-size: 0.9em;
+                padding: 8px 10px;
+            }
+            .sidebar .recent,
+            .sidebar .create-btn {
+                display: none;
+            }
+        }
+        @media (max-width: 600px) {
+            .sidebar {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 16px 2vw 80px 2vw;
+            }
+            .footer-player {
+                left: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="logo">Musicify</div>
-    <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="playlists.html">Playlists</a>
-      <a href="moods.html">Moods</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      
-    </nav>
-    <div class="recent">
-      <h3>Recently Played</h3>
-      <ul>
-        <li>Chill Vibes</li>
-        <li>Energetic Beats</li>
-        <li>Focus & Study</li>
-      </ul>
+    <div class="sidebar">
+        <div class="logo">Musicify</div>
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="moods.html">Moods</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="recent">
+            <h3>Recently Played</h3>
+            <ul>
+                <li>Chill Vibes</li>
+                <li>Energetic Beats</li>
+                <li>Focus & Study</li>
+            </ul>
+        </div>
+        <button class="create-btn">Create Playlist</button>
     </div>
-    <button class="create-btn">Create Playlist</button>
-  </div>
-  <div class="main-content">
-    <form class="search-bar">
-      <i class="fa fa-search" style="color:#bbb;"></i>
-      <input type="text" placeholder="Search playlists, moods, artists..." />
-    </form>
-    <div>
-      <div class="section-title">Mood Playlists</div>
-      <div class="playlist-grid">
-        <a href="chillvibes.html" class="playlist-card">
-          <img src="images/chill.jpg" alt="Chill Vibes">
-          <div class="playlist-title">Chill Vibes</div>
-          <div class="playlist-desc">Relax and unwind with mellow tunes.</div>
-          <div class="playlist-meta">20 tracks • 1hr 15min</div>
-        </a>
-        <div class="playlist-card">
-          <img src="images/energetic.jpg" alt="Energetic Beats">
-          <div class="playlist-title">Energetic Beats</div>
-          <div class="playlist-desc">Get pumped with high-energy music.</div>
-          <div class="playlist-meta">20 tracks • 1hr 17min</div>
+    <div class="main-content">
+        <form class="search-bar" id="search-form">
+            <i class="fa fa-search" style="color:#bbb;"></i>
+            <input type="text" placeholder="Search playlists, moods, artists..." id="search-input"/>
+        </form>
+        <div>
+            <div class="section-title">Mood Playlists</div>
+            <div class="playlist-grid" id="mood-playlists">
+                <a href="chillvibes.html" class="playlist-card">
+                    <img src="images/chillvibes.webp" alt="Chill Vibes">
+                    <div class="playlist-title">Chill Vibes</div>
+                    <div class="playlist-desc">Relax and unwind with mellow tunes.</div>
+                    <div class="playlist-meta">10 tracks • 40min</div>
+                </a>
+                <a href="energetic.html" class="playlist-card">
+                    <img src="images/energetic.webp" alt="Energetic Beats">
+                    <div class="playlist-title">Energetic Beats</div>
+                    <div class="playlist-desc">Get pumped with high-energy music.</div>
+                    <div class="playlist-meta">20 tracks • 1hr 17min</div>
+                </a>
+                <a href="focus.html" class="playlist-card">
+                    <img src="images/focus.webp" alt="Focus & Study">
+                    <div class="playlist-title">Focus & Study</div>
+                    <div class="playlist-desc">Stay productive with focused sounds.</div>
+                    <div class="playlist-meta">20 tracks • 1hr 30min</div>
+                </a>
+                <a href="rainyday.html" class="playlist-card">
+                    <img src="images/rainyday.webp" alt="Rainy Day Melodies">
+                    <div class="playlist-title">Rainy Day Melodies</div>
+                    <div class="playlist-desc">Perfect for cozy, rainy days.</div>
+                    <div class="playlist-meta">20 tracks • 1hr 23min</div>
+                </a>
+            </div>
+            <div class="section-title">New Releases</div>
+            <div class="playlist-grid" id="new-releases">
+                <a href="sadmix.html" class="playlist-card">
+                    <img src="images/sad mix.webp" alt="Sad Mix">
+                    <div class="playlist-title">Sad Mix</div>
+                    <div class="playlist-desc">Emotional tracks for rainy days.</div>
+                    <div class="playlist-meta">15 tracks • 55min</div>
+                </a>
+                <a href="daylist.html" class="playlist-card">
+                    <img src="images/daylist.webp" alt="Daylist">
+                    <div class="playlist-title">Daylist</div>
+                    <div class="playlist-desc">A playlist for every part of your day.</div>
+                    <div class="playlist-meta">18 tracks • 1hr 5min</div>
+                </a>
+                <a href="pophits.html" class="playlist-card">
+                    <img src="images/pophits.webp" alt="Pop Hits">
+                    <div class="playlist-title">Pop Hits</div>
+                    <div class="playlist-desc">Today's top pop songs.</div>
+                    <div class="playlist-meta">20 tracks • 1hr 10min</div>
+                </a>
+                <a href="rock.html" class="playlist-card">
+                    <img src="images/rock.webp" alt="Rock Essentials">
+                    <div class="playlist-title">Rock Essentials</div>
+                    <div class="playlist-desc">Classic and modern rock.</div>
+                    <div class="playlist-meta">22 tracks • 1hr 40min</div>
+                </a>
+            </div>
         </div>
-        <div class="playlist-card">
-          <img src="images/focus.jpg" alt="Focus & Study">
-          <div class="playlist-title">Focus & Study</div>
-          <div class="playlist-desc">Stay productive with focused sounds.</div>
-          <div class="playlist-meta">20 tracks • 1hr 30min</div>
-        </div>
-        <div class="playlist-card">
-          <img src="images/rainy.jpg" alt="Rainy Day Melodies">
-          <div class="playlist-title">Rainy Day Melodies</div>
-          <div class="playlist-desc">Perfect for cozy, rainy days.</div>
-          <div class="playlist-meta">20 tracks • 1hr 23min</div>
-        </div>
-      </div>
-      <div class="section-title">New Releases</div>
-      <div class="playlist-grid">
-        <div class="playlist-card">
-          <img src="images/new1.jpg" alt="New Release 1">
-          <div class="playlist-title">Fresh Finds</div>
-          <div class="playlist-desc">Discover the latest tracks.</div>
-          <div class="playlist-meta">15 tracks • 55min</div>
-        </div>
-        <div class="playlist-card">
-          <img src="images/new2.jpg" alt="New Release 2">
-          <div class="playlist-title">Indie Picks</div>
-          <div class="playlist-desc">Handpicked indie gems.</div>
-          <div class="playlist-meta">18 tracks • 1hr 5min</div>
-        </div>
-        <div class="playlist-card">
-          <img src="images/new3.jpg" alt="New Release 3">
-          <div class="playlist-title">Pop Hits</div>
-          <div class="playlist-desc">Today's top pop songs.</div>
-          <div class="playlist-meta">20 tracks • 1hr 10min</div>
-        </div>
-        <div class="playlist-card">
-          <img src="images/new4.jpg" alt="New Release 4">
-          <div class="playlist-title">Rock Essentials</div>
-          <div class="playlist-desc">Classic and modern rock.</div>
-          <div class="playlist-meta">22 tracks • 1hr 40min</div>
-        </div>
-      </div>
     </div>
-  </div>
-  <div class="footer-player">
-    <img src="images/chill.jpg" alt="Now Playing">
-    <div class="track-info">
-      <div class="track-title">Exaa Rod010</div>
-      <div class="track-artist">Twierpilotte</div>
+    <div class="footer-player">
+        <img src="images/chillvibes.webp" alt="Now Playing" id="player-img">
+        <div class="track-info">
+            <div class="track-title" id="player-title">Exaa Rod010</div>
+            <div class="track-artist" id="player-artist">Twierpilotte</div>
+        </div>
+        <div class="controls">
+            <button title="Previous" id="prev-btn"><i class="fa fa-step-backward"></i></button>
+            <button title="Play/Pause" id="play-pause-btn"><i class="fa fa-play"></i></button>
+            <button title="Next" id="next-btn"><i class="fa fa-step-forward"></i></button>
+        </div>
     </div>
-    <div class="controls">
-      <button title="Previous"><i class="fa fa-step-backward"></i></button>
-      <button title="Play/Pause"><i class="fa fa-play"></i></button>
-      <button title="Next"><i class="fa fa-step-forward"></i></button>
-    </div>
-  </div>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        // Data for all playlists and their songs
+        const allPlaylists = [
+            { id: 'chillvibes', title: 'Chill Vibes', artist: 'Exaa Rod010', desc: 'Relax and unwind with mellow tunes.', img: 'images/chillvibes.webp', songs: [
+                { title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', src: 'audio/Billie Eilish - BIRDS OF A FEATHER.mp3' },
+                { title: 'Loose', artist: 'Daniel Caesar', src: 'audio/Daniel Caesar - Loose (Lyrics).mp3' },
+                { title: 'Happier Than Ever', artist: 'Billie Eilish', src: 'audio/Billie Eilish - Happier Than Ever (Official Music Video).mp3' },
+                { title: 'drivers license', artist: 'Olivia Rodrigo', src: 'audio/Olivia Rodrigo - drivers license (Official Video).mp3' },
+                { title: 'lovely', artist: 'Billie Eilish, Khalid', src: 'audio/Billie Eilish - lovely (Lyrics) ft. Khalid.mp3' },
+                { title: 'When We Were Young', artist: 'Adele', src: 'audio/When We Were Young.mp3' },
+                { title: 'Someone You Loved', artist: 'Lewis Capaldi', src: 'audio/Lewis Capaldi - Someone You Loved.mp3' },
+                { title: 'Let Her Go', artist: 'Passenger', src: 'audio/Passenger - Let Her Go.mp3' },
+                { title: 'All I Want', artist: 'Kodaline', src: 'audio/Kodaline - All I Want.mp3' },
+                { title: 'Blinding Lights', artist: 'The Weeknd', src: 'audio/The Weeknd - Blinding Lights.mp3' },
+                // ... more songs from chillvibes playlist
+            ]},
+            { id: 'energetic', title: 'Energetic Beats', artist: 'Various Artists', desc: 'Get pumped with high-energy music.', img: 'images/energetic.webp', songs: [
+                { title: 'Blinding Lights', artist: 'The Weeknd', src: 'audio/The Weeknd - Blinding Lights.mp3' },
+                { title: 'Levitating', artist: 'Dua Lipa', src: 'audio/Dua Lipa - Levitating.mp3' },
+                // ... more songs from energetic playlist
+            ]},
+            { id: 'focus', title: 'Focus & Study', artist: 'Various Artists', desc: 'Stay productive with focused sounds.', img: 'images/focus.webp', songs: [
+                { title: 'Moonlight Sonata', artist: 'Beethoven', src: 'audio/Beethoven - Moonlight Sonata.mp3' },
+                { title: 'River Flows in You', artist: 'Yiruma', src: 'audio/Yiruma - River Flows in You.mp3' },
+                // ... more songs from focus playlist
+            ]},
+            { id: 'rainyday', title: 'Rainy Day Melodies', artist: 'Various Artists', desc: 'Perfect for cozy, rainy days.', img: 'images/rainyday.webp', songs: [
+                { title: 'Hello', artist: 'Adele', src: 'audio/Adele - Hello.mp3' },
+                { title: 'Hallelujah', artist: 'Leonard Cohen', src: 'audio/Leonard Cohen - Hallelujah.mp3' },
+                // ... more songs from rainyday playlist
+            ]},
+            { id: 'sadmix', title: 'Sad Mix', artist: 'Various Artists', desc: 'Emotional tracks for rainy days.', img: 'images/sad mix.webp', songs: [
+                { title: 'Let Her Go', artist: 'Passenger', src: 'audio/Passenger - Let Her Go.mp3' },
+                { title: 'All I Want', artist: 'Kodaline', src: 'audio/Kodaline - All I Want.mp3' },
+                // ... more songs from sadmix playlist
+            ]},
+            { id: 'daylist', title: 'Daylist', artist: 'Various Artists', desc: 'A playlist for every part of your day.', img: 'images/daylist.webp', songs: [
+                { title: 'Lovely Day', artist: 'Bill Withers', src: 'audio/Bill Withers - Lovely Day.mp3' },
+                { title: 'Here Comes the Sun', artist: 'The Beatles', src: 'audio/The Beatles - Here Comes the Sun.mp3' },
+                // ... more songs from daylist playlist
+            ]},
+            { id: 'pophits', title: 'Pop Hits', artist: 'Various Artists', desc: "Today's top pop songs.", img: 'images/pophits.webp', songs: [
+                { title: 'Shake It Off', artist: 'Taylor Swift', src: 'audio/Taylor Swift - Shake It Off.mp3' },
+                { title: 'Shape of You', artist: 'Ed Sheeran', src: 'audio/Ed Sheeran - Shape of You.mp3' },
+                // ... more songs from pophits playlist
+            ]},
+            { id: 'rock', title: 'Rock Essentials', artist: 'Various Artists', desc: 'Classic and modern rock.', img: 'images/rock.webp', songs: [
+                { title: 'Bohemian Rhapsody', artist: 'Queen', src: 'audio/Queen - Bohemian Rhapsody.mp3' },
+                { title: 'Stairway to Heaven', artist: 'Led Zeppelin', src: 'audio/Led Zeppelin - Stairway to Heaven.mp3' },
+                // ... more songs from rock playlist
+            ]},
+        ];
+
+        // Player State
+        const player = {
+            isPlaying: false,
+            currentSongIndex: -1,
+            currentPlaylist: allPlaylists[0].songs, // Start with Chill Vibes songs
+            titleEl: document.getElementById('player-title'),
+            artistEl: document.getElementById('player-artist'),
+            imgEl: document.getElementById('player-img'),
+            playPauseBtn: document.getElementById('play-pause-btn'),
+            audioEl: new Audio() // Create a new audio element
+        };
+
+        // Initialize Player with a default track
+        function initializePlayer() {
+            // Set default song from a known playlist
+            player.currentSongIndex = 0;
+            updatePlayerDisplay(player.currentPlaylist[0]);
+        }
+        
+        // Update the display for the player
+        function updatePlayerDisplay(song) {
+            player.titleEl.textContent = song.title;
+            player.artistEl.textContent = song.artist;
+            player.imgEl.src = allPlaylists.find(p => p.songs.includes(song)).img;
+            player.audioEl.src = song.src;
+        }
+
+        // Toggle Play/Pause
+        function togglePlayPause() {
+            if (player.isPlaying) {
+                player.audioEl.pause();
+                player.playPauseBtn.innerHTML = '<i class="fa fa-play"></i>';
+            } else {
+                player.audioEl.play();
+                player.playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+            }
+            player.isPlaying = !player.isPlaying;
+        }
+
+        // Play Next Song
+        function playNext() {
+            player.currentSongIndex = (player.currentSongIndex + 1) % player.currentPlaylist.length;
+            updatePlayerDisplay(player.currentPlaylist[player.currentSongIndex]);
+            player.audioEl.play();
+            player.isPlaying = true;
+            player.playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+        }
+
+        // Play Previous Song
+        function playPrev() {
+            player.currentSongIndex = (player.currentSongIndex - 1 + player.currentPlaylist.length) % player.currentPlaylist.length;
+            updatePlayerDisplay(player.currentPlaylist[player.currentSongIndex]);
+            player.audioEl.play();
+            player.isPlaying = true;
+            player.playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+        }
+
+        // Search Functionality
+        const searchInput = document.getElementById('search-input');
+        const playlistCards = document.querySelectorAll('.playlist-card');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            playlistCards.forEach(card => {
+                const title = card.querySelector('.playlist-title').textContent.toLowerCase();
+                const desc = card.querySelector('.playlist-desc').textContent.toLowerCase();
+                const isVisible = title.includes(searchTerm) || desc.includes(searchTerm);
+                card.style.display = isVisible ? 'flex' : 'none';
+            });
+        });
+
+        // Event Listeners for player controls
+        document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
+        document.getElementById('next-btn').addEventListener('click', playNext);
+        document.getElementById('prev-btn').addEventListener('click', playPrev);
+
+        // Auto-play next song when current one ends
+        player.audioEl.addEventListener('ended', playNext);
+
+        // Initial player setup
+        initializePlayer();
+    </script>
 </body>
 </html>

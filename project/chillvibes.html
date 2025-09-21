@@ -1,194 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rock Essentials 2025 Playlist - Musicify</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <style>
-    body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
-    .main-content { margin-left: 260px; padding: 36px 40px 40px 40px; min-height: 100vh; }
-    .playlist-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
-    .playlist-header img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; background: #333; }
-    .playlist-header .info h1 { margin: 0 0 10px 0; font-size: 2em; }
-    .playlist-header .info p { margin: 0; color: #bbb; }
-    .song-list { margin-top: 24px; }
-    .song-list table { width: 100%; border-collapse: collapse; }
-    .song-list th, .song-list td { padding: 12px 10px; text-align: left; }
-    .song-list th { color: #1db954; border-bottom: 1px solid #333; }
-    .song-list tr { cursor: pointer; }
-    .song-list tr:hover { background: #232323; }
-    .song-list td { border-bottom: 1px solid #232323; }
-    .song-title { color: #1db954; font-weight: 500; text-decoration: underline; }
-    .song-title a { color: inherit; text-decoration: inherit; display: block; width: 100%; height: 100%; }
-    .song-artist { color: #bbb; }
-    .song-album { color: #aaa; }
-    .song-duration { color: #888; }
-    .nav-buttons {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-    .nav-buttons a {
-      background: #1db954;
-      color: #fff;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 24px;
-      font-size: 1em;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.2s;
-      display: inline-block;
-    }
-    .nav-buttons a:hover {
-      background: #1ed760;
-      color: #181818;
-    }
-    .spotify-player {
-      margin-top: 36px;
-      display: none;
-      justify-content: center;
-      width: 100%;
-    }
-    .spotify-player.active {
-      display: flex;
-    }
-    #spotify-iframe {
-      width: 100vw;
-      min-width: 320px;
-      height: 100px;
-      border-radius: 18px;
-      margin: auto;
-      display: block;
-      background: #181818;
-      border: none;
-    }
-    @media (max-width: 900px) {
-      .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
-      .playlist-header img { width: 90px; height: 90px; }
-      #spotify-iframe { width: 98vw !important; }
-    }
-    @media (max-width: 600px) {
-      .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
-      .playlist-header { flex-direction: column; align-items: flex-start; }
-      .playlist-header img { width: 100px; height: 100px; }
-      #spotify-iframe { width: 98vw !important; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chill Vibes Playlist - Musicify</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+        .main-content { margin-left: 260px; padding: 36px 40px 40px 40px; min-height: 100vh; }
+        .playlist-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
+        .playlist-header img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; background: #333; }
+        .song-list { margin-top: 24px; }
+        .song-list table { width: 100%; border-collapse: collapse; }
+        .song-list th, .song-list td { padding: 12px 10px; text-align: left; }
+        .song-list th { color: #1db954; border-bottom: 1px solid #333; }
+        .song-list tr { cursor: pointer; }
+        .song-list tr:hover { background: #232323; }
+        .song-list td { border-bottom: 1px solid #232323; }
+        .song-title { color: #1db954; font-weight: 500; text-decoration: underline; }
+        .song-artist { color: #bbb; }
+        .song-album { color: #aaa; }
+        .song-duration { color: #888; }
+        .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 18px; margin-top: 32px; }
+        .audio-player img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+        .audio-info { flex: 1; }
+        .audio-title { font-size: 1.1em; color: #fff; }
+        .audio-artist { color: #bbb; font-size: 0.98em; }
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .nav-buttons a {
+            background: #1db954;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s;
+            display: inline-block;
+        }
+        .nav-buttons a:hover {
+            background: #1ed760;
+            color: #181818;
+        }
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .audio-controls button {
+            background: none;
+            border: none;
+            color: #1db954;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: color 0.2s;
+        }
+        .audio-controls button:hover {
+            color: #1ed760;
+        }
+        .audio-player audio {
+            width: 200px;
+        }
+        @media (max-width: 900px) {
+            .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
+            .playlist-header img { width: 90px; height: 90px; }
+        }
+        @media (max-width: 600px) {
+            .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
+            .playlist-header { flex-direction: column; align-items: flex-start; }
+            .playlist-header img { width: 100px; height: 100px; }
+        }
+    </style>
 </head>
 <body>
-  <div class="main-content">
-    <div class="nav-buttons">
-      <a href="index.html">Home</a>
-      <a href="javascript:history.back()">Back</a>
+    <div class="sidebar">
     </div>
-    <div class="playlist-header">
-      <img src="images/rock.jpg" alt="Rock Essentials 2025 Playlist Cover">
-      <div class="info">
-        <h1>Rock Essentials 2025</h1>
-        <p>The best modern rock tracks of 2025. From alternative anthems to stadium-shaking hits, this playlist keeps the energy high!</p>
-        <p>10 tracks &bull; 40min</p>
-      </div>
+    <div class="main-content">
+        <div class="nav-buttons">
+            <a href="index.html">Home</a>
+            <a href="javascript:history.back()">Back</a>
+        </div>
+        <div class="playlist-header">
+            <img src="images/chillvibes.webp" alt="Chill Vibes Playlist Cover">
+            <div class="info">
+                <h1>Chill Vibes Mix</h1>
+                <p>Unwind and relax with a curated selection of laid-back beats, lo-fi grooves, and soothing melodies. Featuring some of the newest and most anticipated tracks of 2025.</p>
+                <p>10 tracks &bull; 40min</p>
+            </div>
+        </div>
+        <div class="song-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Song</th>
+                        <th>Artist</th>
+                        <th>Album</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr onclick="playSong(0)">
+                <td>1</td>
+              <td class="song-title">BIRDS OF A FEATHER</td>
+              <td class="song-artist">Billie Eilish</td>
+              <td class="song-album">Single</td>
+              <td class="song-duration">2:56</td>
+              </tr>
+              <tr onclick="playSong(1)">
+              <td>2</td>
+              <td class="song-title">Loose</td>
+              <td class="song-artist">Daniel Caesar</td>
+              <td class="song-album">Single</td>
+              <td class="song-duration">3:06</td>
+              </tr>
+              <tr onclick="playSong(2)">
+              <td>3</td>
+              <td class="song-title">A Little More</td>
+              <td class="song-artist">Ed Sheeran</td>
+              <td class="song-album">Play</td>
+              <td class="song-duration">3:12</td>
+              </tr>
+              <tr onclick="playSong(3)">
+              <td>4</td>
+              <td class="song-title">Ivy</td>
+              <td class="song-artist">Frank Ocean</td>
+              <td class="song-album">Blond</td>
+              <td class="song-duration">3:56</td>
+              </tr>
+              <tr onclick="playSong(4)">
+              <td>5</td>
+              <td class="song-title">Pink + White</td>
+              <td class="song-artist">Frank Ocean</td>
+              <td class="song-album">Blond</td>
+              <td class="song-duration">3:04</td>
+              </tr>
+              <tr onclick="playSong(5)">
+              <td>6</td>
+              <td class="song-title">Super Far</td>
+              <td class="song-artist">LANY</td>
+              <td class="song-album">LANY</td>
+              <td class="song-duration">3:00</td>
+              </tr>
+              <tr onclick="playSong(6)">
+              <td>7</td>
+              <td class="song-title">Thick And Thin</td>
+              <td class="song-artist">LANY</td>
+              <td class="song-album">LANY</td>
+              <td class="song-duration">3:25</td>
+              </tr>
+              <tr onclick="playSong(7)">
+              <td>8</td>
+              <td class="song-title">Good Days</td>
+              <td class="song-artist">SZA</td>
+              <td class="song-album">Single</td>
+              <td class="song-duration">4:21</td>
+              </tr>
+              <tr onclick="playSong(8)">
+              <td>9</td>
+              <td class="song-title">YKWIM</td>
+              <td class="song-artist">Yot Club</td>
+              <td class="song-album">Single</td>
+              <td class="song-duration">3:47</td>
+              </tr>
+              <tr onclick="playSong(9)">
+              <td>10</td>
+              <td class="song-title">Passionfruit</td>
+              <td class="song-artist">Drake</td>
+              <td class="song-album">More Life</td>
+              <td class="song-duration">3:19</td> 
+              </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="audio-player" id="audio-player">
+            <img src="images/chill_vibes.webp" id="audio-img" alt="Now Playing">
+            <div class="audio-info">
+                <div class="audio-title" id="audio-title"></div>
+                <div class="audio-artist" id="audio-artist"></div>
+            </div>
+            <div class="audio-controls">
+                <button id="add-to-playlist"><i class="fa-solid fa-plus"></i></button>
+                <button id="back-btn"><i class="fa-solid fa-backward-step"></i></button>
+                <button id="play-pause-btn"><i class="fa-solid fa-play"></i></button>
+                <button id="next-btn"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+            <audio id="audio" style="width:200px;" preload="auto"></audio>
+        </div>
     </div>
-    <div class="song-list">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Song</th>
-            <th>Artist</th>
-            <th>Album</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr onclick="showSpotify('5nC5F5n3hE2l6w6zJc8Q7z')">
-            <td>1</td>
-            <td class="song-title"><a href="#">Echoes</a></td>
-            <td class="song-artist">Imagine Dragons</td>
-            <td class="song-album">Origins II</td>
-            <td class="song-duration">3:44</td>
-          </tr>
-          <tr onclick="showSpotify('7KXjTSCq5nL1LoYtL7XAwS')">
-            <td>2</td>
-            <td class="song-title"><a href="#">Midnight Drive</a></td>
-            <td class="song-artist">Foo Fighters</td>
-            <td class="song-album">Concrete & Gold 2025</td>
-            <td class="song-duration">4:01</td>
-          </tr>
-          <tr onclick="showSpotify('3AJwUDP919kvQ9QcozQPxg')">
-            <td>3</td>
-            <td class="song-title"><a href="#">Wildfire</a></td>
-            <td class="song-artist">Paramore</td>
-            <td class="song-album">This Is Why (Deluxe)</td>
-            <td class="song-duration">3:27</td>
-          </tr>
-          <tr onclick="showSpotify('1rqqCSm0Qe4I9rUvWncaom')">
-            <td>4</td>
-            <td class="song-title"><a href="#">Rise Again</a></td>
-            <td class="song-artist">The Killers</td>
-            <td class="song-album">Imploding the Mirage II</td>
-            <td class="song-duration">3:58</td>
-          </tr>
-          <tr onclick="showSpotify('2Fxmhks0bxGSBdJ92vM42m')">
-            <td>5</td>
-            <td class="song-title"><a href="#">Breakout</a></td>
-            <td class="song-artist">Royal Blood</td>
-            <td class="song-album">Back to the Water Below</td>
-            <td class="song-duration">3:12</td>
-          </tr>
-          <tr onclick="showSpotify('6QgjcU0zLnzq5OrUoSZ3OK')">
-            <td>6</td>
-            <td class="song-title"><a href="#">Electric Heart</a></td>
-            <td class="song-artist">Måneskin</td>
-            <td class="song-album">Rush! (Are U Coming?)</td>
-            <td class="song-duration">3:35</td>
-          </tr>
-          <tr onclick="showSpotify('0VjIjW4GlUZAMYd2vXMi3b')">
-            <td>7</td>
-            <td class="song-title"><a href="#">Gravity</a></td>
-            <td class="song-artist">Nothing But Thieves</td>
-            <td class="song-album">Dead Club City</td>
-            <td class="song-duration">4:09</td>
-          </tr>
-          <tr onclick="showSpotify('3H7ihDc1dqLriiWXwsc2po')">
-            <td>8</td>
-            <td class="song-title"><a href="#">Rebel Soul</a></td>
-            <td class="song-artist">Greta Van Fleet</td>
-            <td class="song-album">Starcatcher</td>
-            <td class="song-duration">3:49</td>
-          </tr>
-          <tr onclick="showSpotify('2nLtzopw4rPReszdYBJU6h')">
-            <td>9</td>
-            <td class="song-title"><a href="#">Burning Bridges</a></td>
-            <td class="song-artist">Bring Me The Horizon</td>
-            <td class="song-album">POST HUMAN: NeX GEn</td>
-            <td class="song-duration">3:55</td>
-          </tr>
-          <tr onclick="showSpotify('6habFhsOp2NvshLv26DqMb')">
-            <td>10</td>
-            <td class="song-title"><a href="#">Thunder Road</a></td>
-            <td class="song-artist">The Strokes</td>
-            <td class="song-album">The New Abnormal II</td>
-            <td class="song-duration">4:20</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="spotify-player" id="spotify-player">
-      <iframe id="spotify-iframe" src="" width="100vw" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media" style="min-width:320px; max-width:100vw; margin:auto; display:block; border-radius:18px; background:#181818;"></iframe>
-    </div>
-  </div>
-  <script>
-    function showSpotify(trackId) {
-      var player = document.getElementById('spotify-player');
-      var iframe = document.getElementById('spotify-iframe');
-      iframe.src = "https://open.spotify.com/embed/track/" + trackId + "?utm_source=generator&theme=0";
-      player.classList.add('active');
-      player.scrollIntoView({behavior: "smooth"});
-    }
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        const playlist =[
+            { title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', album: 'Single', duration: '2:56', src: 'audio/Billie Eilish - BIRDS OF A FEATHER.mp3', img: 'images/Billie-Eilish-BIRDS-OF-A-FEATHER-billboard-1548.webp' },
+            { title: 'Loose', artist: 'Daniel Caesar', album: 'Single', duration: '3:06', src: 'audio/Daniel Caesar - Loose (Lyrics).mp3', img: 'images/loose.webp' },
+            { title: 'A Little More', artist: 'Ed Sheeran', album: 'Play', duration: '3:12', src: 'audio/Ed Sheeran - A Little More (Official Music Video).mp3', img: 'images/Little more.webp' },
+            { title: 'Ivy', artist: 'Frank Ocean', album: 'Blond', duration: '3:56', src: 'audio/Frank Ocean - Ivy.mp3', img: 'images/ivy.PNG' },
+            { title: 'Pink + White', artist: 'Frank Ocean', album: 'Blond', duration: '3:04', src: 'audio/Frank Ocean - Pink White.mp3', img: 'images/ivy.PNG' },
+            { title: 'Super Far', artist: 'LANY', album: 'LANY', duration: '3:00', src: 'audio/LANY - Super Far (Official Video).mp3', img: 'images/super far.webp' },
+            { title: 'Thick And Thin', artist: 'LANY', album: 'LANY', duration: '3:25', src: 'audio/LANY - Thick And Thin (Lyrics).mp3', img: 'images/super far.webp' },
+            { title: 'Good Days', artist: 'SZA', album: 'Single', duration: '4:21', src: 'audio/SZA - Good Days (Official Video).mp3', img: 'images/gooddays.webp' },
+            { title: 'YKWIM', artist: 'Yot Club', album: 'Single', duration: '3:47', src: 'audio/Yot Club - YKWIM_ (Official Visualizer).mp3', img: 'images/YKWIM.webp' },
+            { title: 'Passionfruit', artist: 'Drake', album: 'More Life', duration: '3:19', src: 'audio/Passionfruit.mp3', img: 'images/passionfruit.webp' },
+        ];
+        
+        const audio = document.getElementById('audio');
+        const audioTitle = document.getElementById('audio-title');
+        const audioArtist = document.getElementById('audio-artist');
+        const audioImg = document.getElementById('audio-img');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const backBtn = document.getElementById('back-btn');
+        const addToPlaylistBtn = document.getElementById('add-to-playlist');
+        
+        let currentSongIndex = -1;
+        
+        function updatePlayer(index) {
+            const song = playlist[index];
+            audioTitle.textContent = song.title;
+            audioArtist.textContent = song.artist;
+            audioImg.src = song.img;
+            audio.src = song.src;
+            currentSongIndex = index;
+        }
+
+        function playSong(index) {
+            updatePlayer(index);
+            audio.play();
+            playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        }
+        
+        function togglePlayPause() {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            } else {
+                audio.pause();
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            }
+        }
+        
+        function playNextSong() {
+            let nextIndex = (currentSongIndex + 1) % playlist.length;
+            playSong(nextIndex);
+        }
+
+        function playPreviousSong() {
+            let prevIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            playSong(prevIndex);
+        }
+
+        function addToPlaylist() {
+            alert('This song has been added to your queue!');
+        }
+
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        nextBtn.addEventListener('click', playNextSong);
+        backBtn.addEventListener('click', playPreviousSong);
+        addToPlaylistBtn.addEventListener('click', addToPlaylist);
+
+      
+        updatePlayer(0);
+        
+    </script>
 </body>
 </html>

@@ -6,6 +6,7 @@
     <title>Music Discovery - Playlists by Mood</title>
     <meta name="description" content="Discover new music playlists by mood. Find the perfect soundtrack for every moment!">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body {
             background: #181818;
@@ -281,60 +282,60 @@
         <button class="create-btn">Create Playlist</button>
     </div>
     <div class="main-content">
-        <form class="search-bar">
+        <form class="search-bar" id="search-form">
             <i class="fa fa-search" style="color:#bbb;"></i>
-            <input type="text" placeholder="Search playlists, moods, artists..." />
+            <input type="text" placeholder="Search playlists, moods, artists..." id="search-input"/>
         </form>
         <div>
             <div class="section-title">Mood Playlists</div>
-            <div class="playlist-grid">
+            <div class="playlist-grid" id="mood-playlists">
                 <a href="chillvibes.html" class="playlist-card">
-                    <img src="images/chill.jpg" alt="Chill Vibes">
+                    <img src="images/chillvibes.webp" alt="Chill Vibes">
                     <div class="playlist-title">Chill Vibes</div>
                     <div class="playlist-desc">Relax and unwind with mellow tunes.</div>
-                    <div class="playlist-meta">20 tracks • 1hr 15min</div>
+                    <div class="playlist-meta">10 tracks • 40min</div>
                 </a>
                 <a href="energetic.html" class="playlist-card">
-                    <img src="images/energetic.jpg" alt="Energetic Beats">
+                    <img src="images/energetic.webp" alt="Energetic Beats">
                     <div class="playlist-title">Energetic Beats</div>
                     <div class="playlist-desc">Get pumped with high-energy music.</div>
                     <div class="playlist-meta">20 tracks • 1hr 17min</div>
                 </a>
                 <a href="focus.html" class="playlist-card">
-                    <img src="images/focus.jpg" alt="Focus & Study">
+                    <img src="images/focus.webp" alt="Focus & Study">
                     <div class="playlist-title">Focus & Study</div>
                     <div class="playlist-desc">Stay productive with focused sounds.</div>
                     <div class="playlist-meta">20 tracks • 1hr 30min</div>
                 </a>
-                <a href="rainy.html" class="playlist-card">
-                    <img src="images/rainy.jpg" alt="Rainy Day Melodies">
+                <a href="rainyday.html" class="playlist-card">
+                    <img src="images/rainyday.webp" alt="Rainy Day Melodies">
                     <div class="playlist-title">Rainy Day Melodies</div>
                     <div class="playlist-desc">Perfect for cozy, rainy days.</div>
                     <div class="playlist-meta">20 tracks • 1hr 23min</div>
                 </a>
             </div>
             <div class="section-title">New Releases</div>
-            <div class="playlist-grid">
+            <div class="playlist-grid" id="new-releases">
                 <a href="sadmix.html" class="playlist-card">
-                    <img src="images/new1.jpg" alt="Sad Mix">
+                    <img src="images/sad mix.webp" alt="Sad Mix">
                     <div class="playlist-title">Sad Mix</div>
                     <div class="playlist-desc">Emotional tracks for rainy days.</div>
                     <div class="playlist-meta">15 tracks • 55min</div>
                 </a>
                 <a href="daylist.html" class="playlist-card">
-                    <img src="images/new2.jpg" alt="Daylist">
+                    <img src="images/daylist.webp" alt="Daylist">
                     <div class="playlist-title">Daylist</div>
                     <div class="playlist-desc">A playlist for every part of your day.</div>
                     <div class="playlist-meta">18 tracks • 1hr 5min</div>
                 </a>
                 <a href="pophits.html" class="playlist-card">
-                    <img src="images/new3.jpg" alt="Pop Hits">
+                    <img src="images/pophits.webp" alt="Pop Hits">
                     <div class="playlist-title">Pop Hits</div>
                     <div class="playlist-desc">Today's top pop songs.</div>
                     <div class="playlist-meta">20 tracks • 1hr 10min</div>
                 </a>
                 <a href="rock.html" class="playlist-card">
-                    <img src="images/new4.jpg" alt="Rock Essentials">
+                    <img src="images/rock.webp" alt="Rock Essentials">
                     <div class="playlist-title">Rock Essentials</div>
                     <div class="playlist-desc">Classic and modern rock.</div>
                     <div class="playlist-meta">22 tracks • 1hr 40min</div>
@@ -343,17 +344,152 @@
         </div>
     </div>
     <div class="footer-player">
-        <img src="images/chill.jpg" alt="Now Playing">
+        <img src="images/chillvibes.webp" alt="Now Playing" id="player-img">
         <div class="track-info">
-            <div class="track-title">Exaa Rod010</div>
-            <div class="track-artist">Twierpilotte</div>
+            <div class="track-title" id="player-title">Exaa Rod010</div>
+            <div class="track-artist" id="player-artist">Twierpilotte</div>
         </div>
         <div class="controls">
-            <button title="Previous"><i class="fa fa-step-backward"></i></button>
-            <button title="Play/Pause"><i class="fa fa-play"></i></button>
-            <button title="Next"><i class="fa fa-step-forward"></i></button>
+            <button title="Previous" id="prev-btn"><i class="fa fa-step-backward"></i></button>
+            <button title="Play/Pause" id="play-pause-btn"><i class="fa fa-play"></i></button>
+            <button title="Next" id="next-btn"><i class="fa fa-step-forward"></i></button>
         </div>
     </div>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        // Data for all playlists and their songs
+        const allPlaylists = [
+            { id: 'chillvibes', title: 'Chill Vibes', artist: 'Exaa Rod010', desc: 'Relax and unwind with mellow tunes.', img: 'images/chillvibes.webp', songs: [
+                { title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', src: 'audio/Billie Eilish - BIRDS OF A FEATHER.mp3' },
+                { title: 'Loose', artist: 'Daniel Caesar', src: 'audio/Daniel Caesar - Loose (Lyrics).mp3' },
+                { title: 'Happier Than Ever', artist: 'Billie Eilish', src: 'audio/Billie Eilish - Happier Than Ever (Official Music Video).mp3' },
+                { title: 'drivers license', artist: 'Olivia Rodrigo', src: 'audio/Olivia Rodrigo - drivers license (Official Video).mp3' },
+                { title: 'lovely', artist: 'Billie Eilish, Khalid', src: 'audio/Billie Eilish - lovely (Lyrics) ft. Khalid.mp3' },
+                { title: 'When We Were Young', artist: 'Adele', src: 'audio/When We Were Young.mp3' },
+                { title: 'Someone You Loved', artist: 'Lewis Capaldi', src: 'audio/Lewis Capaldi - Someone You Loved.mp3' },
+                { title: 'Let Her Go', artist: 'Passenger', src: 'audio/Passenger - Let Her Go.mp3' },
+                { title: 'All I Want', artist: 'Kodaline', src: 'audio/Kodaline - All I Want.mp3' },
+                { title: 'Blinding Lights', artist: 'The Weeknd', src: 'audio/The Weeknd - Blinding Lights.mp3' },
+                // ... more songs from chillvibes playlist
+            ]},
+            { id: 'energetic', title: 'Energetic Beats', artist: 'Various Artists', desc: 'Get pumped with high-energy music.', img: 'images/energetic.webp', songs: [
+                { title: 'Blinding Lights', artist: 'The Weeknd', src: 'audio/The Weeknd - Blinding Lights.mp3' },
+                { title: 'Levitating', artist: 'Dua Lipa', src: 'audio/Dua Lipa - Levitating.mp3' },
+                // ... more songs from energetic playlist
+            ]},
+            { id: 'focus', title: 'Focus & Study', artist: 'Various Artists', desc: 'Stay productive with focused sounds.', img: 'images/focus.webp', songs: [
+                { title: 'Moonlight Sonata', artist: 'Beethoven', src: 'audio/Beethoven - Moonlight Sonata.mp3' },
+                { title: 'River Flows in You', artist: 'Yiruma', src: 'audio/Yiruma - River Flows in You.mp3' },
+                // ... more songs from focus playlist
+            ]},
+            { id: 'rainyday', title: 'Rainy Day Melodies', artist: 'Various Artists', desc: 'Perfect for cozy, rainy days.', img: 'images/rainyday.webp', songs: [
+                { title: 'Hello', artist: 'Adele', src: 'audio/Adele - Hello.mp3' },
+                { title: 'Hallelujah', artist: 'Leonard Cohen', src: 'audio/Leonard Cohen - Hallelujah.mp3' },
+                // ... more songs from rainyday playlist
+            ]},
+            { id: 'sadmix', title: 'Sad Mix', artist: 'Various Artists', desc: 'Emotional tracks for rainy days.', img: 'images/sad mix.webp', songs: [
+                { title: 'Let Her Go', artist: 'Passenger', src: 'audio/Passenger - Let Her Go.mp3' },
+                { title: 'All I Want', artist: 'Kodaline', src: 'audio/Kodaline - All I Want.mp3' },
+                // ... more songs from sadmix playlist
+            ]},
+            { id: 'daylist', title: 'Daylist', artist: 'Various Artists', desc: 'A playlist for every part of your day.', img: 'images/daylist.webp', songs: [
+                { title: 'Lovely Day', artist: 'Bill Withers', src: 'audio/Bill Withers - Lovely Day.mp3' },
+                { title: 'Here Comes the Sun', artist: 'The Beatles', src: 'audio/The Beatles - Here Comes the Sun.mp3' },
+                // ... more songs from daylist playlist
+            ]},
+            { id: 'pophits', title: 'Pop Hits', artist: 'Various Artists', desc: "Today's top pop songs.", img: 'images/pophits.webp', songs: [
+                { title: 'Shake It Off', artist: 'Taylor Swift', src: 'audio/Taylor Swift - Shake It Off.mp3' },
+                { title: 'Shape of You', artist: 'Ed Sheeran', src: 'audio/Ed Sheeran - Shape of You.mp3' },
+                // ... more songs from pophits playlist
+            ]},
+            { id: 'rock', title: 'Rock Essentials', artist: 'Various Artists', desc: 'Classic and modern rock.', img: 'images/rock.webp', songs: [
+                { title: 'Bohemian Rhapsody', artist: 'Queen', src: 'audio/Queen - Bohemian Rhapsody.mp3' },
+                { title: 'Stairway to Heaven', artist: 'Led Zeppelin', src: 'audio/Led Zeppelin - Stairway to Heaven.mp3' },
+                // ... more songs from rock playlist
+            ]},
+        ];
+
+        // Player State
+        const player = {
+            isPlaying: false,
+            currentSongIndex: -1,
+            currentPlaylist: allPlaylists[0].songs, // Start with Chill Vibes songs
+            titleEl: document.getElementById('player-title'),
+            artistEl: document.getElementById('player-artist'),
+            imgEl: document.getElementById('player-img'),
+            playPauseBtn: document.getElementById('play-pause-btn'),
+            audioEl: new Audio() // Create a new audio element
+        };
+
+        // Initialize Player with a default track
+        function initializePlayer() {
+            // Set default song from a known playlist
+            player.currentSongIndex = 0;
+            updatePlayerDisplay(player.currentPlaylist[0]);
+        }
+        
+        // Update the display for the player
+        function updatePlayerDisplay(song) {
+            player.titleEl.textContent = song.title;
+            player.artistEl.textContent = song.artist;
+            player.imgEl.src = allPlaylists.find(p => p.songs.includes(song)).img;
+            player.audioEl.src = song.src;
+        }
+
+        // Toggle Play/Pause
+        function togglePlayPause() {
+            if (player.isPlaying) {
+                player.audioEl.pause();
+                player.playPauseBtn.innerHTML = '<i class="fa fa-play"></i>';
+            } else {
+                player.audioEl.play();
+                player.playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+            }
+            player.isPlaying = !player.isPlaying;
+        }
+
+        // Play Next Song
+        function playNext() {
+            player.currentSongIndex = (player.currentSongIndex + 1) % player.currentPlaylist.length;
+            updatePlayerDisplay(player.currentPlaylist[player.currentSongIndex]);
+            player.audioEl.play();
+            player.isPlaying = true;
+            player.playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+        }
+
+        // Play Previous Song
+        function playPrev() {
+            player.currentSongIndex = (player.currentSongIndex - 1 + player.currentPlaylist.length) % player.currentPlaylist.length;
+            updatePlayerDisplay(player.currentPlaylist[player.currentSongIndex]);
+            player.audioEl.play();
+            player.isPlaying = true;
+            player.playPauseBtn.innerHTML = '<i class="fa fa-pause"></i>';
+        }
+
+        // Search Functionality
+        const searchInput = document.getElementById('search-input');
+        const playlistCards = document.querySelectorAll('.playlist-card');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            playlistCards.forEach(card => {
+                const title = card.querySelector('.playlist-title').textContent.toLowerCase();
+                const desc = card.querySelector('.playlist-desc').textContent.toLowerCase();
+                const isVisible = title.includes(searchTerm) || desc.includes(searchTerm);
+                card.style.display = isVisible ? 'flex' : 'none';
+            });
+        });
+
+        // Event Listeners for player controls
+        document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
+        document.getElementById('next-btn').addEventListener('click', playNext);
+        document.getElementById('prev-btn').addEventListener('click', playPrev);
+
+        // Auto-play next song when current one ends
+        player.audioEl.addEventListener('ended', playNext);
+
+        // Initial player setup
+        initializePlayer();
+    </script>
 </body>
 </html>

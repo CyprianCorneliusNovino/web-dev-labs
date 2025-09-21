@@ -1,186 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daylist Playlist - Musicify</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <style>
-    body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
-    .main-content { margin-left: 260px; padding: 36px 40px 40px 40px; min-height: 100vh; }
-    .playlist-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
-    .playlist-header img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; background: #333; }
-    .song-list { margin-top: 24px; }
-    .song-list table { width: 100%; border-collapse: collapse; }
-    .song-list th, .song-list td { padding: 12px 10px; text-align: left; }
-    .song-list th { color: #1db954; border-bottom: 1px solid #333; }
-    .song-list tr { cursor: pointer; }
-    .song-list tr:hover { background: #232323; }
-    .song-list td { border-bottom: 1px solid #232323; }
-    .song-title { color: #1db954; font-weight: 500; text-decoration: underline; }
-    .song-artist { color: #bbb; }
-    .song-album { color: #aaa; }
-    .song-duration { color: #888; }
-    .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 18px; margin-top: 32px; }
-    .audio-player img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
-    .audio-info { flex: 1; }
-    .audio-title { font-size: 1.1em; color: #fff; }
-    .audio-artist { color: #bbb; font-size: 0.98em; }
-    .nav-buttons {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .nav-buttons a {
-      background: #1db954;
-      color: #fff;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 24px;
-      font-size: 1em;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.2s;
-      display: inline-block;
-    }
-    .nav-buttons a:hover {
-      background: #1ed760;
-      color: #181818;
-    }
-    @media (max-width: 900px) {
-      .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
-      .playlist-header img { width: 90px; height: 90px; }
-    }
-    @media (max-width: 600px) {
-      .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
-      .playlist-header { flex-direction: column; align-items: flex-start; }
-      .playlist-header img { width: 100px; height: 100px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sad Mix Playlist - Musicify</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+        .main-content { margin-left: 260px; padding: 36px 40px 40px 40px; min-height: 100vh; }
+        .playlist-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
+        .playlist-header img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; background: #333; }
+        .song-list { margin-top: 24px; }
+        .song-list table { width: 100%; border-collapse: collapse; }
+        .song-list th, .song-list td { padding: 12px 10px; text-align: left; }
+        .song-list th { color: #1db954; border-bottom: 1px solid #333; }
+        .song-list tr { cursor: pointer; }
+        .song-list tr:hover { background: #232323; }
+        .song-list td { border-bottom: 1px solid #232323; }
+        .song-title { color: #1db954; font-weight: 500; text-decoration: underline; }
+        .song-artist { color: #bbb; }
+        .song-album { color: #aaa; }
+        .song-duration { color: #888; }
+        .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 18px; margin-top: 32px; }
+        .audio-player img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+        .audio-info { flex: 1; }
+        .audio-title { font-size: 1.1em; color: #fff; }
+        .audio-artist { color: #bbb; font-size: 0.98em; }
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .nav-buttons a {
+            background: #1db954;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s;
+            display: inline-block;
+        }
+        .nav-buttons a:hover {
+            background: #1ed760;
+            color: #181818;
+        }
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .audio-controls button {
+            background: none;
+            border: none;
+            color: #1db954;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: color 0.2s;
+        }
+        .audio-controls button:hover {
+            color: #1ed760;
+        }
+        .audio-player audio {
+            width: 200px;
+        }
+        @media (max-width: 900px) {
+            .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
+            .playlist-header img { width: 90px; height: 90px; }
+        }
+        @media (max-width: 600px) {
+            .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
+            .playlist-header { flex-direction: column; align-items: flex-start; }
+            .playlist-header img { width: 100px; height: 100px; }
+        }
+    </style>
 </head>
 <body>
-  <div class="sidebar">
-    <!-- Optional: Add sidebar content here -->
-  </div>
-  <div class="main-content">
-    <div class="nav-buttons">
-      <a href="index.html">Home</a>
-      <a href="javascript:history.back()">Back</a>
+    <div class="sidebar">
     </div>
-    <div class="playlist-header">
-      <img src="images/daylist.jpg" alt="Daylist Playlist Cover">
-      <div class="info">
-        <h1>Daylist</h1>
-        <p>Soundtrack your whole day! From morning motivation to evening chill, this playlist has a song for every moment.</p>
-        <p>10 tracks &bull; 38min</p>
-      </div>
+    <div class="main-content">
+        <div class="nav-buttons">
+            <a href="index.html">Home</a>
+            <a href="javascript:history.back()">Back</a>
+        </div>
+        <div class="playlist-header">
+            <img src="images/sad mix.webp" alt ="Sad Mix Playlist Cover">
+            <div class="info">
+                <h1>Sad Mix</h1>
+                <p>Let your feelings flow with these emotional tracks. Perfect for rainy days, late nights, or whenever you need to let it out.</p>
+                <p>10 tracks &bull; 45min</p>
+            </div>
+        </div>
+        <div class="song-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Song</th>
+                        <th>Artist</th>
+                        <th>Album</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr onclick="playSong(1)">
+                        <td>2</td>
+                        <td class="song-title">Let Her Go</td>
+                        <td class="song-artist">Passenger</td>
+                        <td class="song-album">All the Little Lights</td>
+                        <td class="song-duration">4:14</td>
+                    </tr>
+                    <tr onclick="playSong(2)">
+                        <td>3</td>
+                        <td class="song-title">Sleep Well</td>
+                        <td class="song-artist">D4VID</td>
+                        <td class="song-album">Single</td>
+                        <td class="song-duration">3:30</td>
+                    </tr>
+                    <tr onclick="playSong(3)">
+                        <td>4</td>    
+                        <td class="song-title">All I Want</td>
+                        <td class="song-artist">Kodaline</td>
+                        <td class="song-album">In a Perfect World</td>
+                        <td class="song-duration">5:19</td>
+                    </tr>
+                    <tr onclick="playSong(4)">
+                        <td>5</td>
+                        <td class="song-title">Die for you</td>
+                        <td class="song-artist">Joji</td>
+                        <td class="song-album">Nectar</td>
+                        <td class="song-duration">4:17</td>
+                    </tr>
+                    <tr onclick="playSong(5)">
+                        <td>6</td>
+                        <td class="song-title">Slow Dancing in the Dark</td>
+                        <td class="song-artist">Joji</td>
+                        <td class="song-album">Nectar</td>
+                        <td class="song-duration">4:21</td>
+                    </tr>
+                    <tr onclick="playSong(6)">
+                        <td>7</td>
+                        <td class="song-title">Romantic Homicide</td>
+                        <td class="song-artist">d4vd</td>
+                        <td class="song-album">Single</td>
+                        <td class="song-duration">2:57</td>
+                    </tr>
+                    <tr onclick="playSong(7)">
+                        <td>8</td>
+                        <td class="song-title">Always</td>
+                        <td class="song-artist">Daniel Caesar</td>
+                        <td class="song-album">Single</td>
+                        <td class="song-duration">3:58</td>
+                    </tr>
+                    <tr onclick="playSong(8)">
+                        <td>9</td>
+                        <td class="song-title">Logic</td>
+                        <td class="song-artist">Khalid.</td>
+                        <td class="song-album">Single</td>
+                        <td class="song-duration">6:59</td>
+                    </tr>
+                    <tr onclick="playSong(9)">
+                                    <td>10</td>
+                            <td class="song-title">Passionfruit</td>
+                            <td class="song-artist">Drake</td>
+                            <td class="song-album">More Life</td>
+                            <td class="song-duration">3:19</td> 
+                            </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="audio-player" id="audio-player">
+            <img src="images/sad mix.webp" id="audio-img" alt="Now Playing">
+            <div class="audio-info">
+                <div class="audio-title" id="audio-title"></div>
+                <div class="audio-artist" id="audio-artist"></div>
+            </div>
+            <div class="audio-controls">
+                <button id="add-to-playlist"><i class="fa-solid fa-plus"></i></button>
+                <button id="back-btn"><i class="fa-solid fa-backward-step"></i></button>
+                <button id="play-pause-btn"><i class="fa-solid fa-play"></i></button>
+                <button id="next-btn"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+            <audio id="audio" style="width:200px;" preload="auto"></audio>
+        </div>
     </div>
-    <div class="song-list">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Song</th>
-            <th>Artist</th>
-            <th>Album</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr onclick="playSong('Good Morning', 'Max Frost', 'images/daylist.jpg', 'audio/good_morning.mp3')">
-            <td>1</td>
-            <td class="song-title">Good Morning</td>
-            <td class="song-artist">Max Frost</td>
-            <td class="song-album">Gold Rush</td>
-            <td class="song-duration">3:38</td>
-          </tr>
-          <tr onclick="playSong('Walking on Sunshine', 'Katrina & The Waves', 'images/daylist.jpg', 'audio/walking_on_sunshine.mp3')">
-            <td>2</td>
-            <td class="song-title">Walking on Sunshine</td>
-            <td class="song-artist">Katrina & The Waves</td>
-            <td class="song-album">Katrina & The Waves</td>
-            <td class="song-duration">3:43</td>
-          </tr>
-          <tr onclick="playSong('Pocketful of Sunshine', 'Natasha Bedingfield', 'images/daylist.jpg', 'audio/pocketful_of_sunshine.mp3')">
-            <td>3</td>
-            <td class="song-title">Pocketful of Sunshine</td>
-            <td class="song-artist">Natasha Bedingfield</td>
-            <td class="song-album">Pocketful of Sunshine</td>
-            <td class="song-duration">3:23</td>
-          </tr>
-          <tr onclick="playSong('On Top of the World', 'Imagine Dragons', 'images/daylist.jpg', 'audio/on_top_of_the_world.mp3')">
-            <td>4</td>
-            <td class="song-title">On Top of the World</td>
-            <td class="song-artist">Imagine Dragons</td>
-            <td class="song-album">Night Visions</td>
-            <td class="song-duration">3:12</td>
-          </tr>
-          <tr onclick="playSong('Happy', 'Pharrell Williams', 'images/daylist.jpg', 'audio/happy.mp3')">
-            <td>5</td>
-            <td class="song-title">Happy</td>
-            <td class="song-artist">Pharrell Williams</td>
-            <td class="song-album">G I R L</td>
-            <td class="song-duration">3:53</td>
-          </tr>
-          <tr onclick="playSong('Sunflower', 'Post Malone & Swae Lee', 'images/daylist.jpg', 'audio/sunflower.mp3')">
-            <td>6</td>
-            <td class="song-title">Sunflower</td>
-            <td class="song-artist">Post Malone & Swae Lee</td>
-            <td class="song-album">Spider-Man: Into the Spider-Verse</td>
-            <td class="song-duration">2:38</td>
-          </tr>
-          <tr onclick="playSong('Budapest', 'George Ezra', 'images/daylist.jpg', 'audio/budapest.mp3')">
-            <td>7</td>
-            <td class="song-title">Budapest</td>
-            <td class="song-artist">George Ezra</td>
-            <td class="song-album">Wanted on Voyage</td>
-            <td class="song-duration">3:20</td>
-          </tr>
-          <tr onclick="playSong('Put Your Records On', 'Corinne Bailey Rae', 'images/daylist.jpg', 'audio/put_your_records_on.mp3')">
-            <td>8</td>
-            <td class="song-title">Put Your Records On</td>
-            <td class="song-artist">Corinne Bailey Rae</td>
-            <td class="song-album">Corinne Bailey Rae</td>
-            <td class="song-duration">3:35</td>
-          </tr>
-          <tr onclick="playSong('Sunday Best', 'Surfaces', 'images/daylist.jpg', 'audio/sunday_best.mp3')">
-            <td>9</td>
-            <td class="song-title">Sunday Best</td>
-            <td class="song-artist">Surfaces</td>
-            <td class="song-album">Where the Light Is</td>
-            <td class="song-duration">2:39</td>
-          </tr>
-          <tr onclick="playSong('Good Life', 'OneRepublic', 'images/daylist.jpg', 'audio/good_life.mp3')">
-            <td>10</td>
-            <td class="song-title">Good Life</td>
-            <td class="song-artist">OneRepublic</td>
-            <td class="song-album">Waking Up</td>
-            <td class="song-duration">4:13</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="audio-player" id="audio-player">
-      <img src="images/daylist.jpg" id="audio-img" alt="Now Playing">
-      <div class="audio-info">
-        <div class="audio-title" id="audio-title">Good Morning</div>
-        <div class="audio-artist" id="audio-artist">Max Frost</div>
-      </div>
-      <audio id="audio" controls style="width:200px;">
-        <source src="audio/good_morning.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-      </audio>
-    </div>
-  </div>
-  <script>
-    function playSong(title, artist, img, src) {
-      document.getElementById('audio-title').textContent = title;
-      document.getElementById('audio-artist').textContent = artist;
-      document.getElementById('audio-img').src = img;
-      var audio = document.getElementById('audio');
-      audio.src = src;
-      audio.play();
-    }
-  </script>
+    <script>
+        const playlist = [
+            { title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', album: 'Single', duration: '2:56', src: 'audio/Billie Eilish - BIRDS OF A FEATHER.mp3', img: 'images/Billie-Eilish-BIRDS-OF-A-FEATHER-billboard-1548.webp' },
+            { title: 'Let Her Go', artist: 'Passenger', img: 'images/Lethergo.webp', src: 'audio/Passenger  Let Her Go.mp3' },
+            { title: 'Sleep Well', artist: 'D4VID', img: 'images/sleepwell.webp', src: 'audio/d4vd - Sleep Well [Official Music Video].mp3' },
+            { title: 'All I Want', artist: 'Kodaline', img: 'images/alliwant.webp', src: 'audio/Kodaline - All I Want (Part 1).mp3' },
+            { title: 'Die for you', artist: 'Joji', img: 'images/sad mix.webp', src: 'audio/Joji - Die For You.mp3' },
+            { title: 'Passionfruit', artist: 'Drake', album: 'More Life', duration: '3:19', src: 'audio/Passionfruit.mp3', img: 'images/passionfruit.webp' },
+            { title: 'Slow Dancing in the Dark', artist: 'Joji', img: 'images/slowdancing.webp', src: 'audio/Joji - Slow Dancing In The Dark (Lyrics).mp3' },
+            { title: 'Romantic Homicide', artist: 'd4vd', img: 'images/romantic.webp', src: 'audio/d4vd - Romantic Homicide.mp3' },
+            { title: 'Always', artist: 'Daniel Caesar', img: 'images/always.PNG', src: 'audio/Daniel Caesar - Always (Official Audio).mp3' },
+            { title: 'Logic', artist: 'Khalid.', img: 'images/logic.webp', src: 'audio/Logic - 1-800-273-8255 ft. Alessia Cara, Khalid (Official Video).mp3' },
+            { title: 'back to be friends', artist: 'sombr', img: 'images/backtobefriends.webp', src: 'audio/sombr - back to friends (official audio).mp3' },
+        ];
+        
+        const audio = document.getElementById('audio');
+        const audioTitle = document.getElementById('audio-title');
+        const audioArtist = document.getElementById('audio-artist');
+        const audioImg = document.getElementById('audio-img');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const backBtn = document.getElementById('back-btn');
+        const addToPlaylistBtn = document.getElementById('add-to-playlist');
+        
+        let currentSongIndex = -1;
+        
+        function updatePlayer(index) {
+            const song = playlist[index];
+            audioTitle.textContent = song.title;
+            audioArtist.textContent = song.artist;
+            audioImg.src = song.img;
+            audio.src = song.src;
+            currentSongIndex = index;
+        }
+
+        function playSong(index) {
+            updatePlayer(index);
+            audio.play();
+            playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        }
+        
+        function togglePlayPause() {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            } else {
+                audio.pause();
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            }
+        }
+        
+        function playNextSong() {
+            let nextIndex = (currentSongIndex + 1) % playlist.length;
+            playSong(nextIndex);
+        }
+
+        function playPreviousSong() {
+            let prevIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            playSong(prevIndex);
+        }
+
+        function addToPlaylist() {
+            alert('This song has been added to your queue!');
+        }
+
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        nextBtn.addEventListener('click', playNextSong);
+        backBtn.addEventListener('click', playPreviousSong);
+        addToPlaylistBtn.addEventListener('click', addToPlaylist);
+
+        // Play the first song automatically
+        updatePlayer(0);
+        
+    </script>
 </body>
 </html>

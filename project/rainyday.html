@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RainyDayPlaylist - Musicify</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
+        .main-content { margin-left: 260px; padding: 36px 40px 40px 40px; min-height: 100vh; }
+        .playlist-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
+        .playlist-header img { width: 140px; height: 140px; border-radius: 16px; object-fit: cover; background: #333; }
+        .song-list { margin-top: 24px; }
+        .song-list table { width: 100%; border-collapse: collapse; }
+        .song-list th, .song-list td { padding: 12px 10px; text-align: left; }
+        .song-list th { color: #1db954; border-bottom: 1px solid #333; }
+        .song-list tr { cursor: pointer; }
+        .song-list tr:hover { background: #232323; }
+        .song-list td { border-bottom: 1px solid #232323; }
+        .song-title { color: #1db954; font-weight: 500; text-decoration: underline; }
+        .song-artist { color: #bbb; }
+        .song-album { color: #aaa; }
+        .song-duration { color: #888; }
+        .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 18px; margin-top: 32px; }
+        .audio-player img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+        .audio-info { flex: 1; }
+        .audio-title { font-size: 1.1em; color: #fff; }
+        .audio-artist { color: #bbb; font-size: 0.98em; }
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .nav-buttons a {
+            background: #1db954;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s;
+            display: inline-block;
+        }
+        .nav-buttons a:hover {
+            background: #1ed760;
+            color: #181818;
+        }
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .audio-controls button {
+            background: none;
+            border: none;
+            color: #1db954;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: color 0.2s;
+        }
+        .audio-controls button:hover {
+            color: #1ed760;
+        }
+        .audio-player audio {
+            width: 200px;
+        }
+        @media (max-width: 900px) {
+            .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
+            .playlist-header img { width: 90px; height: 90px; }
+        }
+        @media (max-width: 600px) {
+            .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
+            .playlist-header { flex-direction: column; align-items: flex-start; }
+            .playlist-header img { width: 100px; height: 100px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+    </div>
+    <div class="main-content">
+        <div class="nav-buttons">
+            <a href="index.html">Home</a>
+            <a href="javascript:history.back()">Back</a>
+        </div>
+        <div class="playlist-header">
+            <img src="images/rainyday.webp" alt="Rainy Days Playlist Cover">
+            <div class="info">
+                <h1>Rainy Days Mix</h1>
+                <p>Curl up with a blanket and these melancholic, modern tracks. Perfect for a cozy day in or watching the rain fall.</p>
+                <p>5 tracks &bull; 17min</p>
+            </div>
+        </div>
+        <div class="song-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Song</th>
+                        <th>Artist</th>
+                        <th>Album</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr onclick="playSong(0)">
+                        <td>1</td>
+                        <td class="song-title">Happier Than Ever</td>
+                        <td class="song-artist">Billie Eilish</td>
+                        <td class="song-album">Happier Than Ever</td>
+                        <td class="song-duration">4:58</td>
+                    </tr>
+                    <tr onclick="playSong(1)">
+                        <td>2</td>
+                        <td class="song-title">drivers license</td>
+                        <td class="song-artist">Olivia Rodrigo</td>
+                        <td class="song-album">SOUR</td>
+                        <td class="song-duration">4:02</td>
+                    </tr>
+                    <tr onclick="playSong(2)">
+                        <td>3</td>
+                        <td class="song-title">lovely</td>
+                        <td class="song-artist">Billie Eilish, Khalid</td>
+                        <td class="song-album">lovely</td>
+                        <td class="song-duration">3:20</td>
+                    </tr>
+                    <tr onclick="playSong(3)">
+                        <td>4</td>
+                        <td class="song-title">When We Were Young</td>
+                        <td class="song-artist">Adele</td>
+                        <td class="song-album">25</td>
+                        <td class="song-duration">4:50</td>
+                    </tr>
+                    <tr onclick="playSong(4)">
+                        <td>5</td>
+                        <td class="song-title">Someone You Loved</td>
+                        <td class="song-artist">Lewis Capaldi</td>
+                        <td class="song-album">Divinely Uninspired to a Hellish Extent</td>
+                        <td class="song-duration">3:02</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="audio-player" id="audio-player">
+            <img src="images/placeholder.webp" id="audio-img" alt="Now Playing">
+            <div class="audio-info">
+                <div class="audio-title" id="audio-title"></div>
+                <div class="audio-artist" id="audio-artist"></div>
+            </div>
+            <div class="audio-controls">
+                <button id="add-to-playlist"><i class="fa-solid fa-plus"></i></button>
+                <button id="back-btn"><i class="fa-solid fa-backward-step"></i></button>
+                <button id="play-pause-btn"><i class="fa-solid fa-play"></i></button>
+                <button id="next-btn"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+            <audio id="audio" style="width:200px;" preload="auto"></audio>
+        </div>
+    </div>
+    <script>
+        const playlist = [
+            { 
+                title: 'Happier Than Ever', 
+                artist: 'Billie Eilish', 
+                album: 'Happier Than Ever', 
+                duration: '4:58', 
+                src: 'audio/Billie Eilish - Happier Than Ever (Official Music Video).mp3', 
+                img: 'images/Happier Than Ever.webp' 
+            },
+            { 
+                title: 'drivers license', 
+                artist: 'Olivia Rodrigo', 
+                album: 'SOUR', 
+                duration: '4:02', 
+                src: 'audio/Olivia Rodrigo - drivers license (Official Video).mp3', 
+                img: 'images/drivers license.webp' 
+            },
+            { 
+                title: 'lovely', 
+                artist: 'Billie Eilish, Khalid', 
+                album: 'lovely', 
+                duration: '3:20', 
+                src: 'audio/Billie Eilish - lovely (Lyrics) ft. Khalid.mp3', 
+                img: 'images/lovely.webp' 
+            },
+            { 
+                title: 'When We Were Young', 
+                artist: 'Adele', 
+                album: '25', 
+                duration: '4:50', 
+                src: 'audio/When We Were Young.mp3', 
+                img: 'images/When We Were Young.webp' 
+            },
+            { 
+                title: 'Someone You Loved', 
+                artist: 'Lewis Capaldi', 
+                album: 'Divinely Uninspired to a Hellish Extent', 
+                duration: '3:02', 
+                src: 'audio/Lewis Capaldi - Someone You Loved.mp3', 
+                img: 'images/Lewis_Capaldi_-_Someone_You_Loved.webp' 
+            }
+        ];
+        
+        const audio = document.getElementById('audio');
+        const audioTitle = document.getElementById('audio-title');
+        const audioArtist = document.getElementById('audio-artist');
+        const audioImg = document.getElementById('audio-img');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const backBtn = document.getElementById('back-btn');
+        const addToPlaylistBtn = document.getElementById('add-to-playlist');
+        
+        let currentSongIndex = -1;
+        
+        function updatePlayer(index) {
+            const song = playlist[index];
+            audioTitle.textContent = song.title;
+            audioArtist.textContent = song.artist;
+            audioImg.src = song.img;
+            audio.src = song.src;
+            currentSongIndex = index;
+        }
+
+        function playSong(index) {
+            updatePlayer(index);
+            audio.play();
+            playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        }
+        
+        function togglePlayPause() {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            } else {
+                audio.pause();
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            }
+        }
+        
+        function playNextSong() {
+            let nextIndex = (currentSongIndex + 1) % playlist.length;
+            playSong(nextIndex);
+        }
+
+        function playPreviousSong() {
+            let prevIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            playSong(prevIndex);
+        }
+
+        function addToPlaylist() {
+            alert('This song has been added to your queue!');
+        }
+
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        nextBtn.addEventListener('click', playNextSong);
+        backBtn.addEventListener('click', playPreviousSong);
+        addToPlaylistBtn.addEventListener('click', addToPlaylist);
+
+        updatePlayer(0);
+        
+    </script>
+</body>
+</html>
