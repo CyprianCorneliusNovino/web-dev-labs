@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chill Vibes Playlist - Musicify</title>
-    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
@@ -14,59 +13,153 @@
         .song-list { margin-top: 24px; }
         .song-list table { width: 100%; border-collapse: collapse; }
         .song-list th, .song-list td { padding: 12px 10px; text-align: left; }
-        .song-list th { color: #1db954; border-bottom: 1px solid #333; }
+        .song-list th { color: #aaa; border-bottom: 1px solid #333; }
         .song-list tr { cursor: pointer; }
         .song-list tr:hover { background: #232323; }
         .song-list td { border-bottom: 1px solid #232323; }
-        .song-title { color: #1db954; font-weight: 500; text-decoration: underline; }
+        .song-title { color: #fff; font-weight: 500; text-decoration: none; }
         .song-artist { color: #bbb; }
         .song-album { color: #aaa; }
         .song-duration { color: #888; }
-        .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 18px; margin-top: 32px; }
-        .audio-player img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
-        .audio-info { flex: 1; }
-        .audio-title { font-size: 1.1em; color: #fff; }
-        .audio-artist { color: #bbb; font-size: 0.98em; }
+        
+        /* Audio Player Styling */
+        .audio-player-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #222;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+        .audio-player-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .audio-player-info img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .audio-player-info .info {
+            display: flex;
+            flex-direction: column;
+        }
+        .audio-player-info .info .audio-title {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .audio-player-info .info .audio-artist {
+            color: #bbb;
+            font-size: 0.9em;
+        }
+        .audio-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+        .audio-controls .main-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .audio-controls .main-controls button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .audio-controls .main-controls button:hover {
+            color: #1db954;
+        }
+        .audio-controls .play-pause-btn {
+            font-size: 2em;
+        }
+        .audio-controls .timeline {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .audio-controls .timeline span {
+            font-size: 0.8em;
+            color: #aaa;
+        }
+        .audio-controls .timeline input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: #535353;
+            border-radius: 2px;
+            cursor: pointer;
+            outline: none;
+        }
+        .audio-controls .timeline input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #1db954;
+            border-radius: 50%;
+        }
+        .volume-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .volume-controls i {
+            font-size: 1em;
+            color: #fff;
+        }
+        .volume-controls input[type="range"] {
+            -webkit-appearance: none;
+            width: 100px;
+            height: 4px;
+            background: #535353;
+            border-radius: 2px;
+            cursor: pointer;
+            outline: none;
+        }
+        .volume-controls input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
         .nav-buttons {
             display: flex;
             gap: 12px;
             margin-bottom: 24px;
         }
         .nav-buttons a {
-            background: #1db954;
+            background: #222;
             color: #fff;
-            border: none;
+            border: 1px solid #444;
             border-radius: 20px;
             padding: 10px 24px;
             font-size: 1em;
             font-weight: bold;
             text-decoration: none;
-            transition: background 0.2s;
+            transition: background 0.2s, border-color 0.2s;
             display: inline-block;
         }
         .nav-buttons a:hover {
-            background: #1ed760;
-            color: #181818;
+            background: #333;
+            border-color: #666;
         }
-        .audio-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .audio-controls button {
-            background: none;
-            border: none;
-            color: #1db954;
-            cursor: pointer;
-            font-size: 1.5em;
-            transition: color 0.2s;
-        }
-        .audio-controls button:hover {
-            color: #1ed760;
-        }
-        .audio-player audio {
-            width: 200px;
-        }
+        
         @media (max-width: 900px) {
             .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
             .playlist-header img { width: 90px; height: 90px; }
@@ -75,6 +168,8 @@
             .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
             .playlist-header { flex-direction: column; align-items: flex-start; }
             .playlist-header img { width: 100px; height: 100px; }
+            .audio-player-container { flex-direction: column; padding: 12px; }
+            .audio-controls .timeline { width: 90%; }
         }
     </style>
 </head>
@@ -83,8 +178,8 @@
     </div>
     <div class="main-content">
         <div class="nav-buttons">
-            <a href="index.html">Home</a>
-            <a href="javascript:history.back()">Back</a>
+            <a href="index.html" style="background: #1db954; border-color: #1db954;">Home</a>
+            <a href="javascript:history.back()" style="background: #222; border-color: #444;">Back</a>
         </div>
         <div class="playlist-header">
             <img src="images/chillvibes.webp" alt="Chill Vibes Playlist Cover">
@@ -106,96 +201,113 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr onclick="playSong(0)">
-                <td>1</td>
-              <td class="song-title">BIRDS OF A FEATHER</td>
-              <td class="song-artist">Billie Eilish</td>
-              <td class="song-album">Single</td>
-              <td class="song-duration">2:56</td>
-              </tr>
-              <tr onclick="playSong(1)">
-              <td>2</td>
-              <td class="song-title">Loose</td>
-              <td class="song-artist">Daniel Caesar</td>
-              <td class="song-album">Single</td>
-              <td class="song-duration">3:06</td>
-              </tr>
-              <tr onclick="playSong(2)">
-              <td>3</td>
-              <td class="song-title">A Little More</td>
-              <td class="song-artist">Ed Sheeran</td>
-              <td class="song-album">Play</td>
-              <td class="song-duration">3:12</td>
-              </tr>
-              <tr onclick="playSong(3)">
-              <td>4</td>
-              <td class="song-title">Ivy</td>
-              <td class="song-artist">Frank Ocean</td>
-              <td class="song-album">Blond</td>
-              <td class="song-duration">3:56</td>
-              </tr>
-              <tr onclick="playSong(4)">
-              <td>5</td>
-              <td class="song-title">Pink + White</td>
-              <td class="song-artist">Frank Ocean</td>
-              <td class="song-album">Blond</td>
-              <td class="song-duration">3:04</td>
-              </tr>
-              <tr onclick="playSong(5)">
-              <td>6</td>
-              <td class="song-title">Super Far</td>
-              <td class="song-artist">LANY</td>
-              <td class="song-album">LANY</td>
-              <td class="song-duration">3:00</td>
-              </tr>
-              <tr onclick="playSong(6)">
-              <td>7</td>
-              <td class="song-title">Thick And Thin</td>
-              <td class="song-artist">LANY</td>
-              <td class="song-album">LANY</td>
-              <td class="song-duration">3:25</td>
-              </tr>
-              <tr onclick="playSong(7)">
-              <td>8</td>
-              <td class="song-title">Good Days</td>
-              <td class="song-artist">SZA</td>
-              <td class="song-album">Single</td>
-              <td class="song-duration">4:21</td>
-              </tr>
-              <tr onclick="playSong(8)">
-              <td>9</td>
-              <td class="song-title">YKWIM</td>
-              <td class="song-artist">Yot Club</td>
-              <td class="song-album">Single</td>
-              <td class="song-duration">3:47</td>
-              </tr>
-              <tr onclick="playSong(9)">
-              <td>10</td>
-              <td class="song-title">Passionfruit</td>
-              <td class="song-artist">Drake</td>
-              <td class="song-album">More Life</td>
-              <td class="song-duration">3:19</td> 
-              </tr>
+                    <tr data-index="0">
+                        <td>1</td>
+                        <td class="song-title">BIRDS OF A FEATHER</td>
+                        <td class="song-artist">Billie Eilish</td>
+                        <td class="song-album">Single</td>
+                        <td class="song-duration">2:56</td>
+                    </tr>
+                    <tr data-index="1">
+                        <td>2</td>
+                        <td class="song-title">Loose</td>
+                        <td class="song-artist">Daniel Caesar</td>
+                        <td class="song-album">Single</td>
+                        <td class="song-duration">3:06</td>
+                    </tr>
+                    <tr data-index="2">
+                        <td>3</td>
+                        <td class="song-title">A Little More</td>
+                        <td class="song-artist">Ed Sheeran</td>
+                        <td class="song-album">Play</td>
+                        <td class="song-duration">3:12</td>
+                    </tr>
+                    <tr data-index="3">
+                        <td>4</td>
+                        <td class="song-title">Ivy</td>
+                        <td class="song-artist">Frank Ocean</td>
+                        <td class="song-album">Blond</td>
+                        <td class="song-duration">3:56</td>
+                    </tr>
+                    <tr data-index="4">
+                        <td>5</td>
+                        <td class="song-title">Pink + White</td>
+                        <td class="song-artist">Frank Ocean</td>
+                        <td class="song-album">Blond</td>
+                        <td class="song-duration">3:04</td>
+                    </tr>
+                    <tr data-index="5">
+                        <td>6</td>
+                        <td class="song-title">Super Far</td>
+                        <td class="song-artist">LANY</td>
+                        <td class="song-album">LANY</td>
+                        <td class="song-duration">3:00</td>
+                    </tr>
+                    <tr data-index="6">
+                        <td>7</td>
+                        <td class="song-title">Thick And Thin</td>
+                        <td class="song-artist">LANY</td>
+                        <td class="song-album">LANY</td>
+                        <td class="song-duration">3:25</td>
+                    </tr>
+                    <tr data-index="7">
+                        <td>8</td>
+                        <td class="song-title">Good Days</td>
+                        <td class="song-artist">SZA</td>
+                        <td class="song-album">Single</td>
+                        <td class="song-duration">4:21</td>
+                    </tr>
+                    <tr data-index="8">
+                        <td>9</td>
+                        <td class="song-title">YKWIM</td>
+                        <td class="song-artist">Yot Club</td>
+                        <td class="song-album">Single</td>
+                        <td class="song-duration">3:47</td>
+                    </tr>
+                    <tr data-index="9">
+                        <td>10</td>
+                        <td class="song-title">Passionfruit</td>
+                        <td class="song-artist">Drake</td>
+                        <td class="song-album">More Life</td>
+                        <td class="song-duration">3:19</td> 
+                    </tr>
                 </tbody>
             </table>
         </div>
-        <div class="audio-player" id="audio-player">
-            <img src="images/chill_vibes.webp" id="audio-img" alt="Now Playing">
-            <div class="audio-info">
+    </div>
+
+    <div class="audio-player-container">
+        <div class="audio-player-info">
+            <img id="audio-img" src="images/chillvibes.webp" alt="Now Playing">
+            <div class="info">
                 <div class="audio-title" id="audio-title"></div>
                 <div class="audio-artist" id="audio-artist"></div>
             </div>
-            <div class="audio-controls">
-                <button id="add-to-playlist"><i class="fa-solid fa-plus"></i></button>
-                <button id="back-btn"><i class="fa-solid fa-backward-step"></i></button>
-                <button id="play-pause-btn"><i class="fa-solid fa-play"></i></button>
+        </div>
+
+        <div class="audio-controls">
+            <div class="main-controls">
+                <button id="prev-btn"><i class="fa-solid fa-backward-step"></i></button>
+                <button id="play-pause-btn" class="play-pause-btn"><i class="fa-solid fa-play"></i></button>
                 <button id="next-btn"><i class="fa-solid fa-forward-step"></i></button>
             </div>
-            <audio id="audio" style="width:200px;" preload="auto"></audio>
+            <div class="timeline">
+                <span id="current-time">0:00</span>
+                <input type="range" id="progress-bar" value="0" step="0.1" min="0" max="100">
+                <span id="total-time">0:00</span>
+            </div>
+        </div>
+
+        <div class="volume-controls">
+            <i class="fa-solid fa-volume-high"></i>
+            <input type="range" id="volume-bar" value="100" step="1" min="0" max="100">
         </div>
     </div>
+    
+    <audio id="audio" preload="auto"></audio>
+    
     <script>
-        const playlist =[
+        const playlist = [
             { title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', album: 'Single', duration: '2:56', src: 'audio/Billie Eilish - BIRDS OF A FEATHER.mp3', img: 'images/Billie-Eilish-BIRDS-OF-A-FEATHER-billboard-1548.webp' },
             { title: 'Loose', artist: 'Daniel Caesar', album: 'Single', duration: '3:06', src: 'audio/Daniel Caesar - Loose (Lyrics).mp3', img: 'images/loose.webp' },
             { title: 'A Little More', artist: 'Ed Sheeran', album: 'Play', duration: '3:12', src: 'audio/Ed Sheeran - A Little More (Official Music Video).mp3', img: 'images/Little more.webp' },
@@ -213,11 +325,16 @@
         const audioArtist = document.getElementById('audio-artist');
         const audioImg = document.getElementById('audio-img');
         const playPauseBtn = document.getElementById('play-pause-btn');
+        const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
-        const backBtn = document.getElementById('back-btn');
-        const addToPlaylistBtn = document.getElementById('add-to-playlist');
-        
-        let currentSongIndex = -1;
+        const progressBar = document.getElementById('progress-bar');
+        const currentTime = document.getElementById('current-time');
+        const totalTime = document.getElementById('total-time');
+        const volumeBar = document.getElementById('volume-bar');
+        const songListTable = document.querySelector('.song-list table');
+
+        let currentSongIndex = 0;
+        let isPlaying = false;
         
         function updatePlayer(index) {
             const song = playlist[index];
@@ -231,39 +348,71 @@
         function playSong(index) {
             updatePlayer(index);
             audio.play();
+            isPlaying = true;
             playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
         }
-        
+
         function togglePlayPause() {
-            if (audio.paused) {
-                audio.play();
-                playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
-            } else {
+            if (isPlaying) {
                 audio.pause();
                 playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            } else {
+                audio.play();
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
             }
-        }
-        
-        function playNextSong() {
-            let nextIndex = (currentSongIndex + 1) % playlist.length;
-            playSong(nextIndex);
+            isPlaying = !isPlaying;
         }
 
-        function playPreviousSong() {
-            let prevIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
-            playSong(prevIndex);
+        function playNext() {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            playSong(currentSongIndex);
         }
 
-        function addToPlaylist() {
-            alert('This song has been added to your queue!');
+        function playPrevious() {
+            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            playSong(currentSongIndex);
         }
 
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            const formattedSeconds = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
+            return `${minutes}:${formattedSeconds}`;
+        }
+
+        // Event Listeners
         playPauseBtn.addEventListener('click', togglePlayPause);
-        nextBtn.addEventListener('click', playNextSong);
-        backBtn.addEventListener('click', playPreviousSong);
-        addToPlaylistBtn.addEventListener('click', addToPlaylist);
+        prevBtn.addEventListener('click', playPrevious);
+        nextBtn.addEventListener('click', playNext);
 
-      
+        audio.addEventListener('loadedmetadata', () => {
+            totalTime.textContent = formatTime(audio.duration);
+            progressBar.max = audio.duration;
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            currentTime.textContent = formatTime(audio.currentTime);
+            progressBar.value = audio.currentTime;
+        });
+
+        audio.addEventListener('ended', playNext);
+        
+        progressBar.addEventListener('input', () => {
+            audio.currentTime = progressBar.value;
+        });
+
+        volumeBar.addEventListener('input', () => {
+            audio.volume = volumeBar.value / 100;
+        });
+
+        songListTable.addEventListener('click', (event) => {
+            const clickedRow = event.target.closest('tr');
+            if (clickedRow) {
+                const rowIndex = clickedRow.dataset.index;
+                playSong(rowIndex);
+            }
+        });
+
         updatePlayer(0);
         
     </script>

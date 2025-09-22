@@ -21,11 +21,123 @@
         .song-artist { color: #bbb; }
         .song-album { color: #aaa; }
         .song-duration { color: #888; }
-        .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 18px; margin-top: 32px; }
-        .audio-player img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
-        .audio-info { flex: 1; }
-        .audio-title { font-size: 1.1em; color: #fff; }
-        .audio-artist { color: #bbb; font-size: 0.98em; }
+        
+        /* Audio Player Styling */
+        .audio-player-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #222;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+        .audio-player-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .audio-player-info img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .audio-player-info .info {
+            display: flex;
+            flex-direction: column;
+        }
+        .audio-player-info .info .audio-title {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .audio-player-info .info .audio-artist {
+            color: #bbb;
+            font-size: 0.9em;
+        }
+        .audio-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+        .audio-controls .main-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .audio-controls .main-controls button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .audio-controls .main-controls button:hover {
+            color: #1db954;
+        }
+        .audio-controls .play-pause-btn {
+            font-size: 2em;
+        }
+        .audio-controls .timeline {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .audio-controls .timeline span {
+            font-size: 0.8em;
+            color: #aaa;
+        }
+        .audio-controls .timeline input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: #535353;
+            border-radius: 2px;
+            cursor: pointer;
+            outline: none;
+        }
+        .audio-controls .timeline input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #1db954;
+            border-radius: 50%;
+        }
+        .volume-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .volume-controls i {
+            font-size: 1em;
+            color: #fff;
+        }
+        .volume-controls input[type="range"] {
+            -webkit-appearance: none;
+            width: 100px;
+            height: 4px;
+            background: #535353;
+            border-radius: 2px;
+            cursor: pointer;
+            outline: none;
+        }
+        .volume-controls input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
         .nav-buttons {
             display: flex;
             gap: 12px;
@@ -47,25 +159,7 @@
             background: #333;
             border-color: #666;
         }
-        .audio-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .audio-controls button {
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            font-size: 1.5em;
-            transition: color 0.2s;
-        }
-        .audio-controls button:hover {
-            color: #1db954;
-        }
-        .audio-player audio {
-            width: 200px;
-        }
+        
         @media (max-width: 900px) {
             .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
             .playlist-header img { width: 90px; height: 90px; }
@@ -74,6 +168,8 @@
             .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
             .playlist-header { flex-direction: column; align-items: flex-start; }
             .playlist-header img { width: 100px; height: 100px; }
+            .audio-player-container { flex-direction: column; padding: 12px; }
+            .audio-controls .timeline { width: 90%; }
         }
     </style>
 </head>
@@ -86,9 +182,9 @@
             <a href="javascript:history.back()" style="background: #222; border-color: #444;">Back</a>
         </div>
         <div class="playlist-header">
-            <img src="images/energeticbeats.webp" alt="Energetic Beats Playlist Cover">
+            <img src="images/rock.webp" alt="ROCK Playlist Cover">
             <div class="info">
-                <h1>Energetic Beats</h1>
+                <h1>ROCK Playlist</h1>
                 <p>Get pumped with high-energy tracks of 2025. Perfect for workouts, parties, or wherever you need a boost!</p>
                 <p>10 tracks &bull; 30min</p>
             </div>
@@ -105,70 +201,70 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr onclick="playSong(0)">
+                    <tr>
                         <td>1</td>
                         <td class="song-title">Espresso</td>
                         <td class="song-artist">Sabrina Carpenter</td>
                         <td class="song-album">Espresso</td>
                         <td class="song-duration">2:54</td>
                     </tr>
-                    <tr onclick="playSong(1)">
+                    <tr>
                         <td>2</td>
                         <td class="song-title">Beautiful Things</td>
                         <td class="song-artist">Benson Boone</td>
                         <td class="song-album">Beautiful Things</td>
                         <td class="song-duration">3:02</td>
                     </tr>
-                    <tr onclick="playSong(2)">
+                    <tr>
                         <td>3</td>
                         <td class="song-title">Lose Control</td>
                         <td class="song-artist">Teddy Swims</td>
                         <td class="song-album">I've Tried Everything But Therapy</td>
                         <td class="song-duration">3:00</td>
                     </tr>
-                    <tr onclick="playSong(3)">
+                    <tr>
                         <td>4</td>
                         <td class="song-title">Paint The Town Red</td>
                         <td class="song-artist">Doja Cat</td>
                         <td class="song-album">Scarlet</td>
                         <td class="song-duration">3:51</td>
                     </tr>
-                    <tr onclick="playSong(4)">
+                    <tr>
                         <td>5</td>
                         <td class="song-title">Good Luck, Babe!</td>
                         <td class="song-artist">Chappell Roan</td>
                         <td class="song-album">Good Luck, Babe!</td>
                         <td class="song-duration">3:08</td>
                     </tr>
-                    <tr onclick="playSong(5)">
+                    <tr>
                         <td>6</td>
                         <td class="song-title">Fortnight (feat. Post Malone)</td>
                         <td class="song-artist">Taylor Swift, Post Malone</td>
                         <td class="song-album">THE TORTURED POETS DEPARTMENT</td>
                         <td class="song-duration">3:48</td>
                     </tr>
-                    <tr onclick="playSong(6)">
+                    <tr>
                         <td>7</td>
-                        <td class="song-title">greedy</td>
-                        <td class="song-artist">Tate McRae</td>
+                        <td class="song-title">Pink Pony Club</td>
+                        <td class="song-artist">Chappell Roan</td>
                         <td class="song-album">THINK LATER</td>
-                        <td class="song-duration">2:10</td>
+                        <td class="song-duration">4:40</td>
                     </tr>
-                    <tr onclick="playSong(7)">
+                    <tr>
                         <td>8</td>
                         <td class="song-title">Flowers</td>
                         <td class="song-artist">Miley Cyrus</td>
                         <td class="song-album">Endless Summer Vacation</td>
                         <td class="song-duration">3:20</td>
                     </tr>
-                    <tr onclick="playSong(8)">
+                    <tr>
                         <td>9</td>
                         <td class="song-title">Dance The Night</td>
                         <td class="song-artist">Dua Lipa</td>
                         <td class="song-album">Barbie The Album</td>
                         <td class="song-duration">2:56</td>
                     </tr>
-                    <tr onclick="playSong(9)">
+                    <tr>
                         <td>10</td>
                         <td class="song-title">Stronger</td>
                         <td class="song-artist">Kanye West</td>
@@ -178,35 +274,66 @@
                 </tbody>
             </table>
         </div>
-        <div class="audio-player" id="audio-player">
-            <img src="images/energeticbeats.webp" id="audio-img" alt="Now Playing">
-            <div class="audio-info">
+    </div>
+
+    <div class="audio-player-container">
+        <div class="audio-player-info">
+            <img id="audio-img" src="images/energeticbeats.webp" alt="Now Playing">
+            <div class="info">
                 <div class="audio-title" id="audio-title"></div>
                 <div class="audio-artist" id="audio-artist"></div>
             </div>
-            <audio id="audio" controls style="width:200px;" preload="auto"></audio>
+        </div>
+
+        <div class="audio-controls">
+            <div class="main-controls">
+                <button id="prev-btn"><i class="fa-solid fa-backward-step"></i></button>
+                <button id="play-pause-btn" class="play-pause-btn"><i class="fa-solid fa-play"></i></button>
+                <button id="next-btn"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+            <div class="timeline">
+                <span id="current-time">0:00</span>
+                <input type="range" id="progress-bar" value="0" step="0.1" min="0" max="100">
+                <span id="total-time">0:00</span>
+            </div>
+        </div>
+        
+        <div class="volume-controls">
+            <i class="fa-solid fa-volume-high"></i>
+            <input type="range" id="volume-bar" value="100" step="1" min="0" max="100">
         </div>
     </div>
+    
+    <audio id="audio" preload="auto"></audio>
+    
     <script>
         const playlist = [
-            { title: 'Espresso', artist: 'Sabrina Carpenter', album: 'Espresso', duration: '2:54', src: 'audio/Sabrina Carpenter - Espresso.mp3', img: 'images/energeticbeats.webp' },
-            { title: 'Beautiful Things', artist: 'Benson Boone', album: 'Beautiful Things', duration: '3:02', src: 'audio/Benson Boone - Beautiful Things.mp3', img: 'images/energeticbeats.webp' },
-            { title: 'Lose Control', artist: 'Teddy Swims', album: 'I\'ve Tried Everything But Therapy', duration: '3:00', src: 'audio/Teddy Swims - Lose Control.mp3', img: 'images/energeticbeats.webp' },
-            { title: 'Paint The Town Red', artist: 'Doja Cat', album: 'Scarlet', duration: '3:51', src: 'audio/Doja Cat - Paint The Town Red.mp3', img: 'images/energeticbeats.webp' },
-            { title: 'Good Luck, Babe!', artist: 'Chappell Roan', album: 'Good Luck, Babe!', duration: '3:08', src: 'audio/Chappell Roan - Good Luck, Babe.mp3', img: 'images/energeticbeats.webp' },
-            { title: 'Fortnight (feat. Post Malone)', artist: 'Taylor Swift, Post Malone', album: 'THE TORTURED POETS DEPARTMENT', duration: '3:48', src: 'audio/Taylor Swift - Fortnight.mp3', img: 'images/energeticbeats.webp' },
-            { title: 'greedy', artist: 'Tate McRae', album: 'THINK LATER', duration: '2:10', src: 'audio/Tate McRae - greedy.mp3', img: 'images/energeticbeats.webp' },
-            { title: 'Flowers', artist: 'Miley Cyrus', album: 'Endless Summer Vacation', duration: '3:20', src: 'audio/Miley Cyrus - Flowers.mp3', img: 'images/energeticbeats.webp' },
-            { title: 'Dance The Night', artist: 'Dua Lipa', album: 'Barbie The Album', duration: '2:56', src: 'audio/Dua Lipa - Dance The Night.mp3', img: 'images/energeticbeats.webp' },
-            { title: 'Stronger', artist: 'Kanye West', album: 'Graduation', duration: '5:12', src: 'audio/Kanye West - Stronger.mp3', img: 'images/energeticbeats.webp' },
+    { title: 'Espresso', artist: 'Sabrina Carpenter', album: 'Espresso', duration: '2:54', src: 'audio/Sabrina Carpenter - Espresso.mp3', img: 'images/Espresso_-_Sabrina_Carpenter.webp' }, 
+   { title: 'Beautiful Things', artist: 'Benson Boone', album: 'Beautiful Things', duration: '3:02', src: 'audio/Benson Boone - Beautiful Things.mp3', img: 'images/Beautiful_Things.webp' }, 
+   { title: 'Lose Control', artist: 'Teddy Swims', album: 'I\'ve Tried Everything But Therapy', duration: '3:00', src: 'audio/Teddy Swims - Lose Control.mp3', img: 'images/teddy-swims-lose-control.webp' }, 
+   { title: 'Paint The Town Red', artist: 'Doja Cat', album: 'Scarlet', duration: '3:51', src: 'audio/Doja Cat - Paint The Town Red.mp3', img: 'images/Doja Cat - Paint The Town Red.webp' }, 
+   { title: 'Good Luck, Babe!', artist: 'Chappell Roan', album: 'Good Luck, Babe!', duration: '3:08', src: 'audio/Chappell Roan - Good Luck, Babe.mp3', img: 'images/Chappell Roan - Good Luck.webp' }, 
+   { title: 'Fortnight (feat. Post Malone)', artist: 'Taylor Swift, Post Malone', album: 'THE TORTURED POETS DEPARTMENT', duration: '3:48', src: 'audio/Taylor Swift - Fortnight.mp3', img: 'images/Taylor Swift - Fortnight.webp' }, 
+{ title: 'Pink Pony Club', artist: 'Chappell Roan', album: 'THINK LATER', duration: '4:40', src: 'audio/pink pony club.mp3', img: 'images/pink pony club.webp' }, 
+{ title: 'Flowers', artist: 'Miley Cyrus', album: 'Endless Summer Vacation', duration: '3:20', src: 'audio/Miley Cyrus - Flowers.mp3', img: 'images/Miley Cyrus - Flowers.webp' }, 
+   { title: 'Dance The Night', artist: 'Dua Lipa', album: 'Barbie The Album', duration: '2:56', src: 'audio/Dua Lipa - Dance The Night.mp3', img: 'images/Dua Lipa - Dance The Night.webp' }, 
+   { title: 'Stronger', artist: 'Kanye West', album: 'Graduation', duration: '5:12', src: 'audio/Kanye West - Stronger.mp3', img: 'images/Kanye West - Stronger.webp' },
         ];
-        
         const audio = document.getElementById('audio');
         const audioTitle = document.getElementById('audio-title');
         const audioArtist = document.getElementById('audio-artist');
         const audioImg = document.getElementById('audio-img');
-        
-        let currentSongIndex = -1;
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const currentTime = document.getElementById('current-time');
+        const totalTime = document.getElementById('total-time');
+        const volumeBar = document.getElementById('volume-bar');
+        const songListTable = document.querySelector('.song-list table');
+
+        let currentSongIndex = 0;
+        let isPlaying = false;
         
         function updatePlayer(index) {
             const song = playlist[index];
@@ -220,9 +347,81 @@
         function playSong(index) {
             updatePlayer(index);
             audio.play();
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
         }
+
+        function togglePlayPause() {
+            if (isPlaying) {
+                audio.pause();
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            } else {
+                audio.play();
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function playNext() {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            playSong(currentSongIndex);
+        }
+
+        function playPrevious() {
+            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            playSong(currentSongIndex);
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            const formattedSeconds = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
+            return `${minutes}:${formattedSeconds}`;
+        }
+
+        // Event Listeners
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        prevBtn.addEventListener('click', playPrevious);
+        nextBtn.addEventListener('click', playNext);
+
+        audio.addEventListener('loadedmetadata', () => {
+            totalTime.textContent = formatTime(audio.duration);
+            progressBar.max = audio.duration;
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            currentTime.textContent = formatTime(audio.currentTime);
+            progressBar.value = audio.currentTime;
+        });
+
+        audio.addEventListener('ended', playNext);
         
-        // Initial setup to display the first song
+        progressBar.addEventListener('input', () => {
+            audio.currentTime = progressBar.value;
+        });
+
+        volumeBar.addEventListener('input', () => {
+            audio.volume = volumeBar.value / 100;
+        });
+
+        songListTable.addEventListener('click', (event) => {
+            const clickedCell = event.target.closest('td');
+            if (!clickedCell) {
+                return;
+            }
+
+            const cellIndex = clickedCell.cellIndex;
+            if (cellIndex === 0) {
+                return;
+            }
+
+            const clickedRow = clickedCell.closest('tr');
+            if (clickedRow) {
+                const rowIndex = Array.from(clickedRow.parentNode.children).indexOf(clickedRow);
+                playSong(rowIndex);
+            }
+        });
+
         updatePlayer(0);
         
     </script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pop Hits 2025 - Musicify</title>
+    <title>Pop Hits - Musicify</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body { background: #181818; color: #fff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; }
@@ -21,11 +21,122 @@
         .song-artist { color: #bbb; }
         .song-album { color: #aaa; }
         .song-duration { color: #888; }
-        .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 18px; margin-top: 32px; }
-        .audio-player img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
-        .audio-info { flex: 1; }
-        .audio-title { font-size: 1.1em; color: #fff; }
-        .audio-artist { color: #bbb; font-size: 0.98em; }
+        
+        .audio-player-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #222;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+        .audio-player-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .audio-player-info img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .audio-player-info .info {
+            display: flex;
+            flex-direction: column;
+        }
+        .audio-player-info .info .audio-title {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .audio-player-info .info .audio-artist {
+            color: #bbb;
+            font-size: 0.9em;
+        }
+        .audio-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+        .audio-controls .main-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .audio-controls .main-controls button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .audio-controls .main-controls button:hover {
+            color: #1db954;
+        }
+        .audio-controls .play-pause-btn {
+            font-size: 2em;
+        }
+        .audio-controls .timeline {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .audio-controls .timeline span {
+            font-size: 0.8em;
+            color: #aaa;
+        }
+        .audio-controls .timeline input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: #535353;
+            border-radius: 2px;
+            cursor: pointer;
+            outline: none;
+        }
+        .audio-controls .timeline input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #1db954;
+            border-radius: 50%;
+        }
+        .volume-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .volume-controls i {
+            font-size: 1em;
+            color: #fff;
+        }
+        .volume-controls input[type="range"] {
+            -webkit-appearance: none;
+            width: 100px;
+            height: 4px;
+            background: #535353;
+            border-radius: 2px;
+            cursor: pointer;
+            outline: none;
+        }
+        .volume-controls input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
         .nav-buttons {
             display: flex;
             gap: 12px;
@@ -47,25 +158,7 @@
             background: #333;
             border-color: #666;
         }
-        .audio-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .audio-controls button {
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            font-size: 1.5em;
-            transition: color 0.2s;
-        }
-        .audio-controls button:hover {
-            color: #1db954;
-        }
-        .audio-player audio {
-            width: 200px;
-        }
+        
         @media (max-width: 900px) {
             .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
             .playlist-header img { width: 90px; height: 90px; }
@@ -74,6 +167,8 @@
             .main-content { margin-left: 0; padding: 16px 2vw 80px 2vw; }
             .playlist-header { flex-direction: column; align-items: flex-start; }
             .playlist-header img { width: 100px; height: 100px; }
+            .audio-player-container { flex-direction: column; padding: 12px; }
+            .audio-controls .timeline { width: 90%; }
         }
     </style>
 </head>
@@ -86,11 +181,11 @@
             <a href="javascript:history.back()" style="background: #222; border-color: #444;">Back</a>
         </div>
         <div class="playlist-header">
-            <img src="images/pophits.webp" alt="Pop Hits 2025 Playlist Cover">
+            <img src="images/pophits.webp" alt="Pop Hits Playlist Cover">
             <div class="info">
-                <h1>Pop Hits 2025</h1>
-                <p>The hottest modern pop tracks of 2025. Stay up-to-date with the latest chart-toppers and viral hits!</p>
-                <p>10 tracks &bull; 36min</p>
+                <h1>Pop Hits</h1>
+                <p>Top Pop Hits of 2025. Perfect for dancing, driving, or just chilling out!</p>
+                <p>5 tracks &bull; 16min</p>
             </div>
         </div>
         <div class="song-list">
@@ -105,108 +200,100 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr onclick="playSong(0)">
+                    <tr>
                         <td>1</td>
-                        <td class="song-title">Eclipse</td>
-                        <td class="song-artist">Dua Lipa</td>
-                        <td class="song-album">Future Nostalgia 2</td>
-                        <td class="song-duration">3:32</td>
+                        <td class="song-title">Die With A Smile</td>
+                        <td class="song-artist">Lady Gaga, Bruno Mars</td>
+                        <td class="song-album">Die With A Smile - Single</td>
+                        <td class="song-duration">4:11</td>
                     </tr>
-                    <tr onclick="playSong(1)">
+                    <tr>
                         <td>2</td>
-                        <td class="song-title">Neon Dreams</td>
-                        <td class="song-artist">The Weeknd</td>
-                        <td class="song-album">After Hours Deluxe</td>
-                        <td class="song-duration">3:45</td>
+                        <td class="song-title">Beautiful Things</td>
+                        <td class="song-artist">Benson Boone</td>
+                        <td class="song-album">Beautiful Things - Single</td>
+                        <td class="song-duration">3:00</td>
                     </tr>
-                    <tr onclick="playSong(2)">
+                    <tr>
                         <td>3</td>
-                        <td class="song-title">Paradise</td>
-                        <td class="song-artist">Olivia Rodrigo</td>
-                        <td class="song-album">GUTS (Deluxe)</td>
-                        <td class="song-duration">3:18</td>
-                    </tr>
-                    <tr onclick="playSong(3)">
-                        <td>4</td>
-                        <td class="song-title">Starlight</td>
-                        <td class="song-artist">Harry Styles</td>
-                        <td class="song-album">Fine Line 2</td>
-                        <td class="song-duration">3:41</td>
-                    </tr>
-                    <tr onclick="playSong(4)">
-                        <td>5</td>
-                        <td class="song-title">Glow Up</td>
+                        <td class="song-title">BIRDS OF A FEATHER</td>
                         <td class="song-artist">Billie Eilish</td>
-                        <td class="song-album">Happier Than Ever (2025)</td>
-                        <td class="song-duration">3:29</td>
+                        <td class="song-album">HIT ME HARD AND SOFT</td>
+                        <td class="song-duration">3:30</td>
                     </tr>
-                    <tr onclick="playSong(5)">
-                        <td>6</td>
-                        <td class="song-title">City Lights</td>
-                        <td class="song-artist">Shawn Mendes</td>
-                        <td class="song-album">Illuminate Again</td>
-                        <td class="song-duration">3:27</td>
-                    </tr>
-                    <tr onclick="playSong(6)">
-                        <td>7</td>
-                        <td class="song-title">Electric Heart</td>
+                    <tr>
+                        <td>4</td>
+                        <td class="song-title">Espresso</td>
                         <td class="song-artist">Sabrina Carpenter</td>
-                        <td class="song-album">Short n' Sweet</td>
-                        <td class="song-duration">3:10</td>
+                        <td class="song-album">Espresso - Single</td>
+                        <td class="song-duration">2:54</td>
                     </tr>
-                    <tr onclick="playSong(7)">
-                        <td>8</td>
-                        <td class="song-title">Golden Hour</td>
-                        <td class="song-artist">Taylor Swift</td>
-                        <td class="song-album">Midnights 2AM</td>
-                        <td class="song-duration">3:40</td>
-                    </tr>
-                    <tr onclick="playSong(8)">
-                        <td>9</td>
-                        <td class="song-title">Runaway</td>
-                        <td class="song-artist">Charlie Puth</td>
-                        <td class="song-album">CHARLIE 2025</td>
-                        <td class="song-duration">3:20</td>
-                    </tr>
-                    <tr onclick="playSong(9)">
-                        <td>10</td>
-                        <td class="song-title">Viral</td>
-                        <td class="song-artist">Ariana Grande</td>
-                        <td class="song-album">eternal sunshine</td>
-                        <td class="song-duration">3:18</td>
+                    <tr>
+                        <td>5</td>
+                        <td class="song-title">Good Luck, Babe!</td>
+                        <td class="song-artist">Chappell Roan</td>
+                        <td class="song-album">Good Luck, Babe! - Single</td>
+                        <td class="song-duration">3:08</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="audio-player" id="audio-player">
-            <img src="images/pophits.webp" id="audio-img" alt="Now Playing">
-            <div class="audio-info">
+    </div>
+
+    <div class="audio-player-container">
+        <div class="audio-player-info">
+            <img id="audio-img" src="images/pophits.webp" alt="Now Playing">
+            <div class="info">
                 <div class="audio-title" id="audio-title"></div>
                 <div class="audio-artist" id="audio-artist"></div>
             </div>
-            <audio id="audio" controls style="width:200px;" preload="auto"></audio>
+        </div>
+
+        <div class="audio-controls">
+            <div class="main-controls">
+                <button id="prev-btn"><i class="fa-solid fa-backward-step"></i></button>
+                <button id="play-pause-btn" class="play-pause-btn"><i class="fa-solid fa-play"></i></button>
+                <button id="next-btn"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+            <div class="timeline">
+                <span id="current-time">0:00</span>
+                <input type="range" id="progress-bar" value="0" step="0.1" min="0" max="100">
+                <span id="total-time">0:00</span>
+            </div>
+        </div>
+        
+        <div class="volume-controls">
+            <i class="fa-solid fa-volume-high"></i>
+            <input type="range" id="volume-bar" value="100" step="1" min="0" max="100">
         </div>
     </div>
+    
+    <audio id="audio" preload="auto"></audio>
+    
     <script>
         const playlist = [
-            { title: 'Eclipse', artist: 'Dua Lipa', album: 'Future Nostalgia 2', duration: '3:32', src: 'audio/Dua Lipa - Eclipse.mp3', img: 'images/pophits.webp' },
-            { title: 'Neon Dreams', artist: 'The Weeknd', album: 'After Hours Deluxe', duration: '3:45', src: 'audio/The Weeknd - Neon Dreams.mp3', img: 'images/pophits.webp' },
-            { title: 'Paradise', artist: 'Olivia Rodrigo', album: 'GUTS (Deluxe)', duration: '3:18', src: 'audio/Olivia Rodrigo - Paradise.mp3', img: 'images/pophits.webp' },
-            { title: 'Starlight', artist: 'Harry Styles', album: 'Fine Line 2', duration: '3:41', src: 'audio/Harry Styles - Starlight.mp3', img: 'images/pophits.webp' },
-            { title: 'Glow Up', artist: 'Billie Eilish', album: 'Happier Than Ever (2025)', duration: '3:29', src: 'audio/Billie Eilish - Glow Up.mp3', img: 'images/pophits.webp' },
-            { title: 'City Lights', artist: 'Shawn Mendes', album: 'Illuminate Again', duration: '3:27', src: 'audio/Shawn Mendes - City Lights.mp3', img: 'images/pophits.webp' },
-            { title: 'Electric Heart', artist: 'Sabrina Carpenter', album: 'Short n\' Sweet', duration: '3:10', src: 'audio/Sabrina Carpenter - Electric Heart.mp3', img: 'images/pophits.webp' },
-            { title: 'Golden Hour', artist: 'Taylor Swift', album: 'Midnights 2AM', duration: '3:40', src: 'audio/Taylor Swift - Golden Hour.mp3', img: 'images/pophits.webp' },
-            { title: 'Runaway', artist: 'Charlie Puth', album: 'CHARLIE 2025', duration: '3:20', src: 'audio/Charlie Puth - Runaway.mp3', img: 'images/pophits.webp' },
-            { title: 'Viral', artist: 'Ariana Grande', album: 'eternal sunshine', duration: '3:18', src: 'audio/Ariana Grande - Viral.mp3', img: 'images/pophits.webp' },
+            { title: 'Die With A Smile', artist: 'Lady Gaga, Bruno Mars', album: 'Die With A Smile - Single', duration: '4:11', src: 'audio/Die_With_A_Smile_Lady_Gaga_Bruno_Mars.mp3', img: 'images/Die_With_A_Smile_Lady_Gaga_Bruno_Mars.webp' },
+            { title: 'Beautiful Things', artist: 'Benson Boone', album: 'Beautiful Things - Single', duration: '3:00', src: 'audio/Benson Boone - Beautiful Things.mp3', img: 'images/Beautiful_Things.webp' },
+            { title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', album: 'HIT ME HARD AND SOFT', duration: '3:30', src: 'audio/Billie Eilish - BIRDS OF A FEATHER.mp3', img: 'images/BIRDS_OF_A_FEATHER.webp' },
+            { title: 'Espresso', artist: 'Sabrina Carpenter', album: 'Espresso - Single', duration: '2:54', src: 'audio/Sabrina Carpenter - Espresso.mp3', img: 'images/Espresso_-_Sabrina_Carpenter.webp' },
+            { title: 'Good Luck, Babe!', artist: 'Chappell Roan', album: 'Good Luck, Babe! - Single', duration: '3:08', src: 'audio/Chappell Roan - Good Luck, Babe.mp3', img: 'images/Chappell Roan - Good Luck.webp' },
         ];
         
         const audio = document.getElementById('audio');
         const audioTitle = document.getElementById('audio-title');
         const audioArtist = document.getElementById('audio-artist');
         const audioImg = document.getElementById('audio-img');
-        
-        let currentSongIndex = -1;
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const currentTime = document.getElementById('current-time');
+        const totalTime = document.getElementById('total-time');
+        const volumeBar = document.getElementById('volume-bar');
+        const songListTable = document.querySelector('.song-list table');
+
+        let currentSongIndex = 0;
+        let isPlaying = false;
         
         function updatePlayer(index) {
             const song = playlist[index];
@@ -220,9 +307,81 @@
         function playSong(index) {
             updatePlayer(index);
             audio.play();
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
         }
+
+        function togglePlayPause() {
+            if (isPlaying) {
+                audio.pause();
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            } else {
+                audio.play();
+                playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function playNext() {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            playSong(currentSongIndex);
+        }
+
+        function playPrevious() {
+            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            playSong(currentSongIndex);
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            const formattedSeconds = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
+            return `${minutes}:${formattedSeconds}`;
+        }
+
+        // Event Listeners
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        prevBtn.addEventListener('click', playPrevious);
+        nextBtn.addEventListener('click', playNext);
+
+        audio.addEventListener('loadedmetadata', () => {
+            totalTime.textContent = formatTime(audio.duration);
+            progressBar.max = audio.duration;
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            currentTime.textContent = formatTime(audio.currentTime);
+            progressBar.value = audio.currentTime;
+        });
+
+        audio.addEventListener('ended', playNext);
         
-        // Initial setup to display the first song
+        progressBar.addEventListener('input', () => {
+            audio.currentTime = progressBar.value;
+        });
+
+        volumeBar.addEventListener('input', () => {
+            audio.volume = volumeBar.value / 100;
+        });
+
+        songListTable.addEventListener('click', (event) => {
+            const clickedCell = event.target.closest('td');
+            if (!clickedCell) {
+                return;
+            }
+
+            const cellIndex = clickedCell.cellIndex;
+            if (cellIndex === 0) {
+                return;
+            }
+
+            const clickedRow = clickedCell.closest('tr');
+            if (clickedRow) {
+                const rowIndex = Array.from(clickedRow.parentNode.children).indexOf(clickedRow);
+                playSong(rowIndex);
+            }
+        });
+
         updatePlayer(0);
         
     </script>

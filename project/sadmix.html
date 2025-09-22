@@ -22,7 +22,7 @@
         .song-artist { color: #bbb; }
         .song-album { color: #aaa; }
         .song-duration { color: #888; }
-        .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 18px; margin-top: 32px; }
+        .audio-player { background: #222; padding: 16px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 32px; }
         .audio-player img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
         .audio-info { flex: 1; }
         .audio-title { font-size: 1.1em; color: #fff; }
@@ -67,6 +67,69 @@
         .audio-player audio {
             width: 200px;
         }
+        .volume-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .volume-controls span {
+            font-size: 1.2em;
+            color: #bbb;
+        }
+        .volume-slider {
+            -webkit-appearance: none;
+            background: #555;
+            height: 4px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #1db954;
+            border-radius: 50%;
+        }
+        .audio-center {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .player-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .timeline-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+            gap: 10px;
+        }
+        .timeline {
+            width: 100%;
+            height: 4px;
+            background: #555;
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: #1db954;
+            border-radius: 2px;
+        }
+        #current-time, #duration {
+            color: #bbb;
+            font-size: 0.8em;
+            min-width: 30px;
+            text-align: center;
+        }
         @media (max-width: 900px) {
             .main-content { margin-left: 70px; padding: 24px 8px 80px 8px; }
             .playlist-header img { width: 90px; height: 90px; }
@@ -87,7 +150,7 @@
             <a href="javascript:history.back()">Back</a>
         </div>
         <div class="playlist-header">
-            <img src="images/sad mix.webp" alt ="Sad Mix Playlist Cover">
+            <img src="images/sad mix.webp" alt="Sad Mix Playlist Cover">
             <div class="info">
                 <h1>Sad Mix</h1>
                 <p>Let your feelings flow with these emotional tracks. Perfect for rainy days, late nights, or whenever you need to let it out.</p>
@@ -128,7 +191,7 @@
                         <td class="song-duration">3:30</td>
                     </tr>
                     <tr onclick="playSong(3)">
-                        <td>4</td>    
+                        <td>4</td>
                         <td class="song-title">All I Want</td>
                         <td class="song-artist">Kodaline</td>
                         <td class="song-album">In a Perfect World</td>
@@ -180,18 +243,34 @@
             </table>
         </div>
         <div class="audio-player" id="audio-player">
-            <img src="images/sad mix.webp" id="audio-img" alt="Now Playing">
-            <div class="audio-info">
-                <div class="audio-title" id="audio-title"></div>
-                <div class="audio-artist" id="audio-artist"></div>
+            <div class="player-left">
+                <img src="images/sad mix.webp" id="audio-img" alt="Now Playing">
+                <div class="audio-info">
+                    <div class="audio-title" id="audio-title"></div>
+                    <div class="audio-artist" id="audio-artist"></div>
+                </div>
             </div>
-            <div class="audio-controls">
-                <button id="add-to-playlist"><i class="fa-solid fa-plus"></i></button>
-                <button id="back-btn"><i class="fa-solid fa-backward-step"></i></button>
-                <button id="play-pause-btn"><i class="fa-solid fa-play"></i></button>
-                <button id="next-btn"><i class="fa-solid fa-forward-step"></i></button>
+            <div class="audio-center">
+                <div class="player-controls">
+                    <div class="audio-controls">
+                        <button id="back-btn"><i class="fa-solid fa-backward-step"></i></button>
+                        <button id="play-pause-btn"><i class="fa-solid fa-play"></i></button>
+                        <button id="next-btn"><i class="fa-solid fa-forward-step"></i></button>
+                    </div>
+                    <div class="timeline-container">
+                        <span id="current-time">0:00</span>
+                        <div class="timeline" id="timeline">
+                            <div class="progress" id="progress"></div>
+                        </div>
+                        <span id="duration">0:00</span>
+                    </div>
+                </div>
             </div>
-            <audio id="audio" style="width:200px;" preload="auto"></audio>
+            <div class="volume-controls">
+                <span class="volume-icon"><i class="fa-solid fa-volume-high"></i></span>
+                <input type="range" class="volume-slider">
+            </div>
+            <audio id="audio" preload="auto"></audio>
         </div>
     </div>
     <script>
@@ -215,8 +294,12 @@
         const playPauseBtn = document.getElementById('play-pause-btn');
         const nextBtn = document.getElementById('next-btn');
         const backBtn = document.getElementById('back-btn');
-        const addToPlaylistBtn = document.getElementById('add-to-playlist');
-        
+        const volumeSlider = document.querySelector('.volume-slider');
+        const timeline = document.getElementById('timeline');
+        const progress = document.getElementById('progress');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration');
+
         let currentSongIndex = -1;
         
         function updatePlayer(index) {
@@ -254,18 +337,50 @@
             playSong(prevIndex);
         }
 
-        function addToPlaylist() {
-            alert('This song has been added to your queue!');
+        function setVolume() {
+            audio.volume = volumeSlider.value;
+        }
+
+        function updateProgress() {
+            const progressPercent = (audio.currentTime / audio.duration) * 100;
+            progress.style.width = progressPercent + '%';
+            updateTime();
+        }
+
+        function updateTime() {
+            const formatTime = (time) => {
+                if (isNaN(time)) return '0:00';
+                const minutes = Math.floor(time / 60);
+                const seconds = Math.floor(time % 60);
+                return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            };
+            currentTimeEl.textContent = formatTime(audio.currentTime);
+            if (!isNaN(audio.duration)) {
+                durationEl.textContent = formatTime(audio.duration);
+            }
+        }
+
+        function setTimeline(e) {
+            const timelineWidth = timeline.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audio.duration;
+            audio.currentTime = (clickX / timelineWidth) * duration;
         }
 
         playPauseBtn.addEventListener('click', togglePlayPause);
         nextBtn.addEventListener('click', playNextSong);
         backBtn.addEventListener('click', playPreviousSong);
-        addToPlaylistBtn.addEventListener('click', addToPlaylist);
+        volumeSlider.addEventListener('input', setVolume);
+        audio.addEventListener('timeupdate', updateProgress);
+        timeline.addEventListener('click', setTimeline);
+        audio.addEventListener('loadedmetadata', updateTime);
 
+        // Initialize volume to max
+        audio.volume = 1;
+        volumeSlider.value = 1;
+        
         // Play the first song automatically
         updatePlayer(0);
-        
     </script>
 </body>
 </html>
