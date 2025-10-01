@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexible Two-Column Layout</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .text-section {
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .image-section img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+            }
+            .text-section, .image-section {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="text-section">
+            <h2>Morning Brew ☕</h2>
+            <p>This photo captures a simple moment of daily comfort: a steaming cup of coffee ready to start the day. It's all about the cozy ritual of a morning brew.</p>
+        </div>
+        <div class="image-section">
+            <img src="https://images.unsplash.com/photo-1541167760496-1b4e0d4a0443?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y29mZmVlJTIwY3VwfGVufDB8fDB8fHww" alt="A steaming cup of coffee on a wooden table.">
+        </div>
+    </div>
+
+</body>
+</html>

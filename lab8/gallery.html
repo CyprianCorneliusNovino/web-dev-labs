@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Grid Gallery</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            padding: 10px;
+        }
+        
+        .gallery-item {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<h1> PICTURES </h1>
+<style> 
+
+    h1 {
+        text-align: center;
+    }
+</style>
+<body>
+
+    <div class="container">
+        <div class="gallery-item">Picture 1</div>
+        <div class="gallery-item">Picture 2</div>
+        <div class="gallery-item">Picture 3</div>
+        <div class="gallery-item">Picture 4</div>
+        <div class="gallery-item">Picture 5</div>
+        <div class="gallery-item">Picture 6</div>
+    </div>
+
+</body>
+</html>
