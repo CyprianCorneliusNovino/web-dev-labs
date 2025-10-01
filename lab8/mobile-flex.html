@@ -5,22 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile-First Flexbox</title>
     <style>
+        body {
+            min-height: 50vh;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
         .container {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 20px;
+            width: 90%;
+            max-width: 800px;
+            padding: 30px;
+           
+            border-radius: 8px;
         }
 
         .box {
             background-color: lightblue;
-            border: 1px solid black;
-            padding: 20px;
+            padding: 40px;
             text-align: center;
+            font-size: 1.5em;
         }
 
         @media (min-width: 768px) {
             .container {
                 flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .box {
+                flex-grow: 1;
             }
         }
     </style>
