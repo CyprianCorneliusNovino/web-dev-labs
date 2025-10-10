@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Utility Showcase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        /* Optional: Add a height to cards/image placeholder for better visualization */
+        .card-img-placeholder {
+            height: 120px;
+            background-color: #dee2e6;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid bg-primary text-white p-3 p-md-5">
+        <h1 class="text-center">Full-Width Box (P-3, P-MD-5)</h1>
+        <p class="text-center mb-0">Padding increases on medium screens and up.</p>
+    </div>
+
+    <div class="container py-5">
+        <h2>Responsive Card Section</h2>
+
+        <div class="row g-4">
+            
+            <div class="col-12 col-md-4">
+                <div class="card h-100">
+                    <div class="card-img-placeholder"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Card One</h5>
+                        <p class="card-text">Full width on mobile, 1/3 width on desktop.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="card h-100">
+                    <div class="card-img-placeholder"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Card Two</h5>
+                        <p class="card-text">We are using the col-12 and col-md-4 grid classes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="card h-100">
+                    <div class="card-img-placeholder"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Card Three</h5>
+                        <p class="card-text">The use of d-none/d-md-block is not required here, but on the image below.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <div class="text-center">
+             <h3>Image Visibility Demo</h3>
+             <img src="https://via.placeholder.com/400x150/007bff/ffffff?text=Visible+on+MD+" 
+                  class="img-fluid d-none d-md-block border p-2" 
+                  alt="Visible on Desktop">
+            
+             <img src="https://via.placeholder.com/300x100/dc3545/ffffff?text=Visible+on+Mobile" 
+                  class="img-fluid d-block d-md-none border p-2" 
+                  alt="Visible on Mobile">
+             <p class="mt-2">Resize your browser to see the image change.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

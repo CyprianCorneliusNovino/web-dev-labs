@@ -71,6 +71,84 @@
             transform: scale(1.02); /* Makes the item slightly larger on hover */
         }
         
+        /* Contact Form Styles (no longer used in this file but keeping styles for safety) */
+        .contact-form-section {
+            background-color: rgba(240, 240, 240, 0.9);
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #5d4037;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: #6d4c41; /* Coffee brown button */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #5d4037; /* Darker brown on hover */
+        }
+        
+        /* Navigation Button Styles */
+        .nav-button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+
+
+         .nav-button-gallery {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-button {
+            display: inline-block;
+            background-color: #6d4c41; /* Coffee brown button */
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none; /* Remove underline */
+            border-radius: 5px;
+            font-size: 1.1em;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-button:hover {
+            background-color: #5d4037; /* Darker brown on hover */
+            transform: translateY(-2px);
+        }
+        
         footer {
             text-align: center;
             margin-top: 20px;
@@ -84,6 +162,16 @@
     <div class="container">
         <h1>Bean & Brew Café</h1>
         <p>Welcome to our cozy cafe, where every cup is a new adventure. We believe that a good cup of coffee can brighten anyone's day, and we're here to make sure you find your perfect blend.</p>
+        
+        <div class="nav-button-container">
+            <a href="contact.html" class="nav-button">Contact Us! ☕</a>
+        </div>
+
+          <div class="nav-button-gallery">
+            <a href="gallery.html" class="nav-button">Gallery ☕</a>
+            
+        </div>
+        
         <hr>
 
         <h2>Our Story</h2>
@@ -101,7 +189,7 @@
             </ul>
         </div>
         <hr>
-
+        
         <footer>
             <p>&copy; 2025 Bean & Brew Café. All rights reserved.</p>
         </footer>
