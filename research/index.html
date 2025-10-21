@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher's Weighted Picker Wheel</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="top-header">
+            <div class="header-left">
+                <i class="fas fa-wheel-alt logo-icon"></i>
+                <span class="logo-text">SPIN THE WHEEL</span>
+                <span class="logo-subtext">RANDOM PICKER</span>
+            </div>
+            <nav class="header-nav">
+                <a href="#"><i class="fas fa-th-large"></i> My Wheels</a>
+                <a href="#"><i class="fas fa-plus-circle"></i> Create New Wheel</a>
+                <a href="#"><i class="fas fa-cog"></i> Wheel Management</a>
+                <a href="#"><i class="fas fa-sliders-h"></i> Settings</a>
+                <a href="#" class="premium"><i class="fas fa-fire"></i> YouTube Comment Picker</a>
+                <a href="#" class="premium"><i class="fas fa-award"></i> Upgrade</a>
+            </nav>
+            <div class="header-right">
+                <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+                <a href="#"><i class="fas fa-star"></i> Rate Me</a>
+                <a href="#"><i class="fas fa-ellipsis-h"></i> More Apps</a>
+            </div>
+        </header>
+
+        
+        <div class="main-content">
+            
+            <div class="wheel-section">
+                <div class="wheel-controls-top">
+                    <button class="control-button"><i class="fas fa-volume-up"></i></button>
+                    <button class="control-button"><i class="fas fa-keyboard"></i></button>
+                    <button class="control-button"><i class="fas fa-clipboard-list"></i></button>
+                    <div class="wheel-status">16/16</div>
+                </div>
+                <div class="picker-pointer-outer"></div>
+                <div class="wheel-container">
+                    <canvas id="wheelCanvas" width="600" height="600"></canvas>
+                    <button id="spinButton" class="spin-center-button">SPIN</button>
+                </div>
+                <div class="picker-controls-bottom">
+                    <div class="toggle-switch">
+                        <span class="toggle-label">Magic OFF</span>
+                        <label class="switch">
+                            <input type="checkbox" id="magicModeToggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <button class="control-button"><i class="fas fa-balance-scale"></i></button>
+                </div>
+            </div>
+
+            
+            <div class="sidebar-section">
+                <div class="sidebar-panel">
+                    <h3>Wheel Title</h3>
+                    <input type="text" id="wheelTitle" class="full-width-input" value="Student Recitation Grades">
+                </div>
+
+                <div class="sidebar-panel advanced-options">
+                    <h3>Advanced</h3>
+                    <div class="advanced-grid">
+                        <span>Themes</span>
+                        <span>Wheel Colors</span>
+                        <span>Fonts</span>
+                        <span>Text Direction</span>
+                        <span>Slice Repeat</span>
+                        <span>Spin Mode</span>
+                        <span>Mystery</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-panel">
+                    <h3>Wheel Options (<span id="optionCount">0</span> of <span id="maxOptionCount">300</span>)</h3>
+                    <div class="wheel-options-list">
+                        </div>
+                    <button id="shuffleButton" class="sidebar-button"><i class="fas fa-random"></i> Shuffle</button>
+                </div>
+                 
+                <div class="sidebar-panel result-panel">
+                    <h3>Last Picked Student</h3>
+                    <p id="pickedStudentName">None yet.</p>
+                    <p id="pickedStudentGrade">Current Grade: N/A | Weight: N/A</p>
+                    <label for="newGrade">Record New Grade (0-100):</label>
+                    <input type="number" id="newGrade" min="0" max="100" placeholder="e.g., 90">
+                    <button id="recordGradeButton" class="sidebar-button" disabled>RECORD GRADE</button>
+                    
+                    <button id="downloadGradesButton" class="sidebar-button download-button"><i class="fas fa-download"></i> Download Grades (.csv)</button>
+                    </div>
+
+                <div class="sidebar-footer">
+                    <p>Last updated: <span id="lastUpdated"></span></p>
+                    <p class="copyright">© 2023 My App Catalog LLC - All rights reserved. Powered by WheelWiz.JS</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
