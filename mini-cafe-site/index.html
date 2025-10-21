@@ -123,14 +123,17 @@
         .nav-button-container {
             text-align: center;
             margin-bottom: 20px;
+            /* Added flex-based layout for centered, side-by-side buttons */
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* Spacing between the buttons */
         }
 
-
-
-         .nav-button-gallery {
+         /* .nav-button-gallery is no longer needed since we merged all nav buttons into .nav-button-container */
+        /* .nav-button-gallery {
             text-align: center;
             margin-bottom: 20px;
-        }
+        } */
 
         .nav-button {
             display: inline-block;
@@ -164,12 +167,9 @@
         <p>Welcome to our cozy cafe, where every cup is a new adventure. We believe that a good cup of coffee can brighten anyone's day, and we're here to make sure you find your perfect blend.</p>
         
         <div class="nav-button-container">
-            <a href="contact.html" class="nav-button">Contact Us! ☕</a>
-        </div>
-
-          <div class="nav-button-gallery">
-            <a href="gallery.html" class="nav-button">Gallery ☕</a>
-            
+            <a href="menu.html" class="nav-button">View Full Menu ☕</a>
+            <a href="gallery.html" class="nav-button">Gallery 📸</a>
+            <a href="contact.html" class="nav-button">Contact Us! 📞</a>
         </div>
         
         <hr>

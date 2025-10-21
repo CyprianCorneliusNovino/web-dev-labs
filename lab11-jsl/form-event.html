@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Event</title>
+</head>
+<body>
+    <h1>Say Hello</h1>
+    
+    <label for="userName">Enter Your Name:</label>
+    <input type="text" id="userName" placeholder="Your Name"><br><br>
+    
+    <button id="greetButton">Submit</button>
+    
+    <script>
+        document.getElementById('greetButton').addEventListener('click', function() {
+            // Get the value from the input field
+            const name = document.getElementById('userName').value;
+            
+            // Check if name is provided, otherwise use a placeholder
+            const display_name = name || "Guest"; 
+            
+            // Show the alert
+            alert("Thank you, " + display_name + "!");
+        });
+    </script>
+</body>
+</html>
