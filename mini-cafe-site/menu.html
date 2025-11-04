@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu | Bean & Brew Café</title>
     <style>
+        /* (KEEP ALL EXISTING STYLES FROM YOUR ORIGINAL menu.html <style> BLOCK HERE) */
+        
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f8ff;
@@ -169,57 +171,11 @@
 
         <hr>
 
-        <h2>Coffee & Espresso</h2>
+        <h2>All Menu Items (Dynamically Generated)</h2>
         
-        <div class="menu-item">
-            <div class="item-details">
-                <div class="item-name">The Classic Latte</div>
-                <div class="item-description">Rich espresso shot combined with steamed milk and a thin layer of foam. Perfect balance of milk and coffee.</div>
-                <div class="item-price">$4.50</div>
+        <div id="menu-list">
             </div>
-            <button class="order-btn" data-item="Classic Latte">Order Now</button>
-        </div>
-
-        <div class="menu-item">
-            <div class="item-details">
-                <div class="item-name">House Cold Brew</div>
-                <div class="item-description">Steeped for 20 hours, resulting in a smooth, low-acid, and naturally sweet concentrated coffee.</div>
-                <div class="item-price">$5.00</div>
-            </div>
-            <button class="order-btn" data-item="House Cold Brew">Order Now</button>
-        </div>
-
-        <div class="menu-item">
-            <div class="item-details">
-                <div class="item-name">Spicy Chai Tea</div>
-                <div class="item-description">Warm, complex blend of black tea, cinnamon, cardamom, and clove, served with your choice of milk.</div>
-                <div class="item-price">$4.00</div>
-            </div>
-            <button class="order-btn" data-item="Spicy Chai Tea">Order Now</button>
-        </div>
-
-        <hr>
-
-        <h2>Baked Goods & Food</h2>
-
-        <div class="menu-item">
-            <div class="item-details">
-                <div class="item-name">Almond Croissant</div>
-                <div class="item-description">Flaky, buttery croissant filled with sweet almond paste and topped with toasted slivers. A morning classic.</div>
-                <div class="item-price">$3.75</div>
-            </div>
-            <button class="order-btn" data-item="Almond Croissant">Order Now</button>
-        </div>
-
-        <div class="menu-item">
-            <div class="item-details">
-                <div class="item-name">Avocado Toast</div>
-                <div class="item-description">Thick-cut sourdough bread topped with freshly smashed avocado, sea salt, pepper, and a sprinkle of chili flakes.</div>
-                <div class="item-price">$7.50</div>
-            </div>
-            <button class="order-btn" data-item="Avocado Toast">Order Now</button>
-        </div>
-
+        
         <div id="order-summary">
             <h2>📝 Order Summary</h2>
             <p>Your current order:</p>
@@ -235,6 +191,7 @@
         </footer>
     </div>
 
+    <script src="menu.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

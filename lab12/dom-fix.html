@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity 2: DOM Fix</title>
+</head>
+<body>
+    <h1 id="title">Welcome!</h1>
+    <button onclick="changeTitle()">Change Title</button>
+
+    <script>
+        // The script needs to be inside a function so it executes
+        // when the button is clicked, or it will run immediately.
+        function changeTitle() {
+            // FIX: Correctly select the element using the ID selector (#title)
+            // or by using document.getElementById('title')
+            document.querySelector("#title").innerText = "Updated!";
+            // OR: document.getElementById('title').innerText = "Updated!";
+        }
+    </script>
+</body>
+</html>

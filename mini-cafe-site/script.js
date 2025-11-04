@@ -47,22 +47,14 @@ function handleOrderClick(event) {
         // Get the item name from the data-item attribute
         const itemName = event.target.getAttribute('data-item'); 
         
-        // 1. Show the alert (Step 4)
-        alert(`You ordered ${itemName}!`);
+        // **--- MODIFIED: Get price directly from the button's data attribute ---**
+        // The price is stored as a string in the data-price attribute, so parse it to a float
+        const priceString = event.target.getAttribute('data-price');
+        const itemPrice = parseFloat(priceString); 
+        
+        // 1. Show the alert
+        alert(`You ordered ${itemName} for $${itemPrice.toFixed(2)}!`);
 
-        // 2. (Optional) Update the order summary (Step 4 - Optional)
-        
-        // --- Logic to get item price ---
-        // For a simple example, we'll use a hardcoded map of prices.
-        const itemPrices = {
-            "Classic Latte": 4.50,
-            "House Cold Brew": 5.00,
-            "Spicy Chai Tea": 4.00,
-            "Almond Croissant": 3.75,
-            "Avocado Toast": 7.50
-        };
-        const itemPrice = itemPrices[itemName] || 0.00; // Get price or default to 0.00
-        
         // Add the new item to the order array
         currentOrder.push({ name: itemName, price: itemPrice });
 
@@ -71,7 +63,7 @@ function handleOrderClick(event) {
     }
 }
 
-// 3. Attach the event listener to the main container for efficiency (event delegation)
+// Attach the event listener to the main container for efficiency (event delegation)
 document.addEventListener('click', handleOrderClick);
 
 // Initialize the order summary when the page loads
