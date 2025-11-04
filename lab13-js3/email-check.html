@@ -2,24 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Format Validator</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
-        .error { color: red; }
-        .success { color: green; }
+        /* Base styles */
+        body {
+            background-color: #e9ecef; /* Light gray background */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        /* Main Card Container */
+        .validator-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+        /* Style for the validation message area */
+        #validationMessage {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            min-height: 50px; /* Reserve space to prevent layout jump */
+        }
+        /* Custom Bootstrap Success/Error overrides for better contrast */
+        .success {
+            color: #155724; /* Darker green text */
+            background-color: #d4edda; /* Light green background */
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            color: #721c24; /* Darker red text */
+            background-color: #f8d7da; /* Light red background */
+            border: 1px solid #f5c6cb;
+        }
+        h1 {
+            color: #343a40;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Email Validator</h1>
+    <div class="validator-card">
+        <h1>Email Validator <i class="fas fa-at"></i></h1>
 
-    <form id="emailForm">
-        <label for="email">Enter Email:</label><br>
-        <input type="text" id="email" name="email" required><br><br>
-        <button type="submit">Validate</button>
-    </form>
+        <form id="emailForm">
+            <div class="mb-3 text-start">
+                <label for="email" class="form-label fw-bold">Enter Email:</label>
+                <input type="email" id="email" name="email" class="form-control form-control-lg" placeholder="example@domain.com" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">
+                Validate Email
+            </button>
+        </form>
 
-    <div id="validationMessage">
+        <div id="validationMessage">
         </div>
+    </div>
 
     <script>
         const form = document.getElementById('emailForm');
@@ -48,5 +102,6 @@
         });
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

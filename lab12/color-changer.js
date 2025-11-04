@@ -1,12 +1,15 @@
-// Function to handle the background change
+
+
 function changeBackground() {
-    // Get the dropdown element
-    const selectElement = document.getElementById('color-select');
-
-    // Get the selected value from the dropdown
-    // Get the selected value
-    const selectedColor = selectElement.value; 
-
-    // Change the background color of the page using document.body.style.backgroundColor
+    const colorSelect = document.getElementById('color-select');
+    
+    const selectedColor = colorSelect.value;
+    
     document.body.style.backgroundColor = selectedColor;
+    
+    if (selectedColor === '#333') {
+        document.body.style.color = 'white';
+    } else {
+        document.body.style.color = '#333';
+    }
 }

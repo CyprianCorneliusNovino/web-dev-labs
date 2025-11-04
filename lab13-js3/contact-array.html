@@ -2,78 +2,128 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Form with Array Storage</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-color: #f4f7f6; /* Very light background for a clean look */
+            min-height: 100vh;
+            padding: 40px 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        /* Main Container for centered content */
+        .container {
+            max-width: 700px;
+        }
+        /* Card styling for the form and list */
+        .cool-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border: none;
+        }
+        /* Style the 'Previous Contacts' list */
+        #contactList {
+            list-style: none;
+            padding: 0;
+        }
+        #contactList li {
+            background-color: #e9ecef; /* Light gray background for list items */
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border-left: 5px solid #0d6efd; /* Blue accent border */
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+        /* Headings */
+        h1, h2 {
+            color: #212529;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Contact Form</h1>
-
-    <form id="contactForm">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
+    <div class="container">
         
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message" required></textarea><br><br>
-        
-        <button type="submit">Send Message</button>
-    </form>
+        <div class="cool-card">
+            <h1>Contact Form 📝</h1>
 
-    <h2>Previous Contacts</h2>
-    <ul id="contactList">
-        </ul>
+            <form id="contactForm">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Your Name" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message:</label>
+                    <textarea id="message" name="message" class="form-control" rows="3" placeholder="Your Message" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    Send Message <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+
+        <div class="cool-card">
+            <h2>Previous Contacts 🕰️</h2>
+            <ul id="contactList">
+                </ul>
+        </div>
+    </div>
 
     <script>
-        // Array to store the submitted data
+        // --- Existing JavaScript logic retained ---
         const contacts = [];
 
-        // 1. Get the form element
         const form = document.getElementById('contactForm');
-        // 2. Get the list element
         const contactList = document.getElementById('contactList');
 
-        // Add an event listener to handle form submission
         form.addEventListener('submit', function(event) {
-            // Prevent the default form submission (which causes a page reload)
             event.preventDefault(); 
 
-            // Get values from the input fields
             const name = document.getElementById('name').value.trim();
             const message = document.getElementById('message').value.trim();
 
             if (name === "" || message === "") {
                 alert("Please fill in both Name and Message fields.");
-                return; // Stop execution if fields are empty
+                return; 
             }
 
-            // Create an object to store the current contact data
             const contactEntry = {
                 name: name,
                 message: message,
                 timestamp: new Date().toLocaleTimeString()
             };
 
-            // Use push() to store the data in the array
             contacts.push(contactEntry);
 
-            // Display the updated list below the form
             displayContacts();
 
-            // Optional: Clear the form fields after successful submission
             form.reset();
         });
 
-        // Function to clear the existing list and re-display all contacts from the array
         function displayContacts() {
-            // Clear the current content of the list
             contactList.innerHTML = ''; 
 
-            // Iterate over the contacts array and create a list item for each
             contacts.forEach(contact => {
                 const listItem = document.createElement('li');
-                listItem.textContent = `[${contact.timestamp}] ${contact.name}: "${contact.message}"`;
+                // Added a span for the timestamp to possibly style it separately later
+                listItem.innerHTML = `<span class="text-muted fw-bold">${contact.timestamp}</span> &mdash; <strong>${contact.name}</strong>: "${contact.message}"`;
                 contactList.appendChild(listItem);
             });
         }
+        // --- End of existing JavaScript logic ---
     </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-// 3. Create an array of menu items
 const cafeMenu = [
     { name: "The Classic Latte", description: "Rich espresso shot combined with steamed milk and a thin layer of foam. Perfect balance of milk and coffee.", price: 4.50 },
     { name: "House Cold Brew", description: "Steeped for 20 hours, resulting in a smooth, low-acid, and naturally sweet concentrated coffee.", price: 5.00 },
@@ -9,17 +8,12 @@ const cafeMenu = [
     { name: "Blueberry Muffin", description: "Freshly baked muffin loaded with plump, juicy blueberries.", price: 3.00 }
 ];
 
-// Get the container element using its ID
 const menuListContainer = document.getElementById('menu-list');
 
-// 4. Use a loop to dynamically create and Insert HTML for each menu item
 cafeMenu.forEach(item => {
-    // Dynamically create the div (which acts as a 'card')
     const itemDiv = document.createElement('div');
     itemDiv.classList.add('menu-item'); 
 
-    // Construct the inner HTML, applying existing CSS classes
-    // Note: We use item.name for the data-item attribute for the cart script
     itemDiv.innerHTML = `
         <div class="item-details">
             <div class="item-name">${item.name}</div>
@@ -29,6 +23,5 @@ cafeMenu.forEach(item => {
         <button class="order-btn" data-item="${item.name}" data-price="${item.price.toFixed(2)}">Order Now</button>
     `;
 
-    // Insert the generated HTML into the container
     menuListContainer.appendChild(itemDiv);
 });

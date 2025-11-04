@@ -4,129 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Profile</title>
-    <link rel="stylesheet" href="style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Optional: Add custom CSS for the sidebar spacing and iframe */
+        /* You will need to define styles in style.css or here for the look and feel */
+        .sidebar-nav {
+            padding-right: 0;
+            /* Optional fixed height and overflow for long lists */
+            max-height: calc(100vh - 120px); /* Adjust based on header/footer size */
+            overflow-y: auto;
+        }
+        .content-frame {
+            height: calc(100vh - 100px); /* Match the height for the iframe */
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
 
-    <header>
-        <h2>CYPRIAN CORNELIUS B. NOVINO</h2>
-        <p>BSIE - ICT 3B</p>
-        <p><a class="custom-link fa-brands fa-github" 
-            href="https://github.com/CyprianCorneliusNovino/web-dev-labs"> Github Repository</a></p>    
+    <header class="p-3 mb-4 bg-dark text-white shadow-sm">
+        <div class="container-fluid">
+            <h2>CYPRIAN CORNELIUS B. NOVINO</h2>
+            <p class="mb-1">BSIE - ICT 3B</p>
+            <p class="mb-0">
+                <a class="custom-link fa-brands fa-github text-info text-decoration-none" 
+                   href="https://github.com/CyprianCorneliusNovino/web-dev-labs"> Github Repository</a>  
+            </p>    
+        </div>
     </header>
 
-    <div class="container">
-        <div class="sidebar">
-            <h3>Activities</h3>
-            <ul>
-                <li> Lab 1: Intro
-                    <ul>
-                        <li>
-                            <a href="lab1/act1.1.html" target="activity-frame">Activity 1</a>
-                        </li>
-                    </ul>
-                </li>
-                <li> Lab 2: Git
-                    <ul>
-                        <li>
-                            <a href="lab2/act2.1.html" target="activity-frame">Activity 2.1</a>
-                        </li>
-                    </ul>
-                </li>
-                <li> Lab 3: Workflow
-                    <ul>
-                        <li>
-                            <a href="lab3/act3.1.html" target="activity-frame">Activity 1</a>
-                        </li>
-                        <li> <a href="mini-cafe-site/index.html" target="activity-frame">mini-cafe-site</a></li>
-                        <li><a href="lab3/Mini-Cafe-Site/style.css" target="activity-frame">Home Page</a></li>
-                    </ul>
-                </li>
-                <li> Lab 4: HTML5 (Part 1)
-                    <ul>
-                        <li>
-                            <a href="lab4/about.html" target="activity-frame">About Me</a>
-                        </li>
-                        <li> <a href="lab4/firstpage.html" target="activity-frame">first page</a></li>
-                        <li>
-                            <a href="lab4/favorites.html" target="activity-frame">Favorites</a>
-                        </li>
-                        <li>
+    <div class="container-fluid">
+        <div class="row">
+            
+            <div class="col-md-3 col-lg-2 sidebar-nav p-3 bg-light">
+                <h3 class="border-bottom pb-2 mb-3">Activities</h3>
+                
+                <ul class="nav flex-column ps-0">
+                    <li class="nav-item fw-bold text-dark"> Lab 1: Intro
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item">
+                                <a class="nav-link p-1" href="lab1/act1.1.html" target="activity-frame">Activity 1</a>
                             </li>
-                    </ul>
-                </li>      
-                <li> Lab 5: HTML5 (Part 2)
-                    <ul>
-                        <li> <a href="lab5/links.html" target="activity-frame">GITHUB LINKS</a></li>
-                        <li> <a href="lab5/nav-page.html" target="activity-frame">Home Page</a></li>
-                        <li> <a href="lab5/embed-demo.html" target="activity-frame">MAP LOCATION</a></li>
-                    </ul>
-                </li>
-                <li> Lab 6: CSS
-                    <ul>
-                        <li> <a href="lab6/basic-style.html" target="activity-frame">basic-style</a></li>
-                        <li> <a href="lab6/box-style.html" target="activity-frame">box-style</a></li>
-                        <li> <a href="lab6/fix-style.html" target="activity-frame">fix-stylel</a></li>
-                        <li> <a href="lab6/text-style.html" target="activity-frame">text-style</a></li>    
-                        <li> <a href="lab6/wireframe-style.html" target="activity-frame">wireframe-style</a></li>
-                    </ul>
-                </li>
-                <li> Lab 7: Flexbox & Grid
-                    <ul>
-                        <li><a href="lab7/flexbox.html" target="activity-frame">Flexbox Basics</a></li>
-                        <li><a href="lab7/cards.html" target="activity-frame">Flexbox Card Layout</a></li>
-                        <li><a href="lab7/wireframe.html" target="activity-frame">Wireframe Home</a></li>
-                    </ul>
-                </li>
-                <li> Lab 8: Responsive Design
-                    <ul>
-                        <li><a href="lab8/fix-responsive.html" target="activity-frame">fix-responsive</a></li>
-                        <li><a href="lab8/gallery.html" target="activity-frame">gallery</a></li>
-                        <li><a href="lab8/media-fill.html" target="activity-frame">media-fill</a></li>
-                        <li><a href="lab8/mobile-flex.html" target="activity-frame">mobile-flex</a></li>
-                        <li><a href="lab8/two-column.html" target="activity-frame">two-column</a></li>
-                    </ul>
-                </li>
-                <li> Lab 9: Bootstrap
-                    <ul>
-                        <li><a href="lab9/alerts-button.html" target="activity-frame">Alerts & Buttons</a></li>
-                        <li><a href="lab9/bootstrap-fix.html" target="activity-frame">Bootstrap Fix</a></li>
-                        <li><a href="lab9/bootstrap-grid.html" target="activity-frame">Bootstrap Grid</a></li>
-                        <li><a href="lab9/card-bootstrap.html" target="activity-frame">Card Bootstrap</a></li>
-                    </ul>
-                </li>
-                <li> Lab 10: Utilities
-                    <ul>
-                        <li><a href="lab10/responsive-utilities.html" target="activity-frame">Responsive Utilities</a></li>
-                        <li><a href="lab10/section.html" target="activity-frame">Section</a></li>
-                        <li><a href="lab10/utilities-fix.html" target="activity-frame">Utilities Fix</a></li>
-                        <li><a href="lab10/utilities.html" target="activity-frame">Utilities</a></li>
-                        <li><a href="lab10/wireframe-responsive.html" target="activity-frame">Wireframe Responsive</a></li>
-                    </ul>
-                </li>
-                <li> Lab 11: JavaScript
-                    <ul>
-                        <li><a href="lab11-jsl/syntax.html" target="activity-frame">Activity 1: Basic Syntax</a></li>
-                        <li><a href="lab11-jsl/errorfix.html" target="activity-frame">Activity 2: Error Fixing</a></li>
-                        <li><a href="lab11-jsl/fill-blanks.js" target="activity-frame">Activity 3: Fill-in-Blanks</a></li>
-                        <li><a href="lab11-jsl/button-event.html" target="activity-frame">Activity 4: Button Message</a></li>
-                        <li><a href="lab11-jsl/calculator.html" target="activity-frame">Activity 5: Simple Calculator</a></li>
-                        <li><a href="lab11-jsl/form-event.html" target="activity-frame">Activity 6: Visual Wireframe</a></li>
                         </ul>
-                </li>
-                <li>Mini Project
-                    <ul>
-                        <li><a href="mini-cafe-site/index.html" target="activity-frame">Home Page</a></li>
-                        <li><a href="project/index.html" target="activity-frame">MUSIC PLAYER</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+                    </li>
+                    <li class="nav-item fw-bold text-dark mt-2"> Lab 2: Git
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item">
+                                <a class="nav-link p-1" href="lab2/act2.1.html" target="activity-frame">Activity 2.1</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item fw-bold text-dark mt-2"> Lab 3: Workflow
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item">
+                                <a class="nav-link p-1" href="lab3/act3.1.html" target="activity-frame">Activity 1</a>
+                            </li>
+                            <li class="nav-item"> <a class="nav-link p-1" href="mini-cafe-site/index.html" target="activity-frame">mini-cafe-site (Index)</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab3/Mini-Cafe-Site/style.css" target="activity-frame">Home Page (Style)</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item fw-bold text-dark mt-2"> Lab 4: HTML5 (Part 1)
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item">
+                                <a class="nav-link p-1" href="lab4/about.html" target="activity-frame">About Me</a>
+                            </li>
+                            <li class="nav-item"> <a class="nav-link p-1" href="lab4/firstpage.html" target="activity-frame">first page</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link p-1" href="lab4/favorites.html" target="activity-frame">Favorites</a>
+                            </li>
+                        </ul>
+                    </li>      
+                    <li class="nav-item fw-bold text-dark mt-2"> Lab 5: HTML5 (Part 2)
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item"> <a class="nav-link p-1" href="lab5/links.html" target="activity-frame">GITHUB LINKS</a></li>
+                            <li class="nav-item"> <a class="nav-link p-1" href="lab5/nav-page.html" target="activity-frame">Home Page</a></li>
+                            <li class="nav-item"> <a class="nav-link p-1" href="lab5/embed-demo.html" target="activity-frame">MAP LOCATION</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item fw-bold text-dark mt-2"> Lab 6: CSS
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item"> <a class="nav-link p-1" href="lab6/basic-style.html" target="activity-frame">basic-style</a></li>
+                            <li class="nav-item"> <a class="nav-link p-1" href="lab6/box-style.html" target="activity-frame">box-style</a></li>
+                            <li class="nav-item"> <a class="nav-link p-1" href="lab6/fix-style.html" target="activity-frame">fix-stylel</a></li>
+                            <li class="nav-item"> <a class="nav-link p-1" href="lab6/text-style.html" target="activity-frame">text-style</a></li>    
+                            <li class="nav-item"> <a class="nav-link p-1" href="lab6/wireframe-style.html" target="activity-frame">wireframe-style</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item fw-bold text-dark mt-2"> Lab 7: Flexbox & Grid
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item"><a class="nav-link p-1" href="lab7/flexbox.html" target="activity-frame">Flexbox Basics</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab7/cards.html" target="activity-frame">Flexbox Card Layout</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab7/wireframe.html" target="activity-frame">Wireframe Home</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item fw-bold text-dark mt-2"> Lab 8: Responsive Design
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item"><a class="nav-link p-1" href="lab8/fix-responsive.html" target="activity-frame">fix-responsive</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab8/gallery.html" target="activity-frame">gallery</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab8/media-fill.html" target="activity-frame">media-fill</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab8/mobile-flex.html" target="activity-frame">mobile-flex</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab8/two-column.html" target="activity-frame">two-column</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item fw-bold text-dark mt-2"> Lab 9: Bootstrap
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item"><a class="nav-link p-1" href="lab9/alerts-button.html" target="activity-frame">Alerts & Buttons</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab9/bootstrap-fix.html" target="activity-frame">Bootstrap Fix</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab9/bootstrap-grid.html" target="activity-frame">Bootstrap Grid</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab9/card-bootstrap.html" target="activity-frame">Card Bootstrap</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item fw-bold text-dark mt-2"> Lab 10: Utilities
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item"><a class="nav-link p-1" href="lab10/responsive-utilities.html" target="activity-frame">Responsive Utilities</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab10/section.html" target="activity-frame">Section</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab10/utilities-fix.html" target="activity-frame">Utilities Fix</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab10/utilities.html" target="activity-frame">Utilities</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab10/wireframe-responsive.html" target="activity-frame">Wireframe Responsive</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item fw-bold text-dark mt-2"> Lab 11: JavaScript
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item"><a class="nav-link p-1" href="lab11-jsl/syntax.html" target="activity-frame">Activity 1: Basic Syntax</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab11-jsl/errorfix.html" target="activity-frame">Activity 2: Error Fixing</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab11-jsl/fill-blanks.js" target="activity-frame">Activity 3: Fill-in-Blanks</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab11-jsl/button-event.html" target="activity-frame">Activity 4: Button Message</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab11-jsl/calculator.html" target="activity-frame">Activity 5: Simple Calculator</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab11-jsl/form-event.html" target="activity-frame">Activity 6: Visual Wireframe</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item fw-bold text-dark mt-2"> **Lab 12: DOM & Loops** 💡
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item"><a class="nav-link p-1" href="lab12/dom-select.html" target="activity-frame">Activity 1: DOM Selection & Text</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab12/dom-fix.html" target="activity-frame">Activity 2: Error Identification (Fixed)</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab12/loop-fill.html" target="activity-frame">Activity 3: Fill-in-Blanks Loop</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab12/list-generator.html" target="activity-frame">Activity 4: Create List Items</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab12/color-changer.html" target="activity-frame">Activity 5: Dynamic BG Changer</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="lab12/dynamic-table.html" target="activity-frame">Activity 6: Dynamic Table</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item fw-bold text-dark mt-2">Mini Project
+                        <ul class="nav flex-column ps-3">
+                            <li class="nav-item"><a class="nav-link p-1" href="mini-cafe-site/index.html" target="activity-frame">Home Page</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="mini-cafe-site/menu.html" target="activity-frame">Part 9: Dynamic Menu</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="mini-cafe-site/feedback.html" target="activity-frame">Part 10: Feedback Form</a></li>
+                            <li class="nav-item"><a class="nav-link p-1" href="project/index.html" target="activity-frame">MUSIC PLAYER</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
 
-        <div class="content">
-            <iframe name="activity-frame"></iframe>
+            <div class="col-md-9 col-lg-10 content p-3">
+                <iframe name="activity-frame" class="w-100 content-frame"></iframe>
+            </div>
         </div>
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
