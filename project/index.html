@@ -5,448 +5,263 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Discovery - Playlists by Mood</title>
     <meta name="description" content="Discover new music playlists by mood. Find the perfect soundtrack for every moment!">
-    <link rel="stylesheet" href="css/styles.css">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="css/styles.css"> 
+    
     <style>
-        body {
-            background: #181818;
-            color: #fff;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+        /* Custom Variables and Base Styles (Simulating Spotify/Dark Theme) */
+        :root {
+            --bs-body-bg: #181818;
+            --bs-body-color: #fff;
+            --sidebar-bg: #121212;
+            --card-bg: #222222;
+            --highlight-color: #1ed760; /* Spotify Green */
         }
+
+        body {
+            background: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding-bottom: 92px; /* Space for fixed player */
+        }
+        
+        /* Sidebar (Fixed position layout) */
         .sidebar {
             width: 260px;
-            background: #121212;
+            background: var(--sidebar-bg);
             height: 100vh;
             position: fixed;
-            left: 0;
             top: 0;
-            display: flex;
-            flex-direction: column;
-            padding: 24px 0 0 0;
-            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);
-            transition: width 0.3s;
+            left: 0;
+            padding: 24px 0;
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.5);
+            z-index: 10;
         }
-        .sidebar .logo {
-            font-size: 2em;
-            font-weight: bold;
-            color: #1db954;
-            text-align: center;
-            margin-bottom: 32px;
-            letter-spacing: 2px;
-        }
-        .sidebar nav {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 32px;
-        }
-        .sidebar nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 32px;
-            font-size: 1.1em;
-            border-radius: 6px;
-            transition: background 0.2s, color 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .sidebar nav a.active,
-        .sidebar nav a:hover {
-            background: #282828;
-            color: #1ed760;
-        }
-        .sidebar .recent {
-            margin: 24px 0 0 0;
-            padding: 0 32px;
-        }
-        .sidebar .recent h3 {
-            font-size: 1em;
-            color: #bbb;
-            margin-bottom: 10px;
-            margin-top: 0;
-            font-weight: 400;
-        }
-        .sidebar .recent ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .sidebar .recent li {
-            margin-bottom: 10px;
-            color: #eee;
-            font-size: 0.98em;
-            opacity: 0.85;
-        }
-        .sidebar .create-btn {
-            margin: 24px 32px 0 32px;
-            background: #1db954;
-            color: #fff;
-            border: none;
-            border-radius: 20px;
-            padding: 10px 0;
-            font-size: 1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .sidebar .create-btn:hover {
-            background: #1ed760;
-        }
+        
+        /* Main content offset */
         .main-content {
             margin-left: 260px;
-            padding: 36px 40px 40px 40px;
+            padding-top: 36px;
+            padding-bottom: 40px;
             min-height: 100vh;
-            background: #181818;
         }
-        .search-bar {
-            width: 100%;
-            max-width: 420px;
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            background: #222;
-            border-radius: 24px;
-            padding: 8px 18px;
-        }
-        .search-bar input {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 1.1em;
-            width: 100%;
-            outline: none;
-            margin-left: 10px;
-        }
-        .section-title {
-            font-size: 1.4em;
-            margin: 32px 0 18px 0;
-            color: #fff;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-        .playlist-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 28px;
-        }
-        .playlist-card {
-            background: #222;
-            border-radius: 14px;
-            padding: 18px 16px 16px 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: background 0.2s, transform 0.2s;
-            cursor: pointer;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-            text-decoration: none;
-        }
+
+        /* Playlist Card Custom Styling */
         .playlist-card:hover {
-            background: #282828;
-            transform: translateY(-6px) scale(1.03);
+            background: #282828 !important;
+            transform: translateY(-4px) scale(1.02);
         }
         .playlist-card img {
-            width: 110px;
-            height: 110px;
+            width: 130px; /* Adjusting size for card-img-top feel */
+            height: 130px;
             object-fit: cover;
             border-radius: 10px;
             margin-bottom: 14px;
             background: #333;
         }
-        .playlist-card .playlist-title {
-            font-size: 1.08em;
-            font-weight: 500;
-            color: #fff;
-            margin-bottom: 4px;
-            text-align: center;
-        }
-        .playlist-card .playlist-desc {
-            font-size: 0.97em;
-            color: #bbb;
-            text-align: center;
-            margin-bottom: 2px;
-        }
-        .playlist-card .playlist-meta {
-            font-size: 0.85em;
-            color: #888;
-            margin-top: 2px;
-        }
-        /* New styling for the detailed footer player */
+        
+        /* Player Bar Customizations */
         .footer-player {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
             background: #222;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
             z-index: 100;
         }
-        .audio-player-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            width: 25%;
-        }
-        .audio-player-info img {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-        .audio-player-info .info {
-            display: flex;
-            flex-direction: column;
-        }
-        .audio-player-info .info .audio-title {
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-        .audio-player-info .info .audio-artist {
-            color: #bbb;
-            font-size: 0.9em;
-        }
-        .audio-controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-grow: 1;
-        }
-        .audio-controls .main-controls {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .audio-controls .main-controls button {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5em;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
         .audio-controls .main-controls button:hover {
-            color: #1db954;
+            color: var(--highlight-color);
         }
-        .audio-controls .play-pause-btn {
-            font-size: 2em;
-        }
-        .audio-controls .timeline {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            margin-top: 10px;
-        }
-        .audio-controls .timeline span {
-            font-size: 0.8em;
-            color: #aaa;
-        }
-        .audio-controls .timeline input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 4px;
-            background: #535353;
-            border-radius: 2px;
-            cursor: pointer;
-            outline: none;
-        }
-        .audio-controls .timeline input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
-            background: #1db954;
-            border-radius: 50%;
-        }
-        .volume-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 25%;
-            justify-content: flex-end;
-        }
-        .volume-controls i {
-            font-size: 1em;
-            color: #fff;
-        }
-        .volume-controls input[type="range"] {
-            -webkit-appearance: none;
-            width: 100px;
-            height: 4px;
-            background: #535353;
-            border-radius: 2px;
-            cursor: pointer;
-            outline: none;
-        }
-        .volume-controls input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
-            background: #fff;
-            border-radius: 50%;
-        }
-        
-        /* Responsive design */
-        @media (max-width: 900px) {
-            .main-content {
-                margin-left: 70px;
-                padding: 24px 8px 80px 8px;
-            }
-            .audio-player-container {
-                left: 70px;
-                padding: 10px 8px;
-            }
+
+        /* Responsive design using Bootstrap utilities and custom overrides */
+        @media (max-width: 992px) { /* Medium screens and down */
             .sidebar {
                 width: 70px;
+            }
+            .sidebar .logo, .sidebar .recent, .sidebar .create-btn {
+                display: none !important; /* Hide non-essential sidebar elements */
             }
             .sidebar nav a span {
                 display: none;
             }
+            .main-content {
+                margin-left: 70px;
+            }
         }
-        @media (max-width: 600px) {
+        @media (max-width: 576px) { /* Small screens and down */
             .sidebar {
                 display: none;
             }
             .main-content {
                 margin-left: 0;
-                padding: 16px 2vw 80px 2vw;
             }
-            .audio-player-container {
-                flex-direction: column;
-                padding: 12px;
-                left: 0;
+            .footer-player .volume-controls, .footer-player .audio-player-info {
+                width: 100% !important; /* Full width for mobile player parts */
             }
-            .audio-controls .timeline {
-                width: 90%;
-            }
-            .audio-player-info {
-                width: 100%;
-                justify-content: center;
-            }
-            .volume-controls {
-                display: none;
+            .footer-player {
+                 flex-direction: column;
+                 padding: 12px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo">Musicify</div>
-        <nav>
-            <a href="index.html" class="active">Home</a>
-            <a href="playlists.html">Playlists</a>
-            <a href="moods.html">Moods</a>
-            <a href="about.html">About</a>
+    <div class="sidebar d-flex flex-column">
+        <div class="logo text-center text-success fs-3 fw-bold mb-4">Musicify</div>
+        <nav class="nav flex-column gap-2 mb-4">
+            <a href="index.html" class="nav-link text-white py-2 px-4 rounded-3 active bg-dark" aria-current="page">
+                <i class="fas fa-home me-2"></i> <span>Home</span>
+            </a>
+            <a href="playlists.html" class="nav-link text-white py-2 px-4 rounded-3">
+                <i class="fas fa-list-ul me-2"></i> <span>Playlists</span>
+            </a>
+            <a href="moods.html" class="nav-link text-white py-2 px-4 rounded-3">
+                <i class="fas fa-headphones me-2"></i> <span>Moods</span>
+            </a>
+            <a href="about.html" class="nav-link text-white py-2 px-4 rounded-3">
+                <i class="fas fa-info-circle me-2"></i> <span>About</span>
+            </a>
         </nav>
-        <div class="recent">
-            <h3>Recently Played</h3>
-            <ul>
-                <li>Chill Vibes</li>
-                <li>Energetic Beats</li>
-                <li>Focus & Study</li>
+        
+        <div class="recent px-4 mt-4">
+            <h3 class="fs-6 text-secondary mb-2 fw-light">Recently Played</h3>
+            <ul class="list-unstyled">
+                <li class="text-light opacity-75 mb-1">Chill Vibes</li>
+                <li class="text-light opacity-75 mb-1">Energetic Beats</li>
+                <li class="text-light opacity-75 mb-1">Focus & Study</li>
             </ul>
         </div>
+        
+        <button class="btn btn-success rounded-pill fw-bold mt-4 mx-4 create-btn">
+            Create New Playlist
+        </button>
     </div>
-    <div class="main-content">
-        <form class="search-bar" id="search-form">
-            <i class="fa fa-search" style="color:#bbb;"></i>
-            <input type="text" placeholder="Search playlists, moods, artists..." id="search-input"/>
+    
+    <div class="main-content container-fluid px-4 px-md-5">
+        
+        <form class="search-bar d-flex align-items-center bg-secondary-subtle rounded-pill p-2 mb-4" id="search-form">
+            <i class="fa fa-search text-secondary ms-2 me-2"></i>
+            <input type="text" class="form-control bg-transparent border-0 text-white" 
+                   placeholder="Search playlists, moods, artists..." id="search-input"/>
         </form>
+        
         <div>
-            <div class="section-title">Mood Playlists</div>
-            <div class="playlist-grid" id="mood-playlists">
-                <a href="chillvibes.html" class="playlist-card">
-                    <img src="images/chillvibes.webp" alt="Chill Vibes">
-                    <div class="playlist-title">Chill Vibes</div>
-                    <div class="playlist-desc">Relax and unwind with mellow tunes.</div>
-                    <div class="playlist-meta">10 tracks • 40min</div>
-                </a>
-                <a href="energetic.html" class="playlist-card">
-                    <img src="images/energetic.webp" alt="Energetic Beats">
-                    <div class="playlist-title">Energetic Beats</div>
-                    <div class="playlist-desc">Get pumped with high-energy music.</div>
-                    <div class="playlist-meta">5 tracks • 17min</div>
-                </a>
-                <a href="focus.html" class="playlist-card">
-                    <img src="images/focus.webp" alt="Focus & Study">
-                    <div class="playlist-title">Focus & Study</div>
-                    <div class="playlist-desc">Stay productive with focused sounds.</div>
-                    <div class="playlist-meta">5 tracks • 15min</div>
-                </a>
-                <a href="rainyday.html" class="playlist-card">
-                    <img src="images/rainyday.webp" alt="Rainy Day Melodies">
-                    <div class="playlist-title">Rainy Day Melodies</div>
-                    <div class="playlist-desc">Perfect for cozy, rainy days.</div>
-                    <div class="playlist-meta">5 tracks • 17 min</div>
-                </a>
+            <h2 class="section-title text-white fs-4 fw-bold mt-4 mb-3">Mood Playlists</h2>
+            
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3 g-lg-4" id="mood-playlists">
+                
+                <div class="col">
+                    <a href="chillvibes.html" class="playlist-card text-decoration-none d-flex flex-column align-items-center bg-dark p-3 rounded-3 shadow-sm h-100">
+                        <img src="images/chillvibes.webp" alt="Chill Vibes" class="mb-3 rounded-2">
+                        <div class="playlist-title text-white fw-medium text-center text-truncate w-100">Chill Vibes</div>
+                        <div class="playlist-desc text-secondary text-center small text-truncate w-100">Relax and unwind with mellow tunes.</div>
+                        <div class="playlist-meta text-muted small mt-1">10 tracks • 40min</div>
+                    </a>
+                </div>
+                
+                <div class="col">
+                    <a href="energetic.html" class="playlist-card text-decoration-none d-flex flex-column align-items-center bg-dark p-3 rounded-3 shadow-sm h-100">
+                        <img src="images/energetic.webp" alt="Energetic Beats" class="mb-3 rounded-2">
+                        <div class="playlist-title text-white fw-medium text-center text-truncate w-100">Energetic Beats</div>
+                        <div class="playlist-desc text-secondary text-center small text-truncate w-100">Get pumped with high-energy music.</div>
+                        <div class="playlist-meta text-muted small mt-1">5 tracks • 17min</div>
+                    </a>
+                </div>
+                
+                <div class="col">
+                    <a href="focus.html" class="playlist-card text-decoration-none d-flex flex-column align-items-center bg-dark p-3 rounded-3 shadow-sm h-100">
+                        <img src="images/focus.webp" alt="Focus & Study" class="mb-3 rounded-2">
+                        <div class="playlist-title text-white fw-medium text-center text-truncate w-100">Focus & Study</div>
+                        <div class="playlist-desc text-secondary text-center small text-truncate w-100">Stay productive with focused sounds.</div>
+                        <div class="playlist-meta text-muted small mt-1">5 tracks • 15min</div>
+                    </a>
+                </div>
+                
+                <div class="col">
+                    <a href="rainyday.html" class="playlist-card text-decoration-none d-flex flex-column align-items-center bg-dark p-3 rounded-3 shadow-sm h-100">
+                        <img src="images/rainyday.webp" alt="Rainy Day Melodies" class="mb-3 rounded-2">
+                        <div class="playlist-title text-white fw-medium text-center text-truncate w-100">Rainy Day Melodies</div>
+                        <div class="playlist-desc text-secondary text-center small text-truncate w-100">Perfect for cozy, rainy days.</div>
+                        <div class="playlist-meta text-muted small mt-1">5 tracks • 17 min</div>
+                    </a>
+                </div>
             </div>
-            <div class="section-title">New Releases</div>
-            <div class="playlist-grid" id="new-releases">
-                <a href="sadmix.html" class="playlist-card">
-                    <img src="images/sad mix.webp" alt="Sad Mix">
-                    <div class="playlist-title">Sad Mix</div>
-                    <div class="playlist-desc">Emotional tracks for rainy days.</div>
-                    <div class="playlist-meta">10 tracks • 45min</div>
-                </a>
-                <a href="daylist.html" class="playlist-card">
-                    <img src="images/daylist.webp" alt="Daylist">
-                    <div class="playlist-title">Daylist</div>
-                    <div class="playlist-desc">A playlist for every part of your day.</div>
-                    <div class="playlist-meta">11 tracks • 45min</div>
-                </a>
-                <a href="pophits.html" class="playlist-card">
-                    <img src="images/pophits.webp" alt="Pop Hits">
-                    <div class="playlist-title">Pop Hits</div>
-                    <div class="playlist-desc">Today's top pop songs.</div>
-                    <div class="playlist-meta">5 tracks • 17min</div>
-                </a>
-                <a href="rock.html" class="playlist-card">
-                    <img src="images/rock.webp" alt="Rock Essentials">
-                    <div class="playlist-title">Rock Essentials</div>
-                    <div class="playlist-desc">Classic and modern rock.</div>
-                    <div class="playlist-meta">10 tracks • 45min</div>
-                </a>
+            
+            <h2 class="section-title text-white fs-4 fw-bold mt-5 mb-3">New Releases</h2>
+            
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3 g-lg-4" id="new-releases">
+                <div class="col">
+                    <a href="sadmix.html" class="playlist-card text-decoration-none d-flex flex-column align-items-center bg-dark p-3 rounded-3 shadow-sm h-100">
+                        <img src="images/sad mix.webp" alt="Sad Mix" class="mb-3 rounded-2">
+                        <div class="playlist-title text-white fw-medium text-center text-truncate w-100">Sad Mix</div>
+                        <div class="playlist-desc text-secondary text-center small text-truncate w-100">Emotional tracks for rainy days.</div>
+                        <div class="playlist-meta text-muted small mt-1">10 tracks • 45min</div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="daylist.html" class="playlist-card text-decoration-none d-flex flex-column align-items-center bg-dark p-3 rounded-3 shadow-sm h-100">
+                        <img src="images/daylist.webp" alt="Daylist" class="mb-3 rounded-2">
+                        <div class="playlist-title text-white fw-medium text-center text-truncate w-100">Daylist</div>
+                        <div class="playlist-desc text-secondary text-center small text-truncate w-100">A playlist for every part of your day.</div>
+                        <div class="playlist-meta text-muted small mt-1">11 tracks • 45min</div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="pophits.html" class="playlist-card text-decoration-none d-flex flex-column align-items-center bg-dark p-3 rounded-3 shadow-sm h-100">
+                        <img src="images/pophits.webp" alt="Pop Hits" class="mb-3 rounded-2">
+                        <div class="playlist-title text-white fw-medium text-center text-truncate w-100">Pop Hits</div>
+                        <div class="playlist-desc text-secondary text-center small text-truncate w-100">Today's top pop songs.</div>
+                        <div class="playlist-meta text-muted small mt-1">5 tracks • 17min</div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="rock.html" class="playlist-card text-decoration-none d-flex flex-column align-items-center bg-dark p-3 rounded-3 shadow-sm h-100">
+                        <img src="images/rock.webp" alt="Rock Essentials" class="mb-3 rounded-2">
+                        <div class="playlist-title text-white fw-medium text-center text-truncate w-100">Rock Essentials</div>
+                        <div class="playlist-desc text-secondary text-center small text-truncate w-100">Classic and modern rock.</div>
+                        <div class="playlist-meta text-muted small mt-1">10 tracks • 45min</div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
     
-    <div class="footer-player">
-        <div class="audio-player-info">
-            <img id="audio-img" src="images/placeholder.webp" alt="Now Playing">
-            <div class="info">
-                <div class="audio-title" id="audio-title"></div>
-                <div class="audio-artist" id="audio-artist"></div>
+    <div class="footer-player fixed-bottom d-flex align-items-center p-3">
+        
+        <div class="audio-player-info d-flex align-items-center me-3" style="width: 25%;">
+            <img id="audio-img" src="images/placeholder.webp" alt="Now Playing" class="rounded-2 me-3" style="width: 60px; height: 60px; object-fit: cover;">
+            <div class="info d-flex flex-column">
+                <div class="audio-title text-white fw-bold text-truncate" id="audio-title"></div>
+                <div class="audio-artist text-secondary small text-truncate" id="audio-artist"></div>
             </div>
         </div>
-        <div class="audio-controls">
-            <div class="main-controls">
-                <button id="prev-btn"><i class="fa-solid fa-backward-step"></i></button>
-                <button id="play-pause-btn" class="play-pause-btn"><i class="fa-solid fa-play"></i></button>
-                <button id="next-btn"><i class="fa-solid fa-forward-step"></i></button>
+        
+        <div class="audio-controls d-flex flex-column align-items-center flex-grow-1 mx-3">
+            <div class="main-controls d-flex align-items-center gap-3">
+                <button id="prev-btn" class="btn btn-link text-white p-0 fs-5"><i class="fa-solid fa-backward-step"></i></button>
+                <button id="play-pause-btn" class="play-pause-btn btn btn-link text-white p-0 fs-4"><i class="fa-solid fa-play"></i></button>
+                <button id="next-btn" class="btn btn-link text-white p-0 fs-5"><i class="fa-solid fa-forward-step"></i></button>
             </div>
-            <div class="timeline">
-                <span id="current-time">0:00</span>
-                <input type="range" id="progress-bar" value="0" step="0.1" min="0" max="100">
-                <span id="total-time">0:00</span>
+            <div class="timeline d-flex align-items-center w-75 mt-2">
+                <span id="current-time" class="small text-muted me-2">0:00</span>
+                <input type="range" class="form-range flex-grow-1" id="progress-bar" value="0" step="0.1" min="0" max="100">
+                <span id="total-time" class="small text-muted ms-2">0:00</span>
             </div>
         </div>
-        <div class="volume-controls">
-            <i class="fa-solid fa-volume-high"></i>
-            <input type="range" id="volume-bar" value="100" step="1" min="0" max="100">
+        
+        <div class="volume-controls d-flex align-items-center justify-content-end" style="width: 25%;">
+            <i class="fa-solid fa-volume-high text-white me-2"></i>
+            <input type="range" class="form-range" id="volume-bar" value="100" step="1" min="0" max="100" style="width: 100px;">
         </div>
     </div>
     
     <audio id="audio" preload="auto"></audio>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
     <script>
-        // Data for all playlists and their songs
+        // Data for all playlists and their songs (UNCHANGED)
         const allPlaylists = [
             { id: 'chillvibes', title: 'Chill Vibes', artist: 'Exaa Rod010', desc: 'Relax and unwind with mellow tunes.', img: 'images/chillvibes.webp', songs: [
                 { title: 'BIRDS OF A FEATHER', artist: 'Billie Eilish', src: 'audio/Billie Eilish - BIRDS OF A FEATHER.mp3' },
@@ -493,7 +308,7 @@
             ]},
         ];
 
-        // Player State
+        // Player State (UNCHANGED)
         const player = {
             isPlaying: false,
             currentSongIndex: -1,
@@ -509,14 +324,14 @@
             volumeBar: document.getElementById('volume-bar'),
         };
 
-        // Initialize Player with a default track
+        // Initialize Player with a default track (UNCHANGED)
         function initializePlayer() {
             player.currentSongIndex = 0;
             updatePlayerDisplay(player.currentPlaylist[0]);
             player.audioEl.volume = player.volumeBar.value / 100;
         }
 
-        // Update the display for the player
+        // Update the display for the player (UNCHANGED)
         function updatePlayerDisplay(song) {
             player.titleEl.textContent = song.title;
             player.artistEl.textContent = song.artist;
@@ -529,7 +344,7 @@
             player.audioEl.src = song.src;
         }
 
-        // Toggle Play/Pause
+        // Toggle Play/Pause (UNCHANGED)
         function togglePlayPause() {
             if (player.isPlaying) {
                 player.audioEl.pause();
@@ -541,7 +356,7 @@
             player.isPlaying = !player.isPlaying;
         }
 
-        // Play Next Song
+        // Play Next Song (UNCHANGED)
         function playNext() {
             player.currentSongIndex = (player.currentSongIndex + 1) % player.currentPlaylist.length;
             updatePlayerDisplay(player.currentPlaylist[player.currentSongIndex]);
@@ -550,7 +365,7 @@
             player.playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
         }
 
-        // Play Previous Song
+        // Play Previous Song (UNCHANGED)
         function playPrev() {
             player.currentSongIndex = (player.currentSongIndex - 1 + player.currentPlaylist.length) % player.currentPlaylist.length;
             updatePlayerDisplay(player.currentPlaylist[player.currentSongIndex]);
@@ -559,7 +374,7 @@
             player.playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
         }
 
-        // Format time in minutes and seconds
+        // Format time in minutes and seconds (UNCHANGED)
         function formatTime(seconds) {
             const minutes = Math.floor(seconds / 60);
             const remainingSeconds = Math.floor(seconds % 60);
@@ -567,12 +382,12 @@
             return `${minutes}:${formattedSeconds}`;
         }
         
-        // --- Event Listeners ---
+        // --- Event Listeners --- (UNCHANGED)
         document.getElementById('play-pause-btn').addEventListener('click', togglePlayPause);
         document.getElementById('next-btn').addEventListener('click', playNext);
         document.getElementById('prev-btn').addEventListener('click', playPrev);
 
-        // Timeline and Progress Bar Updates
+        // Timeline and Progress Bar Updates (UNCHANGED)
         player.audioEl.addEventListener('loadedmetadata', () => {
             player.progressBar.max = player.audioEl.duration;
             player.totalTimeEl.textContent = formatTime(player.audioEl.duration);
@@ -587,7 +402,7 @@
             player.audioEl.currentTime = player.progressBar.value;
         });
 
-        // Volume Control
+        // Volume Control (UNCHANGED)
         player.volumeBar.addEventListener('input', () => {
             player.audioEl.volume = player.volumeBar.value / 100;
             const volumeIcon = document.querySelector('.volume-controls i');
@@ -604,10 +419,10 @@
             }
         });
 
-        // Auto-play next song when current one ends
+        // Auto-play next song when current one ends (UNCHANGED)
         player.audioEl.addEventListener('ended', playNext);
 
-        // Initial player setup
+        // Initial player setup (UNCHANGED)
         initializePlayer();
     </script>
 </body>

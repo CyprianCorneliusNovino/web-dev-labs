@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation Form</title>
+</head>
+<body>
+
+    <h1>Restaurant Reservation</h1>
+
+    <form id="reservationForm">
+        <label for="res_name">Name:</label><br>
+        <input type="text" id="res_name" name="name" required><br><br>
+        
+        <label for="res_date">Date:</label><br>
+        <input type="date" id="res_date" name="date" required><br><br>
+        
+        <label for="res_time">Time:</label><br>
+        <input type="time" id="res_time" name="time" required><br><br>
+        
+        <label for="res_guests">Guests (Number):</label><br>
+        <input type="number" id="res_guests" name="guests" min="1" max="10" required><br><br>
+        
+        <button type="submit">Submit Reservation</button>
+    </form>
+
+    <div id="submissionOutput" style="border: 1px solid #ccc; padding: 10px; margin-top: 20px; display: none;">
+        <h2>Your Reservation Details:</h2>
+        </div>
+
+    <script>
+        const form = document.getElementById('reservationForm');
+        const outputDiv = document.getElementById('submissionOutput');
+
+        form.addEventListener('submit', function(event) {
+            // 1. Prevent page refresh
+            event.preventDefault(); 
+
+            // Get all field values
+            const name = document.getElementById('res_name').value.trim();
+            const date = document.getElementById('res_date').value.trim();
+            const time = document.getElementById('res_time').value.trim();
+            const guests = document.getElementById('res_guests').value.trim();
+
+            // 2. Validate that all fields are filled
+            // HTML 'required' helps, but this JS check adds a layer for good practice.
+            if (name === "" || date === "" || time === "" || guests === "") {
+                alert("Please fill in ALL required fields for your reservation.");
+                return; // Stop the process
+            }
+
+            // Simple check for Guests being a positive number
+            if (parseInt(guests, 10) <= 0 || isNaN(parseInt(guests, 10))) {
+                 alert("Guests must be a valid number greater than 0.");
+                 return;
+            }
+
+            // 3. Display submitted info below without reloading
+            outputDiv.style.display = 'block';
+            outputDiv.innerHTML = `
+                <h2>Your Reservation Details:</h2>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Date:</strong> ${date}</p>
+                <p><strong>Time:</strong> ${time}</p>
+                <p><strong>Guests:</strong> ${guests}</p>
+                <p style="color: green;">Reservation successfully submitted (client-side).</p>
+            `;
+
+            // Optional: Clear form after successful submission
+            form.reset();
+        });
+    </script>
+</body>
+</html>

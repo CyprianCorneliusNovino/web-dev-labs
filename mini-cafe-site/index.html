@@ -4,161 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Bean & Brew Café</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff; /* Fallback background color */
-            color: #333;
-            margin: 0;
-            padding: 20px;
-
-            /* Background Image Styles */
-            background-image: url('https://via.placeholder.com/1920x1080/f0f8ff/555555?text=Coffee+Beans+Background'); /* Replace with your image URL */
-            background-size: cover; /* Covers the entire body */
-            background-attachment: fixed; /* Keeps the background image in place when scrolling */
-            background-position: center center; /* Centers the background image */
-        }
-
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white for readability */
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px; /* Added rounded corners to the main container */
-        }
-
-        h1, h2 {
-            color: #5d4037; /* A deep brown color, like coffee beans */
-            text-align: center;
-        }
-
-        hr {
-            border: none;
-            height: 1px;
-            background-color: #ccc;
-            margin: 20px 0;
-        }
-
-        /* Styling for the menu list section */
-        .menu-list {
-            background-color: rgba(224, 224, 224, 0.85); /* Slightly transparent light gray */
-            padding: 20px;
-            border-radius: 8px; /* Rounded corners */
-            border: 2px solid #a1887f; /* A darker brown border */
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .menu-list h2 {
-            margin-top: 0;
-        }
-
-        .menu-list ul {
-            list-style-type: none; /* Removes the default bullet points */
-            padding: 0;
-            margin: 0;
-        }
-
-        .menu-list li {
-            background-color: rgba(245, 245, 245, 0.9); /* Slightly transparent background for list items */
-            margin-bottom: 10px;
-            padding: 10px;
-            border-left: 5px solid #6d4c41; /* A vertical bar for visual accent */
-            transition: transform 0.2s; /* A smooth hover effect */
-        }
-
-        .menu-list li:hover {
-            transform: scale(1.02); /* Makes the item slightly larger on hover */
-        }
-        
-        /* Contact Form Styles (no longer used in this file but keeping styles for safety) */
-        .contact-form-section {
-            background-color: rgba(240, 240, 240, 0.9);
-            padding: 30px;
-            border-radius: 8px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #5d4037;
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-        }
-
-        .submit-btn {
-            background-color: #6d4c41; /* Coffee brown button */
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1.1em;
-            transition: background-color 0.3s;
-        }
-
-        .submit-btn:hover {
-            background-color: #5d4037; /* Darker brown on hover */
-        }
-        
-        /* Navigation Button Styles */
-        .nav-button-container {
-            text-align: center;
-            margin-bottom: 20px;
-            /* Added flex-based layout for centered, side-by-side buttons */
-            display: flex;
-            justify-content: center;
-            gap: 15px; /* Spacing between the buttons */
-        }
-
-         /* .nav-button-gallery is no longer needed since we merged all nav buttons into .nav-button-container */
-        /* .nav-button-gallery {
-            text-align: center;
-            margin-bottom: 20px;
-        } */
-
-        .nav-button {
-            display: inline-block;
-            background-color: #6d4c41; /* Coffee brown button */
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none; /* Remove underline */
-            border-radius: 5px;
-            font-size: 1.1em;
-            transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-button:hover {
-            background-color: #5d4037; /* Darker brown on hover */
-            transform: translateY(-2px);
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #666;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
 
@@ -169,13 +16,15 @@
         <div class="nav-button-container">
             <a href="menu.html" class="nav-button">View Full Menu ☕</a>
             <a href="gallery.html" class="nav-button">Gallery 📸</a>
-            <a href="contact.html" class="nav-button">Contact Us! 📞</a>
+            
+            <a href="feedback.html" class="nav-button">Give Feedback! 💬</a>
         </div>
         
         <hr>
 
         <h2>Our Story</h2>
         <p>Every great story starts with a simple idea. Our journey began with a passion for high-quality, ethically sourced coffee and a desire to create a welcoming space for our community. We started small, with just a few tables and a big dream, and we’ve grown thanks to the support of our amazing customers who share our love for great coffee.</p>
+        
         <hr>
 
         <div class="menu-list">
@@ -188,6 +37,7 @@
                 <li>Cold Brew</li>
             </ul>
         </div>
+        
         <hr>
         
         <footer>

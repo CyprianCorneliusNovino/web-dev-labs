@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Form with preventDefault</title>
+</head>
+<body>
+
+    <h1>User Input Form</h1>
+
+    <form id="userForm">
+        
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <p id="outputMessage"></p>
+
+    <script>
+        // Get the form element
+        const form = document.getElementById('userForm');
+        const output = document.getElementById('outputMessage');
+
+        // Attach a listener to the form's submit event
+        form.addEventListener('submit', function(event) {
+            
+            // This is the key step 3: Stop the page from refreshing
+            event.preventDefault(); 
+            
+            // Get values (for demonstration)
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+
+            // Step 4: Show the form input below the form after submission
+            output.textContent = `Submission successful! Name: ${name}, Email: ${email}`;
+            
+            // In a real application, this is where your full validation/data storage would go.
+        });
+    </script>
+
+</body>
+</html>

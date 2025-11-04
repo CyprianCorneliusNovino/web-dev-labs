@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Format Validator</title>
+    <style>
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+
+    <h1>Email Validator</h1>
+
+    <form id="emailForm">
+        <label for="email">Enter Email:</label><br>
+        <input type="text" id="email" name="email" required><br><br>
+        <button type="submit">Validate</button>
+    </form>
+
+    <div id="validationMessage">
+        </div>
+
+    <script>
+        const form = document.getElementById('emailForm');
+        const validationMessage = document.getElementById('validationMessage');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Stop page reload
+
+            const emailInput = document.getElementById('email');
+            const email = emailInput.value.trim();
+
+            // Clear previous message
+            validationMessage.textContent = '';
+            validationMessage.className = '';
+
+            // Basic validation: must contain '@' and '.'
+            if (email.includes('@') && email.includes('.')) {
+                // VALID
+                validationMessage.textContent = "Email Accepted! (Basic check passed)";
+                validationMessage.classList.add('success');
+            } else {
+                // INVALID
+                validationMessage.textContent = "Invalid email format. Must contain '@' and '.'";
+                validationMessage.classList.add('error');
+            }
+        });
+    </script>
+
+</body>
+</html>

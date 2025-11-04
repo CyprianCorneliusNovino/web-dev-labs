@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Validation Fix</title>
+</head>
+<body>
+
+    <form onsubmit="return validateForm();">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // CODE SNIPPET 13.1 - FIXED
+        function validateForm() {
+            // Output numbers 1 to 5 (This line seems like a leftover comment, removed for clarity)
+
+            // 1. Get the value of the 'name' input field
+            let name = document.getElementById("name").value;
+
+            // 2. ERROR FIXED: Changed assignment (=) to strict comparison (===)
+            // Check if the name field is empty
+            if (name === "") {
+                alert("Please enter your name.");
+                // Prevent form submission if validation fails
+                return false; 
+            }
+            
+            // If validation passes, allow form submission (or add success logic)
+            // For a simple test, we can show a success alert and return true.
+            alert("Name is valid. Form would submit now.");
+            return true; 
+        }
+    </script>
+
+</body>
+</html>

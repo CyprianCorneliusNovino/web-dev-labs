@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery | Bean & Brew Café</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <style>
         /* Custom Styles to ensure image aspect ratio and fill the space */
         .card-img-top {
-            height: 250px; /* Increased height for better display of images */
-            object-fit: cover; /* Ensures the image covers the area without distortion */
+            height: 250px; 
+            object-fit: cover; 
             border-bottom: 1px solid #ddd;
         }
 
@@ -25,77 +26,101 @@
             border-color: #4e342e;
             color: white;
         }
+
+        /* Styling for the Navigation Button (matching index/menu/feedback) */
+        .nav-button-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .nav-button {
+            display: inline-block;
+            background-color: #6d4c41; /* Coffee Accent */
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+        .nav-button:hover {
+            background-color: #5d4037; /* Primary Brown on hover */
+        }
     </style>
 </head>
 <body>
 
     <div class="container py-5">
+        
+        <div class="nav-button-container">
+            <a href="index.html" class="nav-button">← Back to Home</a>
+        </div>
+        
         <h1 class="text-center mb-5 display-4 text-dark">☕ Our Gallery: Bean & Brew Moments</h1>
         
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             
             <div class="col">
                 <div class="card h-100 shadow-sm">
-                    <img src="https://via.placeholder.com/600x400/8d6e63/ffffff?text=Perfect+Pour+Over" class="card-img-top" alt="Image of a perfect pour over coffee">
+                    <img src="https://source.unsplash.com/600x400/?pour-over-coffee" class="card-img-top" alt="Image of a perfect pour over coffee">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title text-center text-brown">The Signature Pour-Over</h5>
                         <p class="card-text">Showcasing the meticulous art of our baristas. Experience coffee brewing at its finest with our single-origin beans.</p>
-                        <a href="#" class="btn btn-coffee mt-auto">View Details</a>
+                        <a href="menu.html" class="btn btn-coffee mt-auto">View Menu</a>
                     </div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="card h-100 shadow-sm">
-                    <img src="https://via.placeholder.com/600x400/a1887f/ffffff?text=Delicious+Latte+Art" class="card-img-top" alt="Image of beautiful latte art">
+                    <img src="https://source.unsplash.com/600x400/?latte-art" class="card-img-top" alt="Image of beautiful latte art">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title text-center text-brown">Silky Smooth Latte Art</h5>
                         <p class="card-text">Every latte is a canvas! Enjoy a creamy texture and beautiful design crafted with precision and passion.</p>
-                        <a href="#" class="btn btn-coffee mt-auto">See More</a>
+                        <a href="menu.html" class="btn btn-coffee mt-auto">See More</a>
                     </div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="card h-100 shadow-sm">
-                    <img src="https://via.placeholder.com/600x400/bcaaa4/333333?text=Fresh+Baked+Pastries" class="card-img-top" alt="Image of fresh baked pastries">
+                    <img src="https://source.unsplash.com/600x400/?pastries,bakery" class="card-img-top" alt="Image of fresh baked pastries">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title text-center text-brown">Daily Baked Pastries</h5>
                         <p class="card-text">From croissants to muffins, our bakery items are baked fresh every morning and pair perfectly with your brew.</p>
-                        <a href="#" class="btn btn-coffee mt-auto">Explore Treats</a>
+                        <a href="menu.html" class="btn btn-coffee mt-auto">Explore Treats</a>
                     </div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="card h-100 shadow-sm">
-                    <img src="https://via.placeholder.com/600x400/d7ccc8/333333?text=Cozy+Cafe+Interior" class="card-img-top" alt="Image of the cozy cafe interior">
+                    <img src="https://source.unsplash.com/600x400/?cafe-interior,cozy" class="card-img-top" alt="Image of the cozy cafe interior">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title text-center text-brown">Our Cozy Atmosphere</h5>
                         <p class="card-text">A welcoming, sunlit space designed for work, conversation, or simply relaxing with your favorite cup.</p>
-                        <a href="#" class="btn btn-coffee mt-auto">Visit Us</a>
+                        <a href="index.html" class="btn btn-coffee mt-auto">Visit Us</a>
                     </div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="card h-100 shadow-sm">
-                    <img src="https://via.placeholder.com/600x400/795548/ffffff?text=Roasted+Coffee+Beans" class="card-img-top" alt="Image of roasted coffee beans">
+                    <img src="https://source.unsplash.com/600x400/?coffee-beans,roasted" class="card-img-top" alt="Image of roasted coffee beans">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title text-center text-brown">Freshly Roasted Beans</h5>
                         <p class="card-text">We source and roast the finest beans from around the world to ensure maximum freshness and flavor.</p>
-                        <a href="#" class="btn btn-coffee mt-auto">Buy Beans</a>
+                        <a href="feedback.html" class="btn btn-coffee mt-auto">Leave Feedback</a>
                     </div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="card h-100 shadow-sm">
-                    <img src="https://via.placeholder.com/600x400/9e9e9e/ffffff?text=Refreshing+Cold+Brew" class="card-img-top" alt="Image of a refreshing cold brew with ice">
+                    <img src="https://source.unsplash.com/600x400/?iced-coffee,cold-brew" class="card-img-top" alt="Image of a refreshing cold brew with ice">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title text-center text-brown">Iced Coffee Perfection</h5>
                         <p class="card-text">Our signature Cold Brew is slow-steeped for 24 hours, giving it a smooth, low-acid, and refreshing taste.</p>
-                        <a href="#" class="btn btn-coffee mt-auto">Order Now</a>
+                        <a href="menu.html" class="btn btn-coffee mt-auto">Order Now</a>
                     </div>
                 </div>
             </div>

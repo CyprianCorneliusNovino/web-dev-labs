@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Form with Array Storage</title>
+</head>
+<body>
+
+    <h1>Contact Form</h1>
+
+    <form id="contactForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" required></textarea><br><br>
+        
+        <button type="submit">Send Message</button>
+    </form>
+
+    <h2>Previous Contacts</h2>
+    <ul id="contactList">
+        </ul>
+
+    <script>
+        // Array to store the submitted data
+        const contacts = [];
+
+        // 1. Get the form element
+        const form = document.getElementById('contactForm');
+        // 2. Get the list element
+        const contactList = document.getElementById('contactList');
+
+        // Add an event listener to handle form submission
+        form.addEventListener('submit', function(event) {
+            // Prevent the default form submission (which causes a page reload)
+            event.preventDefault(); 
+
+            // Get values from the input fields
+            const name = document.getElementById('name').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (name === "" || message === "") {
+                alert("Please fill in both Name and Message fields.");
+                return; // Stop execution if fields are empty
+            }
+
+            // Create an object to store the current contact data
+            const contactEntry = {
+                name: name,
+                message: message,
+                timestamp: new Date().toLocaleTimeString()
+            };
+
+            // Use push() to store the data in the array
+            contacts.push(contactEntry);
+
+            // Display the updated list below the form
+            displayContacts();
+
+            // Optional: Clear the form fields after successful submission
+            form.reset();
+        });
+
+        // Function to clear the existing list and re-display all contacts from the array
+        function displayContacts() {
+            // Clear the current content of the list
+            contactList.innerHTML = ''; 
+
+            // Iterate over the contacts array and create a list item for each
+            contacts.forEach(contact => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `[${contact.timestamp}] ${contact.name}: "${contact.message}"`;
+                contactList.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>
