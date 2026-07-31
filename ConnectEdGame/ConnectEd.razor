@@ -1,0 +1,291 @@
+@page "/connected"
+@using ConnectEd.Models
+@using ConnectEd.Services
+@inject ICliSimulatorService CliService
+@inject IGamificationService GameService
+
+<style>
+    /* Map Container - Isometric POV Style */
+    .game-world-container {
+        position: relative;
+        width: 100%;
+        height: 80vh;
+        background-color: #2c3e50;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        perspective: 1000px;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        background-image: 
+            linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+        background-size: 50px 50px;
+    }
+
+    /* Top POV Row of Offices */
+    .office-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        max-width: 800px;
+        margin-top: -20px;
+        transform: rotateX(15deg);
+    }
+
+    .office-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+    .office-container:hover {
+        transform: scale(1.05);
+    }
+
+    .office-room {
+        width: 140px;
+        height: 140px;
+        background-color: #ecf0f1;
+        border-radius: 8px;
+        box-shadow: 0 10px 0 #bdc3c7, 0 15px 20px rgba(0,0,0,0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        color: #34495e;
+        font-family: sans-serif;
+        position: relative;
+        border: 2px solid #34495e;
+    }
+
+    .status-led {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: #2ecc71;
+    }
+    .status-led.broken {
+        background-color: #e74c3c;
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0.3; }
+        100% { opacity: 1; }
+    }
+
+    .office-label {
+        margin-top: 15px;
+        color: white;
+        background: rgba(0,0,0,0.6);
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .room-ui-panel {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        max-width: 600px;
+        background-color: #1e1e1e;
+        border: 2px solid #f1c40f;
+        border-radius: 12px;
+        padding: 20px;
+        color: #ecf0f1;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        animation: slideUp 0.3s ease-out;
+        z-index: 10;
+    }
+    @keyframes slideUp {
+        from { transform: translateX(-50%) translateY(50px); opacity: 0; }
+        to { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+
+    .diagnostic-text {
+        font-family: 'Consolas', monospace;
+        color: #00ff41;
+        background: #000;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
+
+<!-- GAME UI -->
+<div class="container-fluid mt-4">
+    <div class="row mb-3 text-light align-items-center">
+        <div class="col">
+            <h2>ConnectEd - IT Support Sim</h2>
+            <div>
+                <span class="badge bg-primary">XP: @Player.TotalXP</span>
+                <span class="badge bg-warning text-dark">Level: @Player.Level</span>
+            </div>
+        </div>
+        <div class="col text-end">
+            <button class="btn btn-outline-danger btn-sm" @onclick="ResetGame">End Shift</button>
+        </div>
+    </div>
+
+    <div class="game-world-container">
+        <div class="office-row">
+            @foreach (var office in Offices)
+            {
+                <div class="office-container" @onclick="() => EnterOffice(office)">
+                    <div class="office-room">
+                        <span>🖥️</span>
+                        <div class="status-led @(office.IsFixed ? "" : "broken")"></div>
+                    </div>
+                    <div class="office-label">@office.Name</div>
+                </div>
+            }
+        </div>
+
+        @if (CurrentOffice != null && !CurrentOffice.IsFixed)
+        {
+            <div class="room-ui-panel">
+                <div class="d-flex justify-content-between align-items-center border-bottom border-secondary pb-2 mb-3">
+                    <h5 class="m-0 text-warning">🛠️ Help Desk Ticket: @CurrentOffice.Name</h5>
+                    <button class="btn btn-sm btn-outline-light" @onclick="CloseOfficePanel">✕</button>
+                </div>
+
+                <p><strong>Issue:</strong> @CurrentOffice.ProblemDescription</p>
+                
+                <div class="mt-3">
+                    <label class="form-label text-muted">Enter diagnostic command:</label>
+                    <input type="text" class="form-control bg-dark text-white border-success" 
+                           placeholder="e.g., ping, ipconfig, show interfaces..." 
+                           @bind="UserInput" 
+                           @onkeydown="HandleKeyDown" />
+                    <div class="mt-2">
+                        <button class="btn btn-success btn-sm" @onclick="ValidateCommand">Run Command</button>
+                        <button class="btn btn-secondary btn-sm" @onclick="ShowHint">Hint</button>
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(FeedbackMessage))
+                {
+                    <div class="diagnostic-text mt-3">
+                        > @FeedbackMessage
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private PlayerProfile Player = new PlayerProfile { Name = "IT Support" };
+    private List<OfficeRoom> Offices = new();
+    private OfficeRoom? CurrentOffice = null;
+    
+    private string UserInput = string.Empty;
+    private string FeedbackMessage = string.Empty;
+    private bool UsedHint = false;
+
+    public class OfficeRoom
+    {
+        public string Name { get; set; } = string.Empty;
+        public string ProblemDescription { get; set; } = string.Empty;
+        public string ExpectedSolution { get; set; } = string.Empty; 
+        public bool IsFixed { get; set; } = false;
+    }
+
+    protected override void OnInitialized()
+    {
+        ResetGame();
+    }
+
+    private void ResetGame()
+    {
+        Player.TotalXP = 0;
+        Player.Level = 1;
+        CurrentOffice = null;
+        FeedbackMessage = string.Empty;
+        GenerateNewMap();
+    }
+
+    private void GenerateNewMap()
+    {
+        var random = new Random();
+        var problems = new List<(string Prob, string Solution)>
+        {
+            ("PC keeps saying 'Request Timed Out' when pinging the gateway.", "ping 192.168.1.1"),
+            ("Users report very slow internet speeds.", "show interfaces"),
+            ("The wireless access point is not broadcasting the SSID.", "no shutdown"),
+            ("The switch port is down and users are disconnected.", "show ip interface brief")
+        };
+
+        Offices = new List<OfficeRoom>();
+        for (int i = 1; i <= 3; i++)
+        {
+            var issue = problems[random.Next(problems.Count)];
+            Offices.Add(new OfficeRoom
+            {
+                Name = $"Office {i}",
+                ProblemDescription = issue.Prob,
+                ExpectedSolution = issue.Solution,
+                IsFixed = false
+            });
+        }
+    }
+
+    private void EnterOffice(OfficeRoom office)
+    {
+        if (office.IsFixed) return;
+        CurrentOffice = office;
+        UserInput = string.Empty;
+        FeedbackMessage = string.Empty;
+        UsedHint = false;
+    }
+
+    private void CloseOfficePanel()
+    {
+        CurrentOffice = null;
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter") ValidateCommand();
+    }
+
+    private void ValidateCommand()
+    {
+        if (CurrentOffice == null || CurrentOffice.IsFixed) return;
+
+        var result = CliService.ValidateCommand(UserInput, CurrentOffice.ExpectedSolution);
+        FeedbackMessage = result.Feedback;
+
+        if (result.IsValid)
+        {
+            CurrentOffice.IsFixed = true;
+            int earnedXp = GameService.CalculateXp(isUnderTimeLimit: true, usedHint: UsedHint);
+            Player.TotalXP += earnedXp;
+            Player.Level = (Player.TotalXP / 200) + 1;
+            FeedbackMessage += " 🎉 Ticket Resolved! The user can work again!";
+            _ = Task.Delay(2000).ContinueWith(_ => InvokeAsync(CloseOfficePanel));
+        }
+    }
+
+    private void ShowHint()
+    {
+        UsedHint = true;
+        if (CurrentOffice != null)
+        {
+            FeedbackMessage = $"💡 Try checking the connectivity or configuration. (Try: {CurrentOffice.ExpectedSolution})";
+        }
+    }
+}
