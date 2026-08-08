@@ -1,107 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ConnectEd - IT Support Sim</title>
-    <style>
-        body { font-family: sans-serif; background: #1e1e1e; color: white; text-align: center; }
-        #map-container { background: #2c3e50; padding: 50px; margin: 20px auto; width: 80%; border-radius: 12px; display: flex; justify-content: center; }
-        .office { background: #ecf0f1; width: 120px; height: 120px; margin: 0 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; color: black; font-weight: bold;}
-        .led { width: 15px; height: 15px; border-radius: 50%; position: absolute; top: 10px; right: 10px; background: green; }
-        .led.broken { background: red; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.3; } }
-        #ui-panel { background: #333; padding: 20px; width: 60%; margin: 0 auto; border: 2px solid gold; border-radius: 12px; }
-        input { padding: 10px; width: 60%; margin-top: 10px; background: #222; color: white; border: 1px solid green; }
-        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fix Wiring - Network Cabling Challenge</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div id="app">
-        <h1>ConnectEd - IT Support Sim</h1>
-        <div class="stats">XP: <span id="xp">0</span> | Level: <span id="level">1</span></div>
-        
-        <div id="map-container">
-            <div id="office-row"></div>
+    <!-- Background -->
+    <div class="bg-pattern"></div>
+
+    <!-- Main Container -->
+    <div class="game-container">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="header-left">
+                <span class="logo-icon">🔌</span>
+                <h1>FIX <span class="highlight">WIRING</span></h1>
+                <span class="level-badge" id="levelBadge">LEVEL 1</span>
+            </div>
+            <div class="header-right">
+                <div class="header-stat">
+                    <span>⏱️</span>
+                    <span id="timerDisplay">00:30</span>
+                </div>
+                <div class="header-stat">
+                    <span>⭐</span>
+                    <span id="scoreDisplay">0</span>
+                </div>
+                <div class="header-stat">
+                    <span>🔥</span>
+                    <span id="streakDisplay">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Task Description -->
+        <div class="task-banner">
+            <div class="task-icon">📋</div>
+            <div class="task-text">
+                <span class="task-label">TASK:</span>
+                <span class="task-desc" id="taskDesc">RECONNECT WIRES TO RESTORE OFFICE POWER</span>
+            </div>
+            <div class="task-location">
+                <span>🏢</span>
+                <span id="locationDisplay">OFFICE BLOCK C</span>
+            </div>
         </div>
 
-        <div id="ui-panel" style="display:none;">
-            <h3 id="office-title">Office 1</h3>
-            <p id="problem-desc">Loading issue...</p>
-            <input type="text" id="cmd-input" placeholder="Enter command...">
-            <button id="run-btn">Run Command</button>
-            <button id="hint-btn">Hint</button>
-            <pre id="feedback" style="color: #00ff41; background: black; padding: 10px; margin-top: 10px; text-align: left;"></pre>
+        <!-- Main Wiring Area -->
+        <div class="wiring-area">
+            <!-- Left Side: Power Source -->
+            <div class="power-source">
+                <div class="source-label">⚡ POWER SOURCE</div>
+                <div class="source-ports">
+                    <div class="port" data-port="red">
+                        <span class="port-color red"></span>
+                        <span class="port-label">L1</span>
+                    </div>
+                    <div class="port" data-port="yellow">
+                        <span class="port-color yellow"></span>
+                        <span class="port-label">L2</span>
+                    </div>
+                    <div class="port" data-port="green">
+                        <span class="port-color green"></span>
+                        <span class="port-label">L3</span>
+                    </div>
+                    <div class="port" data-port="blue">
+                        <span class="port-color blue"></span>
+                        <span class="port-label">N</span>
+                    </div>
+                </div>
+                <div class="source-status" id="sourceStatus">
+                    <span class="status-dot"></span>
+                    SOURCE READY
+                </div>
+            </div>
+
+            <!-- Middle: Wiring Canvas (Drop Zone) -->
+            <div class="wiring-canvas" id="wiringCanvas">
+                <div class="canvas-label">🔌 CONNECT WIRES</div>
+                <div class="wire-drop-zones">
+                    <!-- Drop zones for each wire -->
+                    <div class="drop-zone" data-target="red">
+                        <span class="drop-label">RED →</span>
+                        <div class="drop-slot" id="dropRed"></div>
+                    </div>
+                    <div class="drop-zone" data-target="yellow">
+                        <span class="drop-label">YELLOW →</span>
+                        <div class="drop-slot" id="dropYellow"></div>
+                    </div>
+                    <div class="drop-zone" data-target="green">
+                        <span class="drop-label">GREEN →</span>
+                        <div class="drop-slot" id="dropGreen"></div>
+                    </div>
+                    <div class="drop-zone" data-target="blue">
+                        <span class="drop-label">BLUE →</span>
+                        <div class="drop-slot" id="dropBlue"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Equipment Panel -->
+            <div class="equipment-panel">
+                <div class="equip-label">🖥️ OFFICE EQUIPMENT</div>
+                <div class="equip-list">
+                    <div class="equip-item">
+                        <span>💻</span>
+                        <span>Workstation 1</span>
+                        <span class="equip-status" id="equip1">⬜</span>
+                    </div>
+                    <div class="equip-item">
+                        <span>🖨️</span>
+                        <span>Printer</span>
+                        <span class="equip-status" id="equip2">⬜</span>
+                    </div>
+                    <div class="equip-item">
+                        <span>📞</span>
+                        <span>Phone System</span>
+                        <span class="equip-status" id="equip3">⬜</span>
+                    </div>
+                    <div class="equip-item">
+                        <span>📡</span>
+                        <span>Network Switch</span>
+                        <span class="equip-status" id="equip4">⬜</span>
+                    </div>
+                </div>
+                <div class="equip-status-total">
+                    <span>Power: <span id="powerPercent">0%</span></span>
+                    <div class="power-bar">
+                        <div class="power-fill" id="powerFill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wire Inventory (Draggable Wires) -->
+        <div class="wire-inventory">
+            <div class="inventory-label">📦 WIRE INVENTORY - Drag to connect</div>
+            <div class="wire-list">
+                <div class="wire-item" draggable="true" data-color="red" id="wireRed">
+                    <span class="wire-color red"></span>
+                    <span class="wire-name">Red Wire</span>
+                    <span class="wire-id">#A1</span>
+                </div>
+                <div class="wire-item" draggable="true" data-color="yellow" id="wireYellow">
+                    <span class="wire-color yellow"></span>
+                    <span class="wire-name">Yellow Wire</span>
+                    <span class="wire-id">#B2</span>
+                </div>
+                <div class="wire-item" draggable="true" data-color="green" id="wireGreen">
+                    <span class="wire-color green"></span>
+                    <span class="wire-name">Green Wire</span>
+                    <span class="wire-id">#C3</span>
+                </div>
+                <div class="wire-item" draggable="true" data-color="blue" id="wireBlue">
+                    <span class="wire-color blue"></span>
+                    <span class="wire-name">Blue Wire</span>
+                    <span class="wire-id">#D4</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn-check" id="checkBtn">✅ CHECK CONNECTIONS</button>
+            <button class="btn-reset" id="resetBtn">🔄 RESET</button>
+            <button class="btn-next" id="nextBtn">➡️ NEXT LEVEL</button>
+        </div>
+
+        <!-- Feedback Area -->
+        <div class="feedback-bar" id="feedbackBar">
+            <span class="fb-icon">💡</span>
+            <span class="fb-text" id="feedbackText">Drag each colored wire to its matching slot</span>
+        </div>
+
+        <!-- Success Overlay -->
+        <div class="success-overlay" id="successOverlay">
+            <div class="success-card">
+                <div class="success-icon">🎉</div>
+                <h2>POWER RESTORED!</h2>
+                <p>All connections are correct. Office Block C is now online!</p>
+                <div class="success-stats">
+                    <span>⭐ Score: <strong id="finalScore">0</strong></span>
+                    <span>⏱️ Time: <strong id="finalTime">0s</strong></span>
+                </div>
+                <button class="btn-continue" id="continueBtn">CONTINUE ➡️</button>
+            </div>
         </div>
     </div>
 
-    <script>
-        let player = { totalXP: 0, level: 1 };
-        let offices = [];
-        let currentOffice = null;
-
-        const problems = [
-            { prob: "PC keeps saying 'Request Timed Out'", sol: "ping 192.168.1.1" },
-            { prob: "Users report very slow internet speeds", sol: "show interfaces" },
-            { prob: "The wireless access point is not broadcasting the SSID", sol: "no shutdown" }
-        ];
-
-        function generateMap() {
-            const row = document.getElementById('office-row');
-            row.innerHTML = '';
-            offices = []; // Reset offices
-            for (let i = 1; i <= 3; i++) {
-                const issue = problems[Math.floor(Math.random() * problems.length)];
-                const office = { name: `Office ${i}`, problem: issue.prob, solution: issue.sol, fixed: false };
-                offices.push(office);
-
-                const div = document.createElement('div');
-                div.className = 'office';
-                div.innerHTML = `<span>🖥️</span><div class="led broken"></div>`;
-                div.onclick = () => enterOffice(office);
-                row.appendChild(div);
-            }
-        }
-
-        function enterOffice(office) {
-            if (office.fixed) return;
-            currentOffice = office;
-            document.getElementById('ui-panel').style.display = 'block';
-            document.getElementById('office-title').innerText = `🛠️ Help Desk: ${office.name}`;
-            document.getElementById('problem-desc').innerText = office.problem;
-            document.getElementById('feedback').innerText = '';
-            document.getElementById('cmd-input').value = '';
-        }
-
-        function runCommand() {
-            const input = document.getElementById('cmd-input').value.trim();
-            const feedback = document.getElementById('feedback');
-            if (input.toLowerCase() === currentOffice.solution.toLowerCase()) {
-                currentOffice.fixed = true;
-                player.totalXP += 70;
-                player.level = Math.floor(player.totalXP / 200) + 1;
-                document.getElementById('xp').innerText = player.totalXP;
-                document.getElementById('level').innerText = player.level;
-                feedback.innerText = "✅ Ticket Resolved! +70 XP!";
-                setTimeout(() => {
-                    document.getElementById('ui-panel').style.display = 'none';
-                    generateMap(); // Refresh the map so the lights go away
-                }, 2000);
-            } else {
-                feedback.innerText = `❌ Incorrect. Try typing: ${currentOffice.solution}`;
-            }
-        }
-
-        document.getElementById('run-btn').onclick = runCommand;
-        document.getElementById('cmd-input').addEventListener("keypress", function(event) {
-            if (event.key === "Enter") { runCommand(); }
-        });
-        document.getElementById('hint-btn').onclick = () => {
-            document.getElementById('feedback').innerText = `💡 Hint: Try typing the command: ${currentOffice.solution}`;
-        };
-
-        // Start the game
-        generateMap();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
