@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConnectEdGame")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd9e22ffce82aac89dabc3708cee92d481f3d795")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7638fbf988b7f23388f6ba326eb2b5d9078430c1")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConnectEdGame")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConnectEdGame")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
