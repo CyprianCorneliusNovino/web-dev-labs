@@ -30,6 +30,8 @@ var performanceData = {
     successRate: 0
 };
 
+var currentUser = null;
+
 // ===== CHALLENGE DEFINITIONS =====
 var challenges = {
     1: { name: 'RJ45 Crimping - T568B', hint: 'Drag wires to correct pins in T568B order', type: 'rj45' },
@@ -330,6 +332,7 @@ window.addEventListener('load', function() {
     }
     setTimeout(playMusic, 1000);
     loadPerformanceData();
+    loadAccount();
     initTopology();
 });
 
@@ -1752,6 +1755,8 @@ function savePerformanceData() {
             totalAttempts: performanceData.totalAttempts,
             successRate: performanceData.successRate
         }));
+
+        saveCurrentUserPerformance();
     } catch (e) { console.log(e); }
 }
 
@@ -1820,6 +1825,197 @@ function updateChallengeBadges() {
             }
         }
     });
+}
+
+function normalizeUsername(name) {
+    return (name || '').trim().toUpperCase();
+}
+
+function isValidTupmId(id) {
+    return /^TUPM-\d{2}-\d{4}$/.test((id || '').trim().toUpperCase());
+}
+
+function createAccount() {
+    var username = normalizeUsername(document.getElementById('account-username').value);
+    var password = (document.getElementById('account-password').value || '').trim();
+    var message = document.getElementById('account-message');
+
+    if (!isValidTupmId(username)) {
+        message.textContent = 'Use ID format: TUPM-26-0001.';
+        return;
+    }
+
+    if (!username || password.length < 4) {
+        message.textContent = 'Enter a TUPM ID and 4+ character password.';
+        return;
+    }
+
+    try {
+        var accounts = JSON.parse(localStorage.getItem('connected_accounts') || '{}');
+        if (accounts[username]) {
+            message.textContent = 'TUPM ID already exists.';
+            return;
+        }
+
+        accounts[username] = {
+            username: username,
+            password: password,
+            createdAt: new Date().toISOString(),
+            totalScore: 0,
+            totalAttempts: 0,
+            completed: [],
+            scores: {},
+            attempts: {},
+            successRate: 0
+        };
+
+        localStorage.setItem('connected_accounts', JSON.stringify(accounts));
+        currentUser = username;
+        localStorage.setItem('connected_current_user', username);
+        message.textContent = 'Account created.';
+        showScreen('main-menu');
+        updateUserProfile();
+        loadPerformanceDataForUser(username);
+    } catch (e) {
+        console.log(e);
+        message.textContent = 'Account could not be created.';
+    }
+}
+
+function loginAccount() {
+    var username = normalizeUsername(document.getElementById('account-username').value);
+    var password = (document.getElementById('account-password').value || '').trim();
+    var message = document.getElementById('account-message');
+
+    if (!isValidTupmId(username)) {
+        message.textContent = 'Use ID format: TUPM-26-0001.';
+        return;
+    }
+
+    if (!username || !password) {
+        message.textContent = 'Enter TUPM ID and password.';
+        return;
+    }
+
+    try {
+        var accounts = JSON.parse(localStorage.getItem('connected_accounts') || '{}');
+        var account = accounts[username];
+        if (!account || account.password !== password) {
+            message.textContent = 'Invalid TUPM ID or password.';
+            return;
+        }
+
+        currentUser = username;
+        localStorage.setItem('connected_current_user', username);
+        message.textContent = 'Welcome back.';
+        showScreen('main-menu');
+        updateUserProfile();
+        loadPerformanceDataForUser(username);
+    } catch (e) {
+        console.log(e);
+        message.textContent = 'Login failed.';
+    }
+}
+
+function loadAccount() {
+    try {
+        var savedUser = localStorage.getItem('connected_current_user');
+        if (!savedUser) {
+            showScreen('account-screen');
+            return;
+        }
+
+        currentUser = savedUser;
+        updateUserProfile();
+        loadPerformanceDataForUser(savedUser);
+        showScreen('main-menu');
+    } catch (e) {
+        console.log(e);
+        showScreen('account-screen');
+    }
+}
+
+function updateUserProfile() {
+    var userName = document.getElementById('user-name');
+    var menuUser = document.getElementById('menu-user');
+    if (userName && menuUser) {
+        if (currentUser) {
+            userName.textContent = currentUser;
+            menuUser.classList.remove('hidden');
+        } else {
+            menuUser.classList.add('hidden');
+        }
+    }
+}
+
+function loadPerformanceDataForUser(username) {
+    try {
+        var accounts = JSON.parse(localStorage.getItem('connected_accounts') || '{}');
+        var account = accounts[username];
+        if (!account) {
+            loadPerformanceData();
+            return;
+        }
+
+        performanceData.completed = new Set(account.completed || []);
+        performanceData.scores = account.scores || {};
+        performanceData.attempts = account.attempts || {};
+        performanceData.totalScore = account.totalScore || 0;
+        performanceData.totalAttempts = account.totalAttempts || 0;
+        performanceData.successRate = account.successRate || 0;
+
+        updateDashboard();
+    } catch (e) {
+        console.log(e);
+        loadPerformanceData();
+    }
+}
+
+function saveCurrentUserPerformance() {
+    if (!currentUser) return;
+    try {
+        var accounts = JSON.parse(localStorage.getItem('connected_accounts') || '{}');
+        var account = accounts[currentUser];
+        if (!account) return;
+
+        account.completed = Array.from(performanceData.completed);
+        account.scores = performanceData.scores;
+        account.attempts = performanceData.attempts;
+        account.totalScore = performanceData.totalScore;
+        account.totalAttempts = performanceData.totalAttempts;
+        account.successRate = performanceData.successRate;
+        localStorage.setItem('connected_accounts', JSON.stringify(accounts));
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+function logoutAccount() {
+    try {
+        currentUser = null;
+        localStorage.removeItem('connected_current_user');
+        if (document.getElementById('account-username')) {
+            document.getElementById('account-username').value = '';
+        }
+        if (document.getElementById('account-password')) {
+            document.getElementById('account-password').value = '';
+        }
+        if (document.getElementById('account-message')) {
+            document.getElementById('account-message').textContent = 'Logged out.';
+        }
+        if (document.getElementById('user-name')) {
+            document.getElementById('user-name').textContent = 'Player';
+        }
+        var menuUser = document.getElementById('menu-user');
+        if (menuUser) {
+            menuUser.classList.add('hidden');
+        }
+        toggleSettings(false);
+        showScreen('account-screen');
+    } catch (e) {
+        console.log(e);
+        showScreen('account-screen');
+    }
 }
 
 // ============================================
@@ -1982,6 +2178,10 @@ function showChallengeSelect() {
 }
 
 function showDashboard() {
+    if (!currentUser) {
+        showScreen('account-screen');
+        return;
+    }
     showScreen('dashboard');
     updateDashboard();
     console.log('📊 Showing dashboard');

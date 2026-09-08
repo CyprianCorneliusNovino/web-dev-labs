@@ -247,6 +247,165 @@
             accent-color: #ff5252;
         }
 
+        /* ===== ACCOUNT SCREEN ===== */
+        #account-screen {
+            background: radial-gradient(circle, #173a58, #081d2e 100%);
+            color: #ecf0f1;
+        }
+
+        .account-screen-wrap {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .account-panel {
+            width: min(760px, 94%);
+            background: rgba(20, 53, 82, 0.96);
+            border: 4px solid #2bf1c9;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 18px rgba(43, 241, 201, 0.22);
+            padding: 26px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .account-left {
+            padding: 12px;
+        }
+
+        .account-left h1 {
+            color: #2bf1c9;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 12px;
+            text-shadow: 3px 3px 0 #0b1c28;
+        }
+
+        .account-left .game-subtitle {
+            color: #f1c40f;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .account-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 4px solid #2bf1c9;
+            margin: 16px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            background: rgba(43, 241, 201, 0.08);
+        }
+
+        .account-copy {
+            color: #ecf0f1;
+            font-size: 0.5rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .account-form-wrap {
+            background: #081d2e;
+            border: 2px solid #f1c40f;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .account-form-wrap h2 {
+            color: #f1c40f;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        .account-form-row {
+            margin-bottom: 12px;
+        }
+
+        .account-form-row label {
+            display: block;
+            color: #ecf0f1;
+            font-size: 0.45rem;
+            margin-bottom: 5px;
+        }
+
+        .account-form-row input {
+            width: 100%;
+            background: #143552;
+            border: 2px solid #2980b9;
+            border-radius: 8px;
+            color: #fff;
+            padding: 9px 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.55rem;
+        }
+
+        .account-form-row input:focus {
+            outline: none;
+            border-color: #2bf1c9;
+        }
+
+        .account-button-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .account-button-row .pixel-btn {
+            font-size: 0.5rem;
+            padding: 9px 12px;
+        }
+
+        .account-message {
+            color: #f1c40f;
+            font-size: 0.45rem;
+            min-height: 22px;
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        #account-create-button {
+            background: #f1c40f;
+            box-shadow: inset 0 -4px 0 #b7950b, 0 4px 0 #000;
+        }
+
+        .menu-user {
+            position: absolute;
+            top: 10px;
+            left: 14px;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ecf0f1;
+            font-size: 0.48rem;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #2bf1c9;
+            padding: 6px 10px;
+            border-radius: 8px;
+            max-width: 250px;
+        }
+
+        .menu-user .user-name {
+            color: #f1c40f;
+        }
+
+        .menu-user.hidden {
+            display: none;
+        }
+
         .settings-actions {
             display: flex;
             justify-content: center;
@@ -2552,8 +2711,42 @@
 
         <button class="pixel-btn settings-btn" onclick="toggleSettings(true)" aria-label="Open game settings">⚙ SETTINGS</button>
 
+        <div id="account-screen" class="screen active">
+            <div class="account-screen-wrap">
+                <div class="account-panel">
+                    <div class="account-left">
+                        <h1>ConnectEd</h1>
+                        <p class="game-subtitle">NETWORK CONFIGURATION TRAINER</p>
+                        <div class="account-logo">🖧</div>
+                        <p class="account-copy">Create a learner account to begin your network challenge path and track your module progress.</p>
+                    </div>
+                    <div class="account-form-wrap">
+                        <h2>PLAYER LOGIN</h2>
+                        <div class="account-form-row">
+                            <label for="account-username">TUPM ID NUMBER</label>
+                            <input id="account-username" type="text" autocomplete="username" placeholder="TUPM-26-0001">
+                        </div>
+                        <div class="account-form-row">
+                            <label for="account-password">CREATE PASSWORD</label>
+                            <input id="account-password" type="password" autocomplete="current-password" placeholder="Enter password">
+                        </div>
+                        <div class="account-button-row">
+                            <button class="pixel-btn" id="account-login-button" onclick="loginAccount()">LOGIN</button>
+                            <button class="pixel-btn" id="account-create-button" onclick="createAccount()">CREATE ACCOUNT</button>
+                        </div>
+                        <div class="account-message" id="account-message"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-user hidden" id="menu-user">
+            <span>👤</span>
+            <span class="user-name" id="user-name">Player</span>
+        </div>
+
         <!-- MAIN MENU -->
-        <div id="main-menu" class="screen active">
+        <div id="main-menu" class="screen">
             <video id="menu-bg-video" autoplay muted playsinline preload="auto" poster="image/IT MAN.png">
                 <source src="image/IT MAN TALKING.mp4" type="video/mp4">
                 <img src="image/IT MAN.png" alt="ConnectEd network trainer">
@@ -2603,6 +2796,7 @@
                     <span>MUTE ALL SOUND</span>
                 </label>
                 <div class="settings-actions">
+                    <button class="pixel-btn" onclick="logoutAccount()">LOGOUT</button>
                     <button class="pixel-btn" onclick="toggleSettings(false)">DONE</button>
                 </div>
             </div>
@@ -3323,6 +3517,7 @@
         var quizOnlyMode = false;
         var quizQuestionLimit = 3;
         var modalCloseAction = null;
+        var currentUser = null;
 
         // ===== PERFORMANCE TRACKING =====
         var performanceData = {
@@ -5853,6 +6048,8 @@
                     totalAttempts: performanceData.totalAttempts,
                     successRate: performanceData.successRate
                 }));
+
+                saveCurrentUserPerformance();
             } catch (e) { console.log(e); }
         }
 
@@ -5869,6 +6066,197 @@
                     performanceData.successRate = parsed.successRate || 0;
                 }
             } catch (e) { console.log(e); }
+        }
+
+        function normalizeUsername(name) {
+            return (name || '').trim().toUpperCase();
+        }
+
+        function isValidTupmId(id) {
+            return /^TUPM-\d{2}-\d{4}$/.test((id || '').trim().toUpperCase());
+        }
+
+        function createAccount() {
+            var username = normalizeUsername(document.getElementById('account-username').value);
+            var password = (document.getElementById('account-password').value || '').trim();
+            var message = document.getElementById('account-message');
+
+            if (!isValidTupmId(username)) {
+                message.textContent = 'Use ID format: TUPM-26-0001.';
+                return;
+            }
+
+            if (!username || password.length < 4) {
+                message.textContent = 'Enter a TUPM ID and 4+ character password.';
+                return;
+            }
+
+            try {
+                var accounts = JSON.parse(localStorage.getItem('connected_accounts') || '{}');
+                if (accounts[username]) {
+                    message.textContent = 'TUPM ID already exists.';
+                    return;
+                }
+
+                accounts[username] = {
+                    username: username,
+                    password: password,
+                    createdAt: new Date().toISOString(),
+                    totalScore: 0,
+                    totalAttempts: 0,
+                    completed: [],
+                    scores: {},
+                    attempts: {},
+                    successRate: 0
+                };
+
+                localStorage.setItem('connected_accounts', JSON.stringify(accounts));
+                currentUser = username;
+                localStorage.setItem('connected_current_user', username);
+                message.textContent = 'Account created.';
+                showScreen('main-menu');
+                updateUserProfile();
+                loadPerformanceDataForUser(username);
+            } catch (e) {
+                console.log(e);
+                message.textContent = 'Account could not be created.';
+            }
+        }
+
+        function loginAccount() {
+            var username = normalizeUsername(document.getElementById('account-username').value);
+            var password = (document.getElementById('account-password').value || '').trim();
+            var message = document.getElementById('account-message');
+
+            if (!isValidTupmId(username)) {
+                message.textContent = 'Use ID format: TUPM-26-0001.';
+                return;
+            }
+
+            if (!username || !password) {
+                message.textContent = 'Enter TUPM ID and password.';
+                return;
+            }
+
+            try {
+                var accounts = JSON.parse(localStorage.getItem('connected_accounts') || '{}');
+                var account = accounts[username];
+                if (!account || account.password !== password) {
+                    message.textContent = 'Invalid TUPM ID or password.';
+                    return;
+                }
+
+                currentUser = username;
+                localStorage.setItem('connected_current_user', username);
+                message.textContent = 'Welcome back.';
+                showScreen('main-menu');
+                updateUserProfile();
+                loadPerformanceDataForUser(username);
+            } catch (e) {
+                console.log(e);
+                message.textContent = 'Login failed.';
+            }
+        }
+
+        function loadAccount() {
+            try {
+                var savedUser = localStorage.getItem('connected_current_user');
+                if (!savedUser) {
+                    showScreen('account-screen');
+                    return;
+                }
+
+                currentUser = savedUser;
+                updateUserProfile();
+                loadPerformanceDataForUser(savedUser);
+                showScreen('main-menu');
+            } catch (e) {
+                console.log(e);
+                showScreen('account-screen');
+            }
+        }
+
+        function updateUserProfile() {
+            var userName = document.getElementById('user-name');
+            var menuUser = document.getElementById('menu-user');
+            if (userName && menuUser) {
+                if (currentUser) {
+                    userName.textContent = currentUser;
+                    menuUser.classList.remove('hidden');
+                } else {
+                    menuUser.classList.add('hidden');
+                }
+            }
+        }
+
+        function loadPerformanceDataForUser(username) {
+            try {
+                var accounts = JSON.parse(localStorage.getItem('connected_accounts') || '{}');
+                var account = accounts[username];
+                if (!account) {
+                    loadPerformanceData();
+                    return;
+                }
+
+                performanceData.completed = new Set(account.completed || []);
+                performanceData.scores = account.scores || {};
+                performanceData.attempts = account.attempts || {};
+                performanceData.totalScore = account.totalScore || 0;
+                performanceData.totalAttempts = account.totalAttempts || 0;
+                performanceData.successRate = account.successRate || 0;
+
+                updateDashboard();
+            } catch (e) {
+                console.log(e);
+                loadPerformanceData();
+            }
+        }
+
+        function saveCurrentUserPerformance() {
+            if (!currentUser) return;
+            try {
+                var accounts = JSON.parse(localStorage.getItem('connected_accounts') || '{}');
+                var account = accounts[currentUser];
+                if (!account) return;
+
+                account.completed = Array.from(performanceData.completed);
+                account.scores = performanceData.scores;
+                account.attempts = performanceData.attempts;
+                account.totalScore = performanceData.totalScore;
+                account.totalAttempts = performanceData.totalAttempts;
+                account.successRate = performanceData.successRate;
+                localStorage.setItem('connected_accounts', JSON.stringify(accounts));
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        function logoutAccount() {
+            try {
+                currentUser = null;
+                localStorage.removeItem('connected_current_user');
+                if (document.getElementById('account-username')) {
+                    document.getElementById('account-username').value = '';
+                }
+                if (document.getElementById('account-password')) {
+                    document.getElementById('account-password').value = '';
+                }
+                if (document.getElementById('account-message')) {
+                    document.getElementById('account-message').textContent = 'Logged out.';
+                }
+                if (document.getElementById('user-name')) {
+                    document.getElementById('user-name').textContent = 'Player';
+                }
+                var menuUser = document.getElementById('menu-user');
+                if (menuUser) {
+                    menuUser.classList.add('hidden');
+                }
+                toggleSettings(false);
+                showScreen('account-screen');
+            } catch (e) {
+                console.log(e);
+                showScreen('account-screen');
+            }
         }
 
         function updateDashboard() {
@@ -6047,6 +6435,17 @@
             var targetScreen = document.getElementById(screenId);
             if (targetScreen) {
                 targetScreen.classList.add('active');
+            }
+
+            var menuUser = document.getElementById('menu-user');
+            if (menuUser) {
+                if (screenId === 'main-menu' && currentUser) {
+                    menuUser.classList.remove('hidden');
+                    var userName = document.getElementById('user-name');
+                    if (userName) userName.textContent = currentUser;
+                } else {
+                    menuUser.classList.add('hidden');
+                }
             }
             console.log('📺 Showing screen:', screenId, '| BGM volume:', bgMusic.volume);
         }
