@@ -2133,6 +2133,17 @@ function showScreen(screenId) {
     if (targetScreen) {
         targetScreen.classList.add('active');
     }
+
+    var menuUser = document.getElementById('menu-user');
+    var userName = document.getElementById('user-name');
+    if (screenId === 'main-menu' && currentUser) {
+        if (menuUser) menuUser.classList.remove('hidden');
+        if (userName) userName.textContent = currentUser;
+    } else {
+        if (menuUser) menuUser.classList.add('hidden');
+        if (userName) userName.textContent = 'Player';
+    }
+
     console.log('📺 Showing screen:', screenId, '| BGM volume:', bgMusic.volume);
 }
 

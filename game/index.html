@@ -6438,14 +6438,13 @@
             }
 
             var menuUser = document.getElementById('menu-user');
-            if (menuUser) {
-                if (screenId === 'main-menu' && currentUser) {
-                    menuUser.classList.remove('hidden');
-                    var userName = document.getElementById('user-name');
-                    if (userName) userName.textContent = currentUser;
-                } else {
-                    menuUser.classList.add('hidden');
-                }
+            var userName = document.getElementById('user-name');
+            if (screenId === 'main-menu' && currentUser) {
+                if (menuUser) menuUser.classList.remove('hidden');
+                if (userName) userName.textContent = currentUser;
+            } else {
+                if (menuUser) menuUser.classList.add('hidden');
+                if (userName) userName.textContent = 'Player';
             }
             console.log('📺 Showing screen:', screenId, '| BGM volume:', bgMusic.volume);
         }
