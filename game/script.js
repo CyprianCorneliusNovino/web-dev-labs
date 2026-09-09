@@ -1838,15 +1838,34 @@ function isValidTupmId(id) {
 function createAccount() {
     var username = normalizeUsername(document.getElementById('account-username').value);
     var password = (document.getElementById('account-password').value || '').trim();
+    var confirmRow = document.getElementById('confirm-password-row');
+    var confirmPasswordField = document.getElementById('account-confirm-password');
+    var confirmPassword = (confirmPasswordField ? confirmPasswordField.value : '') || '';
     var message = document.getElementById('account-message');
+
+    if (!confirmRow || confirmRow.style.display === 'none') {
+        if (confirmRow) {
+            confirmRow.style.display = 'block';
+            if (confirmPasswordField) {
+                confirmPasswordField.value = '';
+            }
+            message.textContent = 'Confirm the password to continue.';
+        }
+        return;
+    }
 
     if (!isValidTupmId(username)) {
         message.textContent = 'Use ID format: TUPM-26-0001.';
         return;
     }
 
-    if (!username || password.length < 4) {
+    if (!username || password.length < 4 || confirmPassword.length < 4) {
         message.textContent = 'Enter a TUPM ID and 4+ character password.';
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        message.textContent = 'Passwords do not match.';
         return;
     }
 

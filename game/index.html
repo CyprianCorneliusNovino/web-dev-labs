@@ -2730,6 +2730,10 @@
                             <label for="account-password">CREATE PASSWORD</label>
                             <input id="account-password" type="password" autocomplete="current-password" placeholder="Enter password">
                         </div>
+                        <div class="account-form-row" id="confirm-password-row" style="display: none;">
+                            <label for="account-confirm-password">CONFIRM PASSWORD</label>
+                            <input id="account-confirm-password" type="password" autocomplete="current-password" placeholder="Confirm password">
+                        </div>
                         <div class="account-button-row">
                             <button class="pixel-btn" id="account-login-button" onclick="loginAccount()">LOGIN</button>
                             <button class="pixel-btn" id="account-create-button" onclick="createAccount()">CREATE ACCOUNT</button>
@@ -6079,15 +6083,34 @@
         function createAccount() {
             var username = normalizeUsername(document.getElementById('account-username').value);
             var password = (document.getElementById('account-password').value || '').trim();
+            var confirmRow = document.getElementById('confirm-password-row');
+            var confirmPasswordField = document.getElementById('account-confirm-password');
+            var confirmPassword = (confirmPasswordField ? confirmPasswordField.value : '') || '';
             var message = document.getElementById('account-message');
+
+            if (!confirmRow || confirmRow.style.display === 'none') {
+                if (confirmRow) {
+                    confirmRow.style.display = 'block';
+                    if (confirmPasswordField) {
+                        confirmPasswordField.value = '';
+                    }
+                    message.textContent = 'Confirm the password to continue.';
+                }
+                return;
+            }
 
             if (!isValidTupmId(username)) {
                 message.textContent = 'Use ID format: TUPM-26-0001.';
                 return;
             }
 
-            if (!username || password.length < 4) {
+            if (!username || password.length < 4 || confirmPassword.length < 4) {
                 message.textContent = 'Enter a TUPM ID and 4+ character password.';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                message.textContent = 'Passwords do not match.';
                 return;
             }
 
