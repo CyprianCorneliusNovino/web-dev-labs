@@ -1835,6 +1835,17 @@ function isValidTupmId(id) {
     return /^TUPM-\d{2}-\d{4}$/.test((id || '').trim().toUpperCase());
 }
 
+function hideConfirmPasswordRow() {
+    var confirmRow = document.getElementById('confirm-password-row');
+    var confirmPasswordField = document.getElementById('account-confirm-password');
+    if (confirmRow) {
+        confirmRow.style.display = 'none';
+    }
+    if (confirmPasswordField) {
+        confirmPasswordField.value = '';
+    }
+}
+
 function createAccount() {
     var username = normalizeUsername(document.getElementById('account-username').value);
     var password = (document.getElementById('account-password').value || '').trim();
@@ -1891,6 +1902,7 @@ function createAccount() {
         localStorage.setItem('connected_accounts', JSON.stringify(accounts));
         currentUser = username;
         localStorage.setItem('connected_current_user', username);
+        hideConfirmPasswordRow();
         message.textContent = 'Account created.';
         showScreen('main-menu');
         updateUserProfile();
@@ -1902,6 +1914,7 @@ function createAccount() {
 }
 
 function loginAccount() {
+    hideConfirmPasswordRow();
     var username = normalizeUsername(document.getElementById('account-username').value);
     var password = (document.getElementById('account-password').value || '').trim();
     var message = document.getElementById('account-message');
@@ -1938,6 +1951,7 @@ function loginAccount() {
 
 function loadAccount() {
     try {
+        hideConfirmPasswordRow();
         var savedUser = localStorage.getItem('connected_current_user');
         if (!savedUser) {
             showScreen('account-screen');
@@ -2019,6 +2033,7 @@ function logoutAccount() {
         if (document.getElementById('account-password')) {
             document.getElementById('account-password').value = '';
         }
+        hideConfirmPasswordRow();
         if (document.getElementById('account-message')) {
             document.getElementById('account-message').textContent = 'Logged out.';
         }
@@ -2033,6 +2048,7 @@ function logoutAccount() {
         showScreen('account-screen');
     } catch (e) {
         console.log(e);
+        hideConfirmPasswordRow();
         showScreen('account-screen');
     }
 }
