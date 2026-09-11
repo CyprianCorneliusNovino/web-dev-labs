@@ -2858,7 +2858,7 @@
                             <input id="account-username" type="text" autocomplete="username" placeholder="TUPM-26-0001">
                         </div>
                         <div class="account-form-row">
-                            <label for="account-password">CREATE PASSWORD</label>
+                            <label for="account-password">ENTER PASSWORD</label>
                             <input id="account-password" type="password" autocomplete="current-password" placeholder="Enter password">
                         </div>
                         <div class="account-form-row" id="confirm-password-row" style="display: none;">
@@ -6211,6 +6211,33 @@
             return /^TUPM-\d{2}-\d{4}$/.test((id || '').trim().toUpperCase());
         }
 
+        function hideConfirmPasswordRow() {
+            var confirmRow = document.getElementById('confirm-password-row');
+            var confirmPasswordField = document.getElementById('account-confirm-password');
+            if (confirmRow) {
+                confirmRow.style.display = 'none';
+            }
+            if (confirmPasswordField) {
+                confirmPasswordField.value = '';
+            }
+        }
+
+        function resetAccountForm(messageText) {
+            var usernameField = document.getElementById('account-username');
+            var passwordField = document.getElementById('account-password');
+            var message = document.getElementById('account-message');
+            if (usernameField) {
+                usernameField.value = '';
+            }
+            if (passwordField) {
+                passwordField.value = '';
+            }
+            hideConfirmPasswordRow();
+            if (message && messageText) {
+                message.textContent = messageText;
+            }
+        }
+
         function createAccount() {
             var username = normalizeUsername(document.getElementById('account-username').value);
             var password = (document.getElementById('account-password').value || '').trim();
@@ -6267,6 +6294,7 @@
                 localStorage.setItem('connected_accounts', JSON.stringify(accounts));
                 currentUser = username;
                 localStorage.setItem('connected_current_user', username);
+                hideConfirmPasswordRow();
                 message.textContent = 'Account created.';
                 showScreen('main-menu');
                 updateUserProfile();
@@ -6278,6 +6306,7 @@
         }
 
         function loginAccount() {
+            hideConfirmPasswordRow();
             var username = normalizeUsername(document.getElementById('account-username').value);
             var password = (document.getElementById('account-password').value || '').trim();
             var message = document.getElementById('account-message');
@@ -6314,6 +6343,7 @@
 
         function loadAccount() {
             try {
+                hideConfirmPasswordRow();
                 var savedUser = localStorage.getItem('connected_current_user');
                 if (!savedUser) {
                     showScreen('account-screen');
@@ -6389,15 +6419,7 @@
             try {
                 currentUser = null;
                 localStorage.removeItem('connected_current_user');
-                if (document.getElementById('account-username')) {
-                    document.getElementById('account-username').value = '';
-                }
-                if (document.getElementById('account-password')) {
-                    document.getElementById('account-password').value = '';
-                }
-                if (document.getElementById('account-message')) {
-                    document.getElementById('account-message').textContent = 'Logged out.';
-                }
+                resetAccountForm('Logged out.');
                 if (document.getElementById('user-name')) {
                     document.getElementById('user-name').textContent = 'Player';
                 }
@@ -6409,6 +6431,7 @@
                 showScreen('account-screen');
             } catch (e) {
                 console.log(e);
+                resetAccountForm('Logged out.');
                 showScreen('account-screen');
             }
         }

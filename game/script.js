@@ -1846,6 +1846,22 @@ function hideConfirmPasswordRow() {
     }
 }
 
+function resetAccountForm(messageText) {
+    var usernameField = document.getElementById('account-username');
+    var passwordField = document.getElementById('account-password');
+    var message = document.getElementById('account-message');
+    if (usernameField) {
+        usernameField.value = '';
+    }
+    if (passwordField) {
+        passwordField.value = '';
+    }
+    hideConfirmPasswordRow();
+    if (message && messageText) {
+        message.textContent = messageText;
+    }
+}
+
 function createAccount() {
     var username = normalizeUsername(document.getElementById('account-username').value);
     var password = (document.getElementById('account-password').value || '').trim();
@@ -2027,16 +2043,7 @@ function logoutAccount() {
     try {
         currentUser = null;
         localStorage.removeItem('connected_current_user');
-        if (document.getElementById('account-username')) {
-            document.getElementById('account-username').value = '';
-        }
-        if (document.getElementById('account-password')) {
-            document.getElementById('account-password').value = '';
-        }
-        hideConfirmPasswordRow();
-        if (document.getElementById('account-message')) {
-            document.getElementById('account-message').textContent = 'Logged out.';
-        }
+        resetAccountForm('Logged out.');
         if (document.getElementById('user-name')) {
             document.getElementById('user-name').textContent = 'Player';
         }
@@ -2048,7 +2055,7 @@ function logoutAccount() {
         showScreen('account-screen');
     } catch (e) {
         console.log(e);
-        hideConfirmPasswordRow();
+        resetAccountForm('Logged out.');
         showScreen('account-screen');
     }
 }
